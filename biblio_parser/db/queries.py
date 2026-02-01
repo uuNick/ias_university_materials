@@ -1,6 +1,6 @@
 CREATE_TABLE_FACULTIES = """
 CREATE TABLE IF NOT EXISTS faculties (
-    id SERIAL PRIMARY KEY,
+    id INT PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     url TEXT NOT NULL UNIQUE
 );
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS faculties (
 CREATE_TABLE_DEPARTMENTS = """
 -- Связь: 1 Факультет имеет М Кафедр
 CREATE TABLE IF NOT EXISTS departments (
-    id SERIAL PRIMARY KEY,
+    id INT PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     url TEXT NOT NULL UNIQUE,
     faculty_id INTEGER NOT NULL,
@@ -22,14 +22,14 @@ CREATE TABLE IF NOT EXISTS departments (
 
 CREATE_TABLE_AUTHORS = """
 CREATE TABLE IF NOT EXISTS authors (
-    id SERIAL PRIMARY KEY,
+    id INT PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL
 );
 """
 
 CREATE_TABLE_KEYWORDS = """
 CREATE TABLE IF NOT EXISTS keywords (
-    id SERIAL PRIMARY KEY,
+    id INT PRIMARY KEY,
     word VARCHAR(100) UNIQUE NOT NULL
 );
 """
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS specialties (
 
 CREATE_TABLE_TYPES = """
 CREATE TABLE IF NOT EXISTS types (
-    id SERIAL PRIMARY KEY,
+    id INT PRIMARY KEY,
     type_name VARCHAR(100) UNIQUE NOT NULL
 );
 """
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS udc_codes (
 CREATE_TABLE_MATERIALS = """
 -- Связи 1:М с departments
 CREATE TABLE IF NOT EXISTS materials (
-    id SERIAL PRIMARY KEY,
+    id INT PRIMARY KEY,
     title TEXT NOT NULL,
     alternative_title TEXT,
     abstract_text TEXT,
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS materials (
     CONSTRAINT fk_department
         FOREIGN KEY (department_id)
         REFERENCES departments(id)
-        ON DELETE CASCADE,
+        ON DELETE CASCADE
 );
 """
 
@@ -189,7 +189,7 @@ CREATE_TABLE_USERS = """
 CREATE TABLE IF NOT EXISTS users (
     user_id INTEGER PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
-    login VARCHAR(100) NOT NULL,
+    login VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     faculty_id INTEGER,
     department_id INTEGER,
@@ -198,15 +198,15 @@ CREATE TABLE IF NOT EXISTS users (
     CONSTRAINT fk_faculty
         FOREIGN KEY (faculty_id)
         REFERENCES faculties(id)
-        ON DELETE CASCADE,
+        ON DELETE SET NULL,
     CONSTRAINT fk_department
         FOREIGN KEY (department_id)
         REFERENCES departments(id)
-        ON DELETE CASCADE,
+        ON DELETE SET NULL,
     CONSTRAINT fk_role
         FOREIGN KEY (role_id)
         REFERENCES roles(id)
-        ON DELETE CASCADE,
+        ON DELETE RESTRICT
 );
 """
 
@@ -225,6 +225,8 @@ INIT_DB_COMMANDS = [
     CREATE_TABLE_MATERIAL_TYPES,
     CREATE_TABLE_MATERIAL_UDC,
     CREATE_TABLE_MATERIAL_EMBEDDINGS,
+    CREATE_TABLE_ROLES,
+    CREATE_TABLE_USERS
 ]
 
 # TO DO: Добавить вставку в CREATE_TABLE_UDC_CODES и в CREATE_TABLE_MATERIAL_UDC

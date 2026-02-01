@@ -31,7 +31,6 @@ def parse_communities(html):
     soup = BeautifulSoup(html, 'html.parser')
     communities = []
 
-    # Находим раздел "Разделы данного сообщества" или аналогичный
     community_list_head = soup.find('h2', class_='ds-list-head')
     if not community_list_head:
         print("Not community list")
@@ -47,7 +46,6 @@ def parse_communities(html):
         name = name_span.get_text(strip=True) if name_span else None
         relative_url = a_tag['href']
         full_url = BASE_URL + relative_url
-
         count_text = li.get_text(strip=True)
         match = re.search(r'\[(\d+)\]', count_text)
         count = int(match.group(1)) if match else 0
@@ -59,9 +57,9 @@ def parse_communities(html):
                 'relative_path': relative_url,
                 'count': count
             })
-    ###
 
     return communities
+
 
 
 # Функция для парсинга списка материалов на странице кафедры
@@ -197,8 +195,11 @@ def parse_material_metadata(html):
 
 # Основная функция парсинга
 def main():
-    #db = DatabaseManager()
-    #db.initialize_db()
+    # db = DatabaseManager()
+    # try:
+    #     db.initialize_db()
+    # finally:
+    #     db.close()
 
     try:
         #Получить главную страницу (main_page)
@@ -235,7 +236,7 @@ def main():
                 continue
 
             departments = parse_communities(faculty_html)
-            print(f"  Найдено кафедр: {len(departments)}")
+            print(f"Найдено кафедр: {len(departments)}")
 
             for dept in departments:
                 #dept_id = db.insert_department(dept['name'], dept['url'], faculty_id)
@@ -243,7 +244,7 @@ def main():
 
                 # Получить все материалы кафедры
                 materials = get_all_materials(dept['url'], dept['count'])
-                print(f"    Найдено материалов: {len(materials)}")
+                print(f"Найдено материалов: {len(materials)}")
 
                 for mat in materials:
                     mat_html = fetch_page(mat['url'])
@@ -252,10 +253,8 @@ def main():
                         continue
 
                     metadata = parse_material_metadata(mat_html)
-                    print(f"      Материал: {mat['title']} (URL: {mat['url']})")
-                    print(f"      Метаданные: {metadata}")
-
-
+                    print(f"Материал: {mat['title']} (URL: {mat['url']})")
+                    print(f"Метаданные: {metadata}")
             time.sleep(2)
         print("Парсинг завершен")
     finally:

@@ -64,6 +64,7 @@ class DatabaseManager:
         try:
             with self.conn.cursor() as cur:
                 for command in INIT_DB_COMMANDS:
+                    logger.info(f"SQL: {command[:100]}...")  # Первые 100 символов
                     cur.execute(command)
             #self.conn.commit()
             logger.info("Таблицы успешно созданы")
