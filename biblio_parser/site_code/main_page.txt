@@ -1,0 +1,676 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0" name="viewport" />
+<link rel="shortcut icon" href="/themes/Mirage/images/favicon.ico" />
+<link rel="apple-touch-icon" href="/themes/Mirage/images/apple-touch-icon.png" />
+<meta name="Generator" content="DSpace 6.2" />
+<link type="text/css" rel="stylesheet" media="screen" href="/themes/Mirage/lib/css/reset.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="/themes/Mirage/lib/css/base.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="/themes/Mirage/lib/css/helper.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="/themes/Mirage/lib/css/jquery-ui-1.8.15.custom.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="/themes/Mirage/lib/css/style.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="/themes/Mirage/lib/css/authority-control.css" />
+<link type="text/css" rel="stylesheet" media="handheld" href="/themes/Mirage/lib/css/handheld.css" />
+<link type="text/css" rel="stylesheet" media="print" href="/themes/Mirage/lib/css/print.css" />
+<link type="text/css" rel="stylesheet" media="all" href="/themes/Mirage/lib/css/media.css" />
+<link type="application/rss+xml" rel="alternate" href="/feed/rss_1.0/site" />
+<link type="application/rss+xml" rel="alternate" href="/feed/rss_2.0/site" />
+<link type="application/atom+xml" rel="alternate" href="/feed/atom_1.0/site" />
+<link type="application/opensearchdescription+xml" rel="search" href="http://e.biblio.bru.by/open-search/description.xml" title="DSpace" />
+<script type="text/javascript">
+                                //Clear default text of empty text areas on focus
+                                function tFocus(element)
+                                {
+                                        if (element.value == ' '){element.value='';}
+                                }
+                                //Clear default text of empty text areas on submit
+                                function tSubmit(form)
+                                {
+                                        var defaultedElements = document.getElementsByTagName("textarea");
+                                        for (var i=0; i != defaultedElements.length; i++){
+                                                if (defaultedElements[i].value == ' '){
+                                                        defaultedElements[i].value='';}}
+                                }
+                                //Disable pressing 'enter' key to submit a form (otherwise pressing 'enter' causes a submission to start over)
+                                function disableEnterKey(e)
+                                {
+                                     var key;
+
+                                     if(window.event)
+                                          key = window.event.keyCode;     //Internet Explorer
+                                     else
+                                          key = e.which;     //Firefox and Netscape
+
+                                     if(key == 13)  //if "Enter" pressed, then disable!
+                                          return false;
+                                     else
+                                          return true;
+                                }
+
+                                function FnArray()
+                                {
+                                    this.funcs = new Array;
+                                }
+
+                                FnArray.prototype.add = function(f)
+                                {
+                                    if( typeof f!= "function" )
+                                    {
+                                        f = new Function(f);
+                                    }
+                                    this.funcs[this.funcs.length] = f;
+                                };
+
+                                FnArray.prototype.execute = function()
+                                {
+                                    for( var i=0; i < this.funcs.length; i++ )
+                                    {
+                                        this.funcs[i]();
+                                    }
+                                };
+
+                                var runAfterJSImports = new FnArray();
+            </script>
+<title xmlns:i18n="http://apache.org/cocoon/i18n/2.1">Главная</title>
+</head><!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
+                <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
+                <!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
+                <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
+                <!--[if (gt IE 9)|!(IE)]><!--><body><!--<![endif]-->
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="ds-main">
+<div id="ds-header-wrapper">
+<div class="clearfix" id="ds-header">
+<a id="ds-header-logo-link" href="/">
+<span id="ds-header-logo"> </span>
+<span id="ds-header-logo-text"> </span>
+</a>
+<h1 xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="pagetitle visuallyhidden">Главная</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="ds-user-box">
+<p>
+<a href="/login">Войти</a>
+</p>
+</div>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" id="ds-language-selection">
+<a href="?locale-attribute=ru">русский</a>
+<a href="?locale-attribute=en">English</a>
+</div>
+</div>
+</div>
+<div id="ds-trail-wrapper">
+<ul id="ds-trail">
+<li class="ds-trail-link first-link last-link">Главная</li>
+</ul>
+</div>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="hidden" id="no-js-warning-wrapper">
+<div id="no-js-warning">
+<div class="notice failure">JavaScript is disabled for your browser. Some features of this site may not work without it.</div>
+</div>
+</div>
+<div id="ds-content-wrapper">
+<div class="clearfix" id="ds-content">
+
+<div id="ds-body">
+<h1 class="ds-div-head">Добро пожаловать</h1>
+<div id="file_news_div_news" class="ds-static-div primary">
+<p class="ds-paragraph">
+Уважаемые пользователи!
+</p>
+<p class="ds-paragraph">
+Материалы Электронной библиотеки предназначены для использования исключительно в научных и образовательных целях с обязательным указанием автора произведения и гиперссылки на данный ресурс.
+</p>
+<p class="ds-paragraph">Если при использовании данного сервиса у Вас возникли трудности, вопросы или предложения, обращайтесь в Зал электронных ресурсов (корп. 3, к. 405) или по электронной почте lib@bru.by.
+</p>
+<p class="ds-paragraph">
+                                 
+                        </p>
+<p class="ds-paragraph">ВНИМАНИЕ!!! Для доступа к ЗАКРЫТЫМ ДОКУМЕНТАМ необходимо авторизоваться на главной странице Электронной библиотеки, после чего можно переходить по ссылкам (после перехода по ссылке убедитесь, что Вы по-прежнему авторизованы, если в правом верхнем углу будет надпись "Войти", ОБНОВИТЕ СТРАНИЦУ).
+</p>
+<p class="ds-paragraph">
+                                 
+                        </p>
+</div>
+<h1 class="ds-div-head">Разделы и коллекции</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="aspect_artifactbrowser_CommunityBrowser_div_comunity-browser" class="ds-static-div primary">
+<p class="ds-paragraph">Выберите раздел для просмотра его коллекций</p>
+<ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" xmlns:oreatom="http://www.openarchives.org/ore/atom/" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:atom="http://www.w3.org/2005/Atom">
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/28/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item community odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/28">
+<span class="Z3988">Авторефераты диссертаций</span>
+</a> [52]</div>
+<div class="artifact-info">
+<span class="short-description">Авторефераты диссертаций, защищенных в Советах Белорусско-Российского университета</span>
+</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/7/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item community even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/7">
+<span class="Z3988">Материалы конференций и семинаров</span>
+</a> [13688]</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/8/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item community odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/8">
+<span class="Z3988">Периодические издания</span>
+</a> [1634]</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/10289/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item community even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/10289">
+<span class="Z3988">Расписание занятий и экзаменов</span>
+</a> [95]</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/9/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item community odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/9">
+<span class="Z3988">Труды сотрудников</span>
+</a> [3456]</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/17870/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item community even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/17870">
+<span class="Z3988">Учебно-методическое обеспечение по образовательным программам РБ (ОКРБ 011-2009)</span>
+</a> [8439]</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/39836/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item community odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/39836">
+<span class="Z3988">Учебно-методическое обеспечение по образовательным программам РБ (ОКРБ 011-2022)</span>
+</a> [2823]</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/3120/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item community even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/3120">
+<span class="Z3988">Учебно-методическое обеспечение по образовательным программам РФ</span>
+</a> [2065]</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/18910/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item community odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/18910">
+<span class="Z3988">Учебно-методическое обеспечение по образовательным программам РФ (3++)</span>
+</a> [3932]</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/10/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item community even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/10">
+<span class="Z3988">Факультеты (методические рекомендации)</span>
+</a> [3169]</div>
+</div>
+</li>
+</ul>
+</div>
+<div id="aspect_discovery_SiteRecentSubmissions_div_site-home" class="ds-static-div primary repository">
+<h1 class="ds-div-head">Новые поступления</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="aspect_discovery_SiteRecentSubmissions_div_site-recent-submission" class="ds-static-div secondary recent-submission">
+<ul xmlns:oreatom="http://www.openarchives.org/ore/atom/" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:atom="http://www.w3.org/2005/Atom" class="ds-artifact-list">
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/47322/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/47322">Деятельность военно-цензурного отдела Ставки Верховного главнокомандующего Вооруженными силами России в 1915–1918 гг.</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%A6%D1%83%D0%BC%D0%B0%D1%80%D0%B5%D0%B2%D0%B0%2C+%D0%95.+%D0%9F.+%D0%94%D0%B5%D1%8F%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B2%D0%BE%D0%B5%D0%BD%D0%BD%D0%BE-%D1%86%D0%B5%D0%BD%D0%B7%D1%83%D1%80%D0%BD%D0%BE%D0%B3%D0%BE+%D0%BE%D1%82%D0%B4%D0%B5%D0%BB%D0%B0+%D0%A1%D1%82%D0%B0%D0%B2%D0%BA%D0%B8+%D0%92%D0%B5%D1%80%D1%85%D0%BE%D0%B2%D0%BD%D0%BE%D0%B3%D0%BE+%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%BE%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D1%83%D1%8E%D1%89%D0%B5%D0%B3%D0%BE+%D0%92%D0%BE%D0%BE%D1%80%D1%83%D0%B6%D0%B5%D0%BD%D0%BD%D1%8B%D0%BC%D0%B8+%D1%81%D0%B8%D0%BB%D0%B0%D0%BC%D0%B8+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8+%D0%B2+1915-1918+%D0%B3%D0%B3.+%2F+%D0%95.+%D0%9F.+%D0%A6%D1%83%D0%BC%D0%B0%D1%80%D0%B5%D0%B2%D0%B0+%2F%2F+%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F+%D0%B2+%D0%B3%D0%BB%D0%BE%D0%B1%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%BC+%D0%BC%D0%B8%D1%80%D0%B5.+%E2%80%93+2025.+%E2%80%93+%D0%A2.+28%2C+%E2%84%96+2.+%E2%80%93+%D0%A1.+55-69.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F47322&amp;rft_id=930%2B355.48&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Цумарева, Е. П.</span>; <span>Tsumarava, A. P.</span>
+</span> <span class="publisher-date">(<span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Введение. Исследование посвящено малоизученному аспекту Первой мировой войны – деятельности военной цензуры на территории Беларуси, где находилась Ставка Верховного главнокомандующего. Актуальность темы обусловлена значением ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/47321/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/47321">Статистика</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%95.+%D0%A1.+%D0%96%D0%B5%D1%81%D1%82%D0%BA%D0%BE%D0%B2%D0%B0+.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+47%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F47321&amp;rft_id=31&amp;rft_id=33&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Жесткова, Е. С.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным занятиям для студентов специальностей 6-05-0411-02 «Финансы и кредит» и 6-05-1042-01 «Транспортная логистика» дневной и заочной форм обучения. В методических рекомендациях представлены ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/47320/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/47320">Выпускная квалификационная работа</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%92%D1%8B%D0%BF%D1%83%D1%81%D0%BA%D0%BD%D0%B0%D1%8F+%D0%BA%D0%B2%D0%B0%D0%BB%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D0%B0%D1%8F+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%B2%D1%8B%D0%BF%D1%83%D1%81%D0%BA.+%D0%BA%D0%B2%D0%B0%D0%BB%D0%B8%D1%84.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B5+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%A2.+%D0%92.+%D0%A0%D0%BE%D0%BC%D0%B0%D0%BD%D1%8C%D0%BA%D0%BE%D0%B2%D0%B0%2C+%D0%9B.+%D0%92.+%D0%9D%D0%B0%D1%80%D0%BA%D0%B5%D0%B2%D0%B8%D1%87%2C+%D0%95.+%D0%A1.+%D0%96%D0%B5%D1%81%D1%82%D0%BA%D0%BE%D0%B2%D0%B0.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+32%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F47320&amp;rft_id=378&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Романькова, Т. В.</span>; <span>Наркевич, Л. В.</span>; <span>Жесткова, Е. С.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации предназначены для выполнения выпускной квалификационной работы для студентов направления подготовки 27.03.05 «Инноватика» очной формы обучения</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/47319/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/47319">Транспорт и транспортная инфраструктура</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%A2%D1%80%D0%B0%D0%BD%D1%81%D0%BF%D0%BE%D1%80%D1%82+%D0%B8+%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%BF%D0%BE%D1%80%D1%82%D0%BD%D0%B0%D1%8F+%D0%B8%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D0%B0+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB.+%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B5+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%9C.+%D0%9D.+%D0%93%D1%80%D0%B8%D0%BD%D0%B5%D0%B2%D0%B8%D1%87.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+14%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F47319&amp;rft_id=629&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Гриневич, М. Н.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">В методических рекомендациях представлены материалы к проведению управляемой самостоятельной работы для студентов специальности 6-05-1042-01 «Транспортная логистика» дневной формы обучения</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/47318/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/47318">Корпоративные информационные системы. Часть 2</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9A%D0%BE%D1%80%D0%BF%D0%BE%D1%80%D0%B0%D1%82%D0%B8%D0%B2%D0%BD%D1%8B%D0%B5+%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5+%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2.+%D0%A7.+2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%A2.+%D0%90.+%D0%91%D0%BE%D1%80%D0%BE%D0%B4%D0%B8%D1%87.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+32%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F47318&amp;rft_id=004&amp;rft_id=330&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Бородич, Т. А.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">В методических рекомендациях представлены материалы к проведению лабораторных работ для студентов специальности 6-05-1042-01 «Транспортная логистика» дневной и заочной форм обучения</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/47317/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/47317">Дорожное грунтоведение и механика земляного полотна</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%94%D0%BE%D1%80%D0%BE%D0%B6%D0%BD%D0%BE%D0%B5+%D0%B3%D1%80%D1%83%D0%BD%D1%82%D0%BE%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5+%D0%B8+%D0%BC%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D0%BA%D0%B0+%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F%D0%BD%D0%BE%D0%B3%D0%BE+%D0%BF%D0%BE%D0%BB%D0%BE%D1%82%D0%BD%D0%B0+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BA%D1%83%D1%80%D1%81%D0%BE%D0%B2.+%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80.+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%98.+%D0%98.+%D0%9C%D0%B5%D0%BB%D1%8C%D1%8F%D0%BD%D1%86%D0%BE%D0%B2%D0%B0.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+28%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F47317&amp;rft_id=69&amp;rft_id=656&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Мельянцова, И. И.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к курсовому проектированию для студентов специальности 7-07-0732-01 «Строительство зданий и сооружений» очной и заочной форм обучения. В методических рекомендациях кратко изложены основные сведения ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/47316/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/47316">Механика материалов</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9C%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D0%BA%D0%B0+%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D0%BE%D0%B2+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87.+%D0%B7%D0%B0%D0%BD%D1%8F%D1%82%D0%B8%D1%8F%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%98.+%D0%90.+%D0%9B%D0%B5%D0%BE%D0%BD%D0%BE%D0%B2%D0%B8%D1%87%2C+%D0%A1.+%D0%92.+%D0%93%D0%BE%D0%BD%D0%BE%D1%80%D0%BE%D0%B2%D0%B0.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+40%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F47316&amp;rft_id=539.3%2F.6&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Леонович, И. А.</span>; <span>Гонорова, С. В.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к практическим занятиям для студентов специальностей 6-05-0715-03 «Автомобили, тракторы, мобильные и технологические комплексы» и 6-05-0715-07 «Эксплуатация наземных транспортных и технологических ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/47315/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/47315">Механика жидкости и газа</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9C%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D0%BA%D0%B0+%D0%B6%D0%B8%D0%B4%D0%BA%D0%BE%D1%81%D1%82%D0%B8+%D0%B8+%D0%B3%D0%B0%D0%B7%D0%B0+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87.+%D0%B7%D0%B0%D0%BD%D1%8F%D1%82%D0%B8%D1%8F%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%92.+%D0%91.+%D0%9F%D0%BE%D0%BF%D0%BE%D0%B2.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+34%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F47315&amp;rft_id=532&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Попов, В. Б.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к практическим занятиям предназначены для студентов специальностей 6-05-0714-02 «Технология машиностроения, металлорежущие станки и инструменты» и 6-05-0611-01 «Информационные системы и технологии» ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/47314/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/47314">Тестирование и отладка программного обеспечения</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%A2%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%D0%B8+%D0%BE%D1%82%D0%BB%D0%B0%D0%B4%D0%BA%D0%B0+%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE+%D0%BE%D0%B1%D0%B5%D1%81%D0%BF%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D1%8F+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%A2.+%D0%92.+%D0%9C%D1%80%D0%BE%D1%87%D0%B5%D0%BA.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+36%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F47314&amp;rft_id=621.01&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Мрочек, Т. В.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации содержат описание пяти лабораторных работ по дисциплине «Тестирование и отладка программного обеспечения» для студентов направления подготовки 01.03.04 «Прикладная математика» очной формы обучения. ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/47313/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/47313">Информационные системы и технологии</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5+%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B+%D0%B8+%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%92.+%D0%9C.+%D0%9A%D0%BE%D0%B2%D0%B0%D0%BB%D1%8C%D1%87%D1%83%D0%BA.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+26%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F47313&amp;rft_id=004&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Ковальчук, В. М.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам для студентов специальности 7-06-0612-03 «Системы управления информацией» очной и заочной форм обучения</div>
+</div>
+</li>
+</ul>
+<p id="aspect_discovery_SiteRecentSubmissions_p_recent-submission-view-more" class="ds-paragraph recentSubmissionViewMore">
+<a href="/recent-submissions">Просмотреть больше</a>
+</p>
+</div>
+</div>
+</div>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="ds-options-wrapper">
+<div id="ds-options">
+<h1 class="ds-option-set-head" id="ds-search-option-head">Поиск</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="ds-option-set" id="ds-search-option">
+<form method="post" id="ds-search-form" action="/discover">
+<fieldset>
+<input type="text" class="ds-text-field " name="query" />
+<input xmlns:i18n="http://apache.org/cocoon/i18n/2.1" value="Ok" type="submit" name="submit" class="ds-button-field " onclick="&#10;                                        var radio = document.getElementById(&quot;ds-search-form-scope-container&quot;);&#10;                                        if (radio != undefined &amp;&amp; radio.checked)&#10;                                        {&#10;                                        var form = document.getElementById(&quot;ds-search-form&quot;);&#10;                                        form.action=&#10;                                    &quot;/handle/&quot; + radio.value + &quot;/discover&quot; ; &#10;                                        }&#10;                                    " />
+</fieldset>
+</form>
+</div>
+<h1 class="ds-option-set-head">Просмотр</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="aspect_viewArtifacts_Navigation_list_browse" class="ds-option-set">
+<ul class="ds-options-list">
+<li>
+<h2 class="ds-sublist-head">Весь архив</h2>
+<ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list sublist">
+<li class="ds-simple-list-item">
+<a href="/community-list">Разделы и коллекции</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/browse?type=dateissued">Дата публикации</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/browse?type=author">Авторы</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/browse?type=title">Названия</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/browse?type=subject">Тематика/Специальность</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-option-set-head">Моя учетная запись</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="aspect_viewArtifacts_Navigation_list_account" class="ds-option-set">
+<ul class="ds-simple-list">
+<li class="ds-simple-list-item">
+<a href="/login">Войти</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/register">Регистрация</a>
+</li>
+</ul>
+</div>
+<h1 xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-option-set-head">Просмотр</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="aspect_discovery_Navigation_list_discovery" class="ds-option-set">
+<ul class="ds-options-list">
+<li>
+<h2 class="ds-sublist-head">Автору</h2>
+<ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list sublist">
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE-%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9+%D1%83%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%82%D0%B5%D1%82">Белорусско-Российский университет (17234)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=%D0%A8%D0%B5%D0%BC%D0%B5%D0%BD%D0%BA%D0%BE%D0%B2%2C+%D0%92.+%D0%9C.">Шеменков, В. М. (175)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=%D0%A5%D0%BE%D0%BC%D1%87%D0%B5%D0%BD%D0%BA%D0%BE%2C+%D0%90.+%D0%92.">Хомченко, А. В. (161)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=%D0%9D%D0%B0%D1%80%D0%BA%D0%B5%D0%B2%D0%B8%D1%87%2C+%D0%9B.+%D0%92.">Наркевич, Л. В. (151)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=%D0%A1%D0%B8%D0%B2%D0%B0%D1%87%D0%B5%D0%BD%D0%BA%D0%BE%2C+%D0%9B.+%D0%90.">Сиваченко, Л. А. (149)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=%D0%9B%D0%BE%D0%B2%D1%88%D0%B5%D0%BD%D0%BA%D0%BE%2C+%D0%A4.+%D0%93.">Ловшенко, Ф. Г. (141)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=%D0%A9%D1%83%D1%80%2C+%D0%90.+%D0%92.">Щур, А. В. (128)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=%D0%AF%D0%BA%D0%B8%D0%BC%D0%BE%D0%B2%2C+%D0%90.+%D0%98.">Якимов, А. И. (124)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=%D0%9B%D1%83%D1%81%D1%82%D0%B5%D0%BD%D0%BA%D0%BE%D0%B2%2C+%D0%9C.+%D0%95.">Лустенков, М. Е. (123)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=author&amp;filter_relational_operator=equals&amp;filter=%D0%A1%D0%B0%D0%B7%D0%BE%D0%BD%D0%BE%D0%B2%2C+%D0%98.+%D0%A1.">Сазонов, И. С. (121)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/search-filter?field=author&amp;order=COUNT">... больше</a>
+</li>
+</ul>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/">
+<h2 class="ds-sublist-head">Теме</h2>
+<ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list sublist">
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=%D0%B4%D0%BD%D0%B5%D0%B2%D0%BD%D0%B0%D1%8F+%D1%84%D0%BE%D1%80%D0%BC%D0%B0+%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D1%8F">дневная форма обучения (2948)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8">методические рекомендации (2315)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=%D0%B7%D0%B0%D0%BE%D1%87%D0%BD%D0%B0%D1%8F+%D1%84%D0%BE%D1%80%D0%BC%D0%B0+%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D1%8F">заочная форма обучения (1785)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5+%D0%B7%D0%B0%D0%BD%D1%8F%D1%82%D0%B8%D1%8F">практические занятия (1303)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=%D0%BB%D0%B0%D0%B1%D0%BE%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B5+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B">лабораторные работы (1229)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=%D0%9F%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D0%B8+%D0%BA%D0%B0%D1%84%D0%B5%D0%B4%D1%80%D1%8B+%22%D0%9C%D0%B0%D1%80%D0%BA%D0%B5%D1%82%D0%B8%D0%BD%D0%B3+%D0%B8+%D0%BC%D0%B5%D0%BD%D0%B5%D0%B4%D0%B6%D0%BC%D0%B5%D0%BD%D1%82%22">Публикации кафедры "Маркетинг и менеджмент" (631)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=%D0%9F%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D0%B8+%D0%BA%D0%B0%D1%84%D0%B5%D0%B4%D1%80%D1%8B+%22%D0%A2%D0%B5%D1%85%D0%BD%D0%BE%D1%81%D1%84%D0%B5%D1%80%D0%BD%D0%B0%D1%8F+%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B8+%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9+%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%22">Публикации кафедры "Техносферная безопасность и производственный дизайн" (624)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=%D0%9F%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D0%B8+%D0%BA%D0%B0%D1%84%D0%B5%D0%B4%D1%80%D1%8B+%22%D0%9F%D1%80%D0%BE%D0%BC%D1%8B%D1%88%D0%BB%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5+%D0%B8+%D0%B3%D1%80%D0%B0%D0%B6%D0%B4%D0%B0%D0%BD%D1%81%D0%BA%D0%BE%D0%B5+%D1%81%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%BE%22">Публикации кафедры "Промышленное и гражданское строительство" (597)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=%D0%9F%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D0%B8+%D0%BA%D0%B0%D1%84%D0%B5%D0%B4%D1%80%D1%8B+%22%D0%AD%D0%BA%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D0%BA%D0%B0+%D0%B8+%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%22">Публикации кафедры "Экономика и управление" (597)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subject&amp;filter_relational_operator=equals&amp;filter=%D0%9F%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D0%B8+%D0%BA%D0%B0%D1%84%D0%B5%D0%B4%D1%80%D1%8B+%22%D0%9B%D0%BE%D0%B3%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0+%D0%B8+%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F+%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B0%22">Публикации кафедры "Логистика и организация производства" (537)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/search-filter?field=subject&amp;order=COUNT">... больше</a>
+</li>
+</ul>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/">
+<h2 class="ds-sublist-head">Специальности</h2>
+<ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list sublist">
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subjectspec&amp;filter_relational_operator=equals&amp;filter=15.03.06+%D0%9C%D0%B5%D1%85%D0%B0%D1%82%D1%80%D0%BE%D0%BD%D0%B8%D0%BA%D0%B0+%D0%B8+%D1%80%D0%BE%D0%B1%D0%BE%D1%82%D0%BE%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0">15.03.06 Мехатроника и робототехника (338)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subjectspec&amp;filter_relational_operator=equals&amp;filter=1-70+02+01+%D0%9F%D1%80%D0%BE%D0%BC%D1%8B%D1%88%D0%BB%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5+%D0%B8+%D0%B3%D1%80%D0%B0%D0%B6%D0%B4%D0%B0%D0%BD%D1%81%D0%BA%D0%BE%D0%B5+%D1%81%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D1%82%D0%B2%D0%BE">1-70 02 01 Промышленное и гражданское строительство (312)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subjectspec&amp;filter_relational_operator=equals&amp;filter=1-53+01+05+%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5+%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BF%D1%80%D0%B8%D0%B2%D0%BE%D0%B4%D1%8B">1-53 01 05 Автоматизированные электроприводы (309)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subjectspec&amp;filter_relational_operator=equals&amp;filter=13.03.02+%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D1%8D%D0%BD%D0%B5%D1%80%D0%B3%D0%B5%D1%82%D0%B8%D0%BA%D0%B0+%D0%B8+%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0">13.03.02 Электроэнергетика и электротехника (304)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=subjectspec&amp;filter_relational_operator=equals&amp;filter=1-70+03+01+%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5+%D0%B4%D0%BE%D1%80%D0%BE%D0%B3%D0%B8">1-70 03 01 Автомобильные дороги (293)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/search-filter?field=subjectspec&amp;order=COUNT">... больше</a>
+</li>
+</ul>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/">
+<h2 class="ds-sublist-head">Дате публикации</h2>
+<ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list sublist">
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B2020+TO+2026%5D">2020 - 2026 (9616)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B2010+TO+2019%5D">2010 - 2019 (11412)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B2000+TO+2009%5D">2000 - 2009 (1613)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B1990+TO+1999%5D">1990 - 1999 (64)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B1980+TO+1989%5D">1980 - 1989 (24)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B1970+TO+1979%5D">1970 - 1979 (12)</a>
+</li>
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=dateIssued&amp;filter_relational_operator=equals&amp;filter=%5B1968+TO+1969%5D">1968 - 1969 (4)</a>
+</li>
+</ul>
+</li>
+<li>
+<h2 class="ds-sublist-head">Has File(s)</h2>
+<ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list sublist">
+<li class="ds-simple-list-item">
+<a href="/discover?filtertype=has_content_in_original_bundle&amp;filter_relational_operator=equals&amp;filter=true">Yes (39210)</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="ds-simple-list-item">
+<a href="/discover?filtertype=has_content_in_original_bundle&amp;filter_relational_operator=equals&amp;filter=false">No (144)</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="ds-option-set-head" id="ds-feed-option-head">Потоки RSS</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="ds-option-set" id="ds-feed-option">
+<ul>
+<li>
+<a href="/feed/rss_1.0/site" style="background: url(/static/icons/feed.png) no-repeat">RSS 1.0</a>
+</li>
+<li>
+<a href="/feed/rss_2.0/site" style="background: url(/static/icons/feed.png) no-repeat">RSS 2.0</a>
+</li>
+<li>
+<a href="/feed/atom_1.0/site" style="background: url(/static/icons/feed.png) no-repeat">Atom</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+</div>
+</div>
+<div id="ds-footer-wrapper">
+<div id="ds-footer">
+<div id="ds-footer-left">
+<a target="_blank" href="http://www.dspace.org/">DSpace software</a> copyright © 2002-2016  <a target="_blank" href="http://www.duraspace.org/">DuraSpace</a>
+</div>
+<div id="ds-footer-right">
+<span class="theme-by">Theme by </span>
+<a id="ds-footer-logo-link" href="http://atmire.com" target="_blank" title="Atmire NV">
+<span id="ds-footer-logo"> </span>
+</a>
+</div>
+<div id="ds-footer-links">
+<a href="/contact">Контакты</a> | <a xmlns:i18n="http://apache.org/cocoon/i18n/2.1" href="/feedback">Отправить отзыв</a>
+</div>
+<a xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="hidden" href="/htmlmap"> </a>
+</div>
+</div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"> </script>
+<script type="text/javascript">!window.jQuery && document.write('<script type="text/javascript" src="/static/js/jquery-1.6.4.min.js"> <\/script>')</script>
+<script type="text/javascript">
+                         if(typeof window.publication === 'undefined'){
+                            window.publication={};
+                          };
+                        window.publication.contextPath= '';window.publication.themePath= '/themes/Mirage';</script>
+<script>if(!window.DSpace){window.DSpace={};}window.DSpace.context_path='';window.DSpace.theme_path='/themes/Mirage/';</script>
+<script type="text/javascript" src="/themes/Mirage/lib/js/jquery-ui-1.8.15.custom.min.js"> </script><!--[if lt IE 7 ]>
+<script type="text/javascript" src="/themes/Mirage/lib/js/DD_belatedPNG_0.0.8a.js?v=1"> </script>
+<script type="text/javascript">DD_belatedPNG.fix('#ds-header-logo');DD_belatedPNG.fix('#ds-footer-logo');$.each($('img[src$=png]'), function() {DD_belatedPNG.fixPng(this);});</script><![endif]-->
+<script type="text/javascript">
+            runAfterJSImports.execute();
+        </script>
+<script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-123787259-1', 'e.biblio.bru.by');
+                ga('send', 'pageview');
+            </script>
+<script type="text/javascript">
+            if(typeof window.orcid === 'undefined'){
+                window.orcid={};
+            };
+            window.orcid.contextPath= '';window.orcid.themePath= '/themes/Mirage';</script></body></html>

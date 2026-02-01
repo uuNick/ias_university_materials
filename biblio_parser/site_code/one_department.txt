@@ -1,0 +1,615 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="no-js">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0" name="viewport" />
+<link rel="shortcut icon" href="/themes/Mirage/images/favicon.ico" />
+<link rel="apple-touch-icon" href="/themes/Mirage/images/apple-touch-icon.png" />
+<meta name="Generator" content="DSpace 6.2" />
+<link type="text/css" rel="stylesheet" media="screen" href="/themes/Mirage/lib/css/reset.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="/themes/Mirage/lib/css/base.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="/themes/Mirage/lib/css/helper.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="/themes/Mirage/lib/css/jquery-ui-1.8.15.custom.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="/themes/Mirage/lib/css/style.css" />
+<link type="text/css" rel="stylesheet" media="screen" href="/themes/Mirage/lib/css/authority-control.css" />
+<link type="text/css" rel="stylesheet" media="handheld" href="/themes/Mirage/lib/css/handheld.css" />
+<link type="text/css" rel="stylesheet" media="print" href="/themes/Mirage/lib/css/print.css" />
+<link type="text/css" rel="stylesheet" media="all" href="/themes/Mirage/lib/css/media.css" />
+<link type="application/opensearchdescription+xml" rel="search" href="http://e.biblio.bru.by/open-search/description.xml" title="DSpace" />
+<script type="text/javascript">
+                                //Clear default text of empty text areas on focus
+                                function tFocus(element)
+                                {
+                                        if (element.value == ' '){element.value='';}
+                                }
+                                //Clear default text of empty text areas on submit
+                                function tSubmit(form)
+                                {
+                                        var defaultedElements = document.getElementsByTagName("textarea");
+                                        for (var i=0; i != defaultedElements.length; i++){
+                                                if (defaultedElements[i].value == ' '){
+                                                        defaultedElements[i].value='';}}
+                                }
+                                //Disable pressing 'enter' key to submit a form (otherwise pressing 'enter' causes a submission to start over)
+                                function disableEnterKey(e)
+                                {
+                                     var key;
+
+                                     if(window.event)
+                                          key = window.event.keyCode;     //Internet Explorer
+                                     else
+                                          key = e.which;     //Firefox and Netscape
+
+                                     if(key == 13)  //if "Enter" pressed, then disable!
+                                          return false;
+                                     else
+                                          return true;
+                                }
+
+                                function FnArray()
+                                {
+                                    this.funcs = new Array;
+                                }
+
+                                FnArray.prototype.add = function(f)
+                                {
+                                    if( typeof f!= "function" )
+                                    {
+                                        f = new Function(f);
+                                    }
+                                    this.funcs[this.funcs.length] = f;
+                                };
+
+                                FnArray.prototype.execute = function()
+                                {
+                                    for( var i=0; i < this.funcs.length; i++ )
+                                    {
+                                        this.funcs[i]();
+                                    }
+                                };
+
+                                var runAfterJSImports = new FnArray();
+            </script>
+<title xmlns:i18n="http://apache.org/cocoon/i18n/2.1">Недавно добавленные</title>
+</head><!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
+                <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
+                <!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
+                <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
+                <!--[if (gt IE 9)|!(IE)]><!--><body><!--<![endif]-->
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="ds-main">
+<div id="ds-header-wrapper">
+<div class="clearfix" id="ds-header">
+<a id="ds-header-logo-link" href="/">
+<span id="ds-header-logo"> </span>
+<span id="ds-header-logo-text"> </span>
+</a>
+<h1 xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="pagetitle visuallyhidden">Недавно добавленные</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="ds-user-box">
+<p>
+<a href="/login">Войти</a>
+</p>
+</div>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" id="ds-language-selection">
+<a href="?offset=0&amp;locale-attribute=ru">русский</a>
+<a href="?offset=0&amp;locale-attribute=en">English</a>
+</div>
+</div>
+</div>
+<div id="ds-trail-wrapper">
+<ul id="ds-trail">
+<li class="ds-trail-link first-link ">
+<a href="/">Главная</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-trail-arrow">→</li>
+<li class="ds-trail-link ">
+<a href="/handle/1212121212/10">Факультеты (методические рекомендации)</a>
+</li>
+<li class="ds-trail-arrow">→</li>
+<li class="ds-trail-link ">
+<a href="/handle/1212121212/4335">Машиностроительный факультет</a>
+</li>
+<li class="ds-trail-arrow">→</li>
+<li class="ds-trail-link ">
+<a href="/handle/1212121212/4348">Кафедра "Металлорежущие станки и инструменты"</a>
+</li>
+<li class="ds-trail-arrow">→</li>
+<li class="ds-trail-link last-link">Новые поступления</li>
+</ul>
+</div>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="hidden" id="no-js-warning-wrapper">
+<div id="no-js-warning">
+<div class="notice failure">JavaScript is disabled for your browser. Some features of this site may not work without it.</div>
+</div>
+</div>
+<div id="ds-content-wrapper">
+<div class="clearfix" id="ds-content">
+<div id="ds-body">
+<h1 class="ds-div-head">Кафедра "Металлорежущие станки и инструменты": Недавние поступления</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="aspect_discovery_recentSubmissions_RecentSubmissionTransformer_div_main-recent-submissions" class="ds-static-div">
+<div class="pagination clearfix top">
+<p class="pagination-info">Отображаемые элементы 1-20 из 109</p>
+<ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="pagination-links">
+<li />
+<li>
+<a class="next-page-link" href="/handle/1212121212/4348/recent-submissions?offset=20">Следующая страница</a>
+</li>
+</ul>
+</div>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" id="aspect_discovery_recentSubmissions_RecentSubmissionTransformer_div_recent-submissions" class="ds-static-div">
+<ul xmlns:oreatom="http://www.openarchives.org/ore/atom/" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:atom="http://www.w3.org/2005/Atom" class="ds-artifact-list">
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/47315/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/47315">Механика жидкости и газа</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9C%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D0%BA%D0%B0+%D0%B6%D0%B8%D0%B4%D0%BA%D0%BE%D1%81%D1%82%D0%B8+%D0%B8+%D0%B3%D0%B0%D0%B7%D0%B0+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87.+%D0%B7%D0%B0%D0%BD%D1%8F%D1%82%D0%B8%D1%8F%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%92.+%D0%91.+%D0%9F%D0%BE%D0%BF%D0%BE%D0%B2.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+34%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F47315&amp;rft_id=532&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Попов, В. Б.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к практическим занятиям предназначены для студентов специальностей 6-05-0714-02 «Технология машиностроения, металлорежущие станки и инструменты» и 6-05-0611-01 «Информационные системы и технологии» ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/45835/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/45835">Проектирование и расчет деталей и механизмов металлорежущих станков</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%D0%B8+%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82+%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D0%B5%D0%B9+%D0%B8+%D0%BC%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D0%B7%D0%BC%D0%BE%D0%B2+%D0%BC%D0%B5%D1%82%D0%B0%D0%BB%D0%BB%D0%BE%D1%80%D0%B5%D0%B6%D1%83%D1%89%D0%B8%D1%85+%D1%81%D1%82%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%90.+%D0%9C.+%D0%94%D0%BE%D0%B2%D0%B3%D0%B0%D0%BB%D0%B5%D0%B2.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+46%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F45835&amp;rft_id=621.9&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Довгалев, А. М.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам для студентов специальности 6-05-0714-02 «Технология машиностроения, металлорежущие станки и инструменты» дневной формы обучения</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/45834/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/45834">Проектирование и расчет деталей и механизмов металлорежущих станков</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%D0%B8+%D1%80%D0%B0%D1%81%D1%87%D0%B5%D1%82+%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D0%B5%D0%B9+%D0%B8+%D0%BC%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D0%B7%D0%BC%D0%BE%D0%B2+%D0%BC%D0%B5%D1%82%D0%B0%D0%BB%D0%BB%D0%BE%D1%80%D0%B5%D0%B6%D1%83%D1%89%D0%B8%D1%85+%D1%81%D1%82%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BA%D1%83%D1%80%D1%81%D0%BE%D0%B2.+%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80.+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%90.+%D0%9C.+%D0%94%D0%BE%D0%B2%D0%B3%D0%B0%D0%BB%D0%B5%D0%B2.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+29%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F45834&amp;rft_id=621.9&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Довгалев, А. М.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к курсовому проектированию для студентов специальности 6-05-0714-02 «Технология машиностроения, металлорежущие станки и инструменты» дневной формы обучения</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/45833/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/45833">Режущий инструмент</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%A0%D0%B5%D0%B6%D1%83%D1%89%D0%B8%D0%B9+%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BA%D1%83%D1%80%D1%81%D0%BE%D0%B2.+%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80.+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%98.+%D0%90.+%D0%A2%D0%B0%D1%80%D0%B0%D0%B4%D0%B5%D0%B9%D0%BA%D0%BE.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+28%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F45833&amp;rft_id=621.9.02&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Тарадейко, И. А.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к курсовому проектированию для студентов специальностей 6-05-0714-02 «Технология машиностроения, металлорежущие станки и инструменты» и 6-05-0713-04 «Автоматизация технологических процессов и ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/45830/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/45830">Металлорежущие станки</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9C%D0%B5%D1%82%D0%B0%D0%BB%D0%BB%D0%BE%D1%80%D0%B5%D0%B6%D1%83%D1%89%D0%B8%D0%B5+%D1%81%D1%82%D0%B0%D0%BD%D0%BA%D0%B8+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%90.+%D0%9C.+%D0%94%D0%BE%D0%B2%D0%B3%D0%B0%D0%BB%D0%B5%D0%B2%2C+%D0%98.+%D0%90.+%D0%A2%D0%B0%D1%80%D0%B0%D0%B4%D0%B5%D0%B9%D0%BA%D0%BE%2C+%D0%9C.+%D0%92.+%D0%A2%D0%B0%D1%80%D0%B0%D0%B4%D0%B5%D0%B9%D0%BA%D0%BE%2C+%D0%A1.+%D0%90.+%D0%A1%D1%83%D1%85%D0%BE%D1%86%D0%BA%D0%B8%D0%B9.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+48%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F45830&amp;rft_id=621.9&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Довгалев, А. М.</span>; <span>Тарадейко, И. А.</span>; <span>Тарадейко, М. В.</span>; <span>Сухоцкий, С. А.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам предназначены для студентов специальностей 6-05-0714-02 «Технология машиностроения, металлорежущие станки и инструменты» и 6-05-0713-04 «Автоматизация технологических процессов ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/45829/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/45829">Системы числового программного управления технологическим оборудованием</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B+%D1%87%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE+%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE+%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F+%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%BC+%D0%BE%D0%B1%D0%BE%D1%80%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%D0%BC+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%A1.+%D0%9D.+%D0%A5%D0%B0%D1%82%D0%B5%D1%82%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+34%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F45829&amp;rft_id=531.8&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Хатетовский, С. Н.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам предназначены для студентов специальностей 6-05-0714-02 «Технология машиностроения, металлорежущие станки и инструменты» и 6-05-0713-04 «Автоматизация технологических процессов ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/45410/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/45410">Режущий инструмент</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%A0%D0%B5%D0%B6%D1%83%D1%89%D0%B8%D0%B9+%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%98.+%D0%90.+%D0%A2%D0%B0%D1%80%D0%B0%D0%B4%D0%B5%D0%B9%D0%BA%D0%BE%2C+%D0%9C.+%D0%92.+%D0%A2%D0%B0%D1%80%D0%B0%D0%B4%D0%B5%D0%B9%D0%BA%D0%BE.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+43%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F45410&amp;rft_id=621.9.02&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Тарадейко, И. А.</span>; <span>Тарадейко, М. В.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам предназначены для студентов специальностей 6-05-0714-02 «Технология машиностроения, металлорежущие станки и инструменты» и 6-05-0713-04 «Автоматизация технологических процессов ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/45387/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/45387">Теория резания</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%A2%D0%B5%D0%BE%D1%80%D0%B8%D1%8F+%D1%80%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%98.+%D0%90.+%D0%A2%D0%B0%D1%80%D0%B0%D0%B4%D0%B5%D0%B9%D0%BA%D0%BE%2C+%D0%9C.+%D0%92.+%D0%A2%D0%B0%D1%80%D0%B0%D0%B4%D0%B5%D0%B9%D0%BA%D0%BE.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2025.+-+48%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F45387&amp;rft_id=621.9&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Тарадейко, И. А.</span>; <span>Тарадейко, М. В.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2025</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам предназначены для студентов специальностей 6-05-0714-02 «Технология машиностроения, металлорежущие станки и инструменты» и 6-05-0713-04 «Автоматизация технологических процессов ...</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/45053/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/45053">Автоматизация проектирования механизмов технологического оборудования</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F+%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F+%D0%BC%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D0%B7%D0%BC%D0%BE%D0%B2+%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+%D0%BE%D0%B1%D0%BE%D1%80%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BA%D1%83%D1%80%D1%81%D0%BE%D0%B2.+%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80.+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%94.+%D0%A1.+%D0%93%D0%B0%D0%BB%D1%8E%D0%B6%D0%B8%D0%BD+.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2024.+-+16%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F45053&amp;rft_id=658.512.011.56&amp;rft_id=621.9&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Галюжин, Д. С.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2024</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к курсовому проектированию для студентов специальности 1-40 05 01 «Информационные системы и технологии (по направлениям)» дневной и заочной форм обучения</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/44096/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/44096">Компьютерное моделирование гидродинамических и тепловых процессов. Часть 2</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%D0%BD%D0%BE%D0%B5+%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%D0%B3%D0%B8%D0%B4%D1%80%D0%BE%D0%B4%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D1%85+%D0%B8+%D1%82%D0%B5%D0%BF%D0%BB%D0%BE%D0%B2%D1%8B%D1%85+%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81%D0%BE%D0%B2+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2.+%D0%A7.+2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%A1.+%D0%9D.+%D0%A5%D0%B0%D1%82%D0%B5%D1%82%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2024.+-+44%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F44096&amp;rft_id=004&amp;rft_id=62-82&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Хатетовский, С. Н.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2024</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам предназначены для студентов специальности 1-40 05 01 «Информационные системы и технологии (по направлениям)» дневной и заочной форм обучения</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/44027/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/44027">Основы теории резания, технологическое оборудование и инструментальные системы</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B+%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D0%B8+%D1%80%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F%2C+%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5+%D0%BE%D0%B1%D0%BE%D1%80%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%D0%B8+%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5+%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BA%D1%83%D1%80%D1%81%D0%BE%D0%B2.+%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80.+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%92.+%D0%90.+%D0%9B%D0%BE%D0%B3%D0%B2%D0%B8%D0%BD+.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2024.+-+42%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F44027&amp;rft_id=621.9&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Логвин, В. А.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2024</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к курсовому проектированию предназначены для студентов специальности 1-40 05 01 «Информационные системы и технологии (по направлениям)» дневной и заочной форм обучения</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/43780/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/43780">Технология и автоматизация инструментального производства</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%A2%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F+%D0%B8+%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F+%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE+%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B0+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BA%D1%83%D1%80%D1%81%D0%BE%D0%B2.+%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80.+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%92.+%D0%90.+%D0%9B%D0%BE%D0%B3%D0%B2%D0%B8%D0%BD.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2024.+-+28%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F43780&amp;rft_id=621.9&amp;rft_id=65.011.56&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Логвин, В. А.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2024</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации предназначены к курсовому проектированию для студентов специальности 1-36 01 03 «Технологическое оборудование машиностроительного производства» дневной формы обучения</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/43690/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/43690">Информационные технологии в машиностроении</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5+%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8+%D0%B2+%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BD%D0%B8%D0%B8+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%9C.+%D0%95.+%D0%9B%D1%83%D1%81%D1%82%D0%B5%D0%BD%D0%BA%D0%BE%D0%B2%2C+%D0%A1.+%D0%9D.+%D0%A5%D0%B0%D1%82%D0%B5%D1%82%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2024.+-+43%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F43690&amp;rft_id=004&amp;rft_id=621.01&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Лустенков, М. Е.</span>; <span>Хатетовский, С. Н.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2024</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам предназначены для студентов специальности 6-05-0714-02 «Технология машиностроения, металлорежущие станки и инструменты» дневной формы обучения</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/43498/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/43498">Основы автоматизации конструирования</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B+%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8+%D0%BA%D0%BE%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%A1.+%D0%9D.+%D0%A5%D0%B0%D1%82%D0%B5%D1%82%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2024.+-+30%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F43498&amp;rft_id=004.4&amp;rft_id=621.8&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Хатетовский, С. Н.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2024</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам предназначены для студентов специальности 6-05-0611-01 «Информационные системы и технологии» дневной формы обучения</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/39873/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/39873">Основы теории резания, технологическое оборудование и инструментальные системы. Часть 2</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B+%D1%82%D0%B5%D0%BE%D1%80%D0%B8%D0%B8+%D1%80%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F%2C+%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5+%D0%BE%D0%B1%D0%BE%D1%80%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%D0%B8+%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5+%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2.+%D0%A7.+2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%98.+%D0%90.+%D0%A2%D0%B0%D1%80%D0%B0%D0%B4%D0%B5%D0%B9%D0%BA%D0%BE%2C+%D0%9C.+%D0%92.+%D0%A2%D0%B0%D1%80%D0%B0%D0%B4%D0%B5%D0%B9%D0%BA%D0%BE+.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2024.+-+43%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F39873&amp;rft_id=621.9&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Тарадейко, И. А.</span>; <span>Тарадейко, М. В.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2024</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам предназначены для студентов специальности 1-40 05 01 «Информационные системы и технологии (по направлениям)» дневной и заочной форм обучения</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/39795/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/39795">Промышленный дизайн</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9F%D1%80%D0%BE%D0%BC%D1%8B%D1%88%D0%BB%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9+%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87.+%D0%B7%D0%B0%D0%BD%D1%8F%D1%82%D0%B8%D1%8F%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%94.+%D0%A1.+%D0%93%D0%B0%D0%BB%D1%8E%D0%B6%D0%B8%D0%BD.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2023.+-+36%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F39795&amp;rft_id=004.4%3A621.9.02&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Галюжин, Д. С.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2023</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к практическим занятиям предназначены для студентов специальности 1-36 07 02 «Производство изделий на основе трехмерных технологий» дневной и заочной форм обучения.</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/39793/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/39793">Технология обработки деталей на станках с ЧПУ</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%A2%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F+%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B8+%D0%B4%D0%B5%D1%82%D0%B0%D0%BB%D0%B5%D0%B9+%D0%BD%D0%B0+%D1%81%D1%82%D0%B0%D0%BD%D0%BA%D0%B0%D1%85+%D1%81+%D0%A7%D0%9F%D0%A3+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D+%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D1%81%D0%B0%D0%BC%D0%BE%D1%81%D1%82.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B5+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%92.+%D0%90.+%D0%9B%D0%BE%D0%B3%D0%B2%D0%B8%D0%BD.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2023.+-+12%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F39793&amp;rft_id=621.01&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Логвин, В. А.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2023</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к самостоятельной работе предназначены для студентов специальности 1-40 05 01 «Информационные системы и технологии (по направлениям)» заочной формы обучения.</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/39791/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/39791">Автоматизация управления проектированием</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F+%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F+%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%D0%BC+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D++%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%A1.+%D0%9D.+%D0%A5%D0%B0%D1%82%D0%B5%D1%82%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2023.+-+27%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F39791&amp;rft_id=658.012.011.56&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Хатетовский, С. Н.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2023</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам предназначены для студентов специальности 1-40 05 01 «Информационные системы и технологии (по направлениям)» дневной и заочной форм обучения.</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/39787/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item odd">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/39787">Системы управления технологическим оборудованием</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B+%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F+%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%BC+%D0%BE%D0%B1%D0%BE%D1%80%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%D0%BC+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D++%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%80%D0%B5%D0%BA.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%A1.+%D0%9D.+%D0%A5%D0%B0%D1%82%D0%B5%D1%82%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2023.+-+23%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F39787&amp;rft_id=531.8&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Хатетовский, С. Н.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2023</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам предназначены для студентов специальности 1-36 01 03 «Технологическое оборудование машиностроительного производства» дневной формы обучения.</div>
+</div>
+</li>
+<!-- External Metadata URL: cocoon://metadata/handle/1212121212/39785/mets.xml?sections=dmdSec,fileSec&fileGrpTypes=THUMBNAIL-->
+<li class="ds-artifact-item even">
+<div class="artifact-description">
+<div class="artifact-title">
+<a href="/handle/1212121212/39785">Компьютерное моделирование гидродинамических и тепловых процессов. Часть 1</a>
+<span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rft_id=%D0%9A%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80%D0%BD%D0%BE%D0%B5+%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%D0%B3%D0%B8%D0%B4%D1%80%D0%BE%D0%B4%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D1%85+%D0%B8+%D1%82%D0%B5%D0%BF%D0%BB%D0%BE%D0%B2%D1%8B%D1%85+%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81%D0%BE%D0%B2+%5B%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9+%D1%80%D0%B5%D1%81%D1%83%D1%80%D1%81%5D++%3A+%D0%BC%D0%B5%D1%82%D0%BE%D0%B4.+%D1%83%D0%BA%D0%B0%D0%B7.+%D0%BA+%D0%BB%D0%B0%D0%B1.+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BC+%D0%B4%D0%BB%D1%8F+%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%BE%D0%B2.+%D0%A7.+1+%2F+%D1%81%D0%BE%D1%81%D1%82.+%D0%A1.+%D0%9D.+%D0%A5%D0%B0%D1%82%D0%B5%D1%82%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9.+-+%D0%9C%D0%BE%D0%B3%D0%B8%D0%BB%D0%B5%D0%B2+%3A+%D0%91%D0%B5%D0%BB%D0%BE%D1%80%D1%83%D1%81.-%D0%A0%D0%BE%D1%81.+%D1%83%D0%BD-%D1%82%2C+2023.+-+35%D1%81.&amp;rft_id=http%3A%2F%2Fe.biblio.bru.by%2Fhandle%2F1212121212%2F39785&amp;rft_id=004%3A+62-82&amp;rfr_id=info%3Asid%2Fdspace.org%3Arepository&amp;">
+                    ﻿ 
+                </span>
+</div>
+<div class="artifact-info">
+<span class="author">
+<span>Хатетовский, С. Н.</span>
+</span> <span class="publisher-date">(<span class="publisher">Белорусско-Российский университет</span>, <span class="date">2023</span>)</span>
+</div>
+<div class="artifact-abstract">Методические рекомендации к лабораторным работам предназначены для студентов специальности 1-40 05 01 «Информационные системы и технологии (по направлениям)» дневной и заочной форм обучения.</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="pagination clearfix bottom">
+<p class="pagination-info">Отображаемые элементы 1-20 из 109</p>
+<ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="pagination-links">
+<li />
+<li>
+<a class="next-page-link" href="/handle/1212121212/4348/recent-submissions?offset=20">Следующая страница</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" id="ds-options-wrapper">
+<div id="ds-options">
+<h1 class="ds-option-set-head" id="ds-search-option-head">Поиск</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="ds-option-set" id="ds-search-option">
+<form method="post" id="ds-search-form" action="/discover">
+<fieldset>
+<input type="text" class="ds-text-field " name="query" />
+<input xmlns:i18n="http://apache.org/cocoon/i18n/2.1" value="Ok" type="submit" name="submit" class="ds-button-field " onclick="&#10;                                        var radio = document.getElementById(&quot;ds-search-form-scope-container&quot;);&#10;                                        if (radio != undefined &amp;&amp; radio.checked)&#10;                                        {&#10;                                        var form = document.getElementById(&quot;ds-search-form&quot;);&#10;                                        form.action=&#10;                                    &quot;/handle/&quot; + radio.value + &quot;/discover&quot; ; &#10;                                        }&#10;                                    " />
+<label>
+<input checked="checked" value="" name="scope" type="radio" id="ds-search-form-scope-all" />Поиск</label>
+<br xmlns:i18n="http://apache.org/cocoon/i18n/2.1" />
+<label>
+<input name="scope" type="radio" id="ds-search-form-scope-container" value="1212121212/4348" />В этом разделе</label>
+</fieldset>
+</form>
+</div>
+<h1 xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="ds-option-set-head">Просмотр</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="aspect_viewArtifacts_Navigation_list_browse" class="ds-option-set">
+<ul class="ds-options-list">
+<li>
+<h2 class="ds-sublist-head">Весь архив</h2>
+<ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list sublist">
+<li class="ds-simple-list-item">
+<a href="/community-list">Разделы и коллекции</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/browse?type=dateissued">Дата публикации</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/browse?type=author">Авторы</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/browse?type=title">Названия</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/browse?type=subject">Тематика/Специальность</a>
+</li>
+</ul>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/">
+<h2 class="ds-sublist-head">Этот раздел</h2>
+<ul xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list sublist">
+<li class="ds-simple-list-item">
+<a href="/handle/1212121212/4348/browse?type=dateissued">Дата публикации</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/handle/1212121212/4348/browse?type=author">Авторы</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/handle/1212121212/4348/browse?type=title">Названия</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/handle/1212121212/4348/browse?type=subject">Тематика/Специальность</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-option-set-head">Моя учетная запись</h1>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="aspect_viewArtifacts_Navigation_list_account" class="ds-option-set">
+<ul class="ds-simple-list">
+<li class="ds-simple-list-item">
+<a href="/login">Войти</a>
+</li>
+<li xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" class="ds-simple-list-item">
+<a href="/register">Регистрация</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<div xmlns:i18n="http://apache.org/cocoon/i18n/2.1" xmlns="http://di.tamu.edu/DRI/1.0/" id="ds-footer-wrapper">
+<div id="ds-footer">
+<div id="ds-footer-left">
+<a target="_blank" href="http://www.dspace.org/">DSpace software</a> copyright © 2002-2016  <a target="_blank" href="http://www.duraspace.org/">DuraSpace</a>
+</div>
+<div id="ds-footer-right">
+<span class="theme-by">Theme by </span>
+<a id="ds-footer-logo-link" href="http://atmire.com" target="_blank" title="Atmire NV">
+<span id="ds-footer-logo"> </span>
+</a>
+</div>
+<div id="ds-footer-links">
+<a href="/contact">Контакты</a> | <a xmlns:i18n="http://apache.org/cocoon/i18n/2.1" href="/feedback">Отправить отзыв</a>
+</div>
+<a xmlns:i18n="http://apache.org/cocoon/i18n/2.1" class="hidden" href="/htmlmap"> </a>
+</div>
+</div>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"> </script>
+<script type="text/javascript">!window.jQuery && document.write('<script type="text/javascript" src="/static/js/jquery-1.6.4.min.js"> <\/script>')</script>
+<script type="text/javascript">
+                         if(typeof window.publication === 'undefined'){
+                            window.publication={};
+                          };
+                        window.publication.contextPath= '';window.publication.themePath= '/themes/Mirage';</script>
+<script>if(!window.DSpace){window.DSpace={};}window.DSpace.context_path='';window.DSpace.theme_path='/themes/Mirage/';</script>
+<script type="text/javascript" src="/themes/Mirage/lib/js/jquery-ui-1.8.15.custom.min.js"> </script><!--[if lt IE 7 ]>
+<script type="text/javascript" src="/themes/Mirage/lib/js/DD_belatedPNG_0.0.8a.js?v=1"> </script>
+<script type="text/javascript">DD_belatedPNG.fix('#ds-header-logo');DD_belatedPNG.fix('#ds-footer-logo');$.each($('img[src$=png]'), function() {DD_belatedPNG.fixPng(this);});</script><![endif]-->
+<script type="text/javascript">
+            runAfterJSImports.execute();
+        </script>
+<script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-123787259-1', 'e.biblio.bru.by');
+                ga('send', 'pageview');
+            </script>
+<script type="text/javascript">
+            if(typeof window.orcid === 'undefined'){
+                window.orcid={};
+            };
+            window.orcid.contextPath= '';window.orcid.themePath= '/themes/Mirage';</script></body></html>
