@@ -1,11 +1,11 @@
-require("dotenv").config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-//const sequelize = require("./db");
-//const models = require("./models/Models");
 const router = require("./routes/allRoutes");
-//const { EmployeeSeed, DocumentSeed, SickLeaveSeed, VacationSeed, DayOffSeed, UserSeed, RoleSeed, UserRoleSeed } = require("./seed");
+const prisma = require('./db');
+
+
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const port = process.env.SERVER_PORT;
 const app = express()
@@ -26,9 +26,23 @@ app.get("/", function(request, response){
     response.send("<h2>Привет Express!</h2>");
 });
 
+app.get('/api/materials', async (req, res) => {
+  try {
+    const materials = await prisma.authors.findMany();
+
+    res.json({
+      success: true,
+      count: materials.length,
+      data: materials
+    });
+  } catch (error) {
+    console.error('Ошибка при получении materials:', error);
+    res.status(500).json({ success: false, error: 'Ошибка сервера' });
+  }
+});
+
 const start = async () => {
     try {
-        //await sequelize.authenticate();
         app.listen(port, () => console.log(`Server listening on port ${port}`));
     } catch (e) {
         console.log(e);
