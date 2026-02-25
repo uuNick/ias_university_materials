@@ -20,5 +20,25 @@ export const facultyRepository = {
   },
   async delete(id) {
     return await prisma.faculties.delete({ where: { id: Number(id) } });
+  },
+  async getMaterialsReportOnYear(startYear, endYear) {
+    let yearColumns = '';
+    for (let year = startYear; year <= endYear; year++) {
+      yearColumns += `SUM(CASE WHEN m.issued_year = ${year} THEN 1 ELSE 0 END) as "${year}", `;
+    }
+
+    const query = `
+      SELECT 
+        f.name as faculty_name,
+        ${yearColumns}
+        COUNT(m.id) as total
+      FROM faculties f
+      LEFT JOIN departments d ON f.id = d.faculty_id
+      LEFT JOIN materials m ON d.id = m.department_id
+      GROUP BY f.name
+      ORDER BY total DESC
+    `;
+
+    return await prisma.$queryRawUnsafe(query);
   }
 };

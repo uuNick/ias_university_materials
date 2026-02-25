@@ -32,3 +32,4 @@ export const updateDepartmentUseCase = async (id, data, repository) => {
 export const deleteDepartmentUseCase = async (id, repository) => {
   return await repository.delete(id);
 };
+

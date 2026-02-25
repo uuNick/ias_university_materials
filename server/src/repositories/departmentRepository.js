@@ -22,9 +22,10 @@ export const departmentRepository = {
   },
   async update(id, data) {
     const raw = await prisma.departments.update({ where: { id: Number(id) }, data });
-    return new Faculty(raw);
+    return new Department(raw);
   },
   async delete(id) {
     return await prisma.departments.delete({ where: { id: Number(id) } });
   }
 };
+

@@ -2,6 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import router from './routes/allRoutes.js';
 
+BigInt.prototype.toJSON = function() {       
+  return Number(this);
+};
+
 const port = process.env.SERVER_PORT;
 const app = express()
 

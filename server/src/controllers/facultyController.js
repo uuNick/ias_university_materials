@@ -45,3 +45,16 @@ export const deleteFaculty = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+export const getReportMaterialsOnYear = async (req, res) => {
+  try {
+    const { startYear, endYear } = req.query;
+    const report = await FacultyCases.getFacultyReportOnYearUseCase(
+      { startYear, endYear }, 
+      facultyRepository
+    );
+    res.json(report);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};

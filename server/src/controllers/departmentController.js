@@ -29,7 +29,6 @@ export const getDepartmentsByFacultyId = async (req, res) => {
   }
 };
 
-
 export const createDepartment = async (req, res) => {
   try {
     const result = await DepartmentCases.createDepartmentUseCase(req.body, departmentRepository, facultyRepository);
@@ -41,7 +40,7 @@ export const createDepartment = async (req, res) => {
 
 export const updateDepartment = async(req, res) => {
   try{
-    const department = await DepartmentCases.updateDepartmentUseCase(req.body, departmentRepository);
+    const department = await DepartmentCases.updateDepartmentUseCase(req.params.id, req.body, departmentRepository);
     res.status(200).json(department);
   } catch (error){
     res.status(500).json({error: error.message});
@@ -56,3 +55,4 @@ export const deleteDepartment = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+

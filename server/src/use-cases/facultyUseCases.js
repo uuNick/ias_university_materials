@@ -24,3 +24,29 @@ export const updateFacultyUseCase = async (id, data, repository) => {
 export const deleteFacultyUseCase = async (id, repository) => {
   return await repository.delete(id);
 };
+
+export const getFacultyReportOnYearUseCase = async (params, repository) => {
+  const startYear = parseInt(params.startYear) || 2020;
+  const endYear = parseInt(params.endYear) || 2026;
+
+  if (startYear < 2010 || endYear > 2026) {
+    throw new Error('Диапазон дат должен быть в пределах 2010-2026 гг.');
+  }
+  if (startYear > endYear) {
+    throw new Error('Год начала не может быть больше года окончания');
+  }
+
+  const reportData = await repository.getMaterialsReportOnYear(startYear, endYear);
+
+  const totals = reportData.reduce((acc, row) => {
+    Object.keys(row).forEach(key => {
+      if (key !== 'faculty_name') {
+        acc[key] = (acc[key] || 0) + Number(row[key]);
+      }
+    });
+    return acc;
+  }, { faculty_name: 'Итого' });
+
+  return [...reportData, totals];
+};
+
