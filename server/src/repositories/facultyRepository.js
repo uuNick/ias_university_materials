@@ -40,5 +40,27 @@ export const facultyRepository = {
     `;
 
     return await prisma.$queryRawUnsafe(query);
+  },
+
+  async getMaterialsReportOnYearWithDepartments(startYear, endYear) {
+    let yearColumns = '';
+    for (let year = startYear; year <= endYear; year++) {
+      yearColumns += `SUM(CASE WHEN m.issued_year = ${year} THEN 1 ELSE 0 END) as "${year}", `;
+    }
+
+    const query = `
+      SELECT 
+        f.name as faculty_name,
+        d.name as department_name,
+        ${yearColumns}
+        COUNT(m.id) as total
+      FROM faculties f
+      JOIN departments d ON f.id = d.faculty_id
+      LEFT JOIN materials m ON d.id = m.department_id
+      GROUP BY f.name, d.name
+      ORDER BY f.name, d.name
+    `;
+
+    return await prisma.$queryRawUnsafe(query);
   }
 };

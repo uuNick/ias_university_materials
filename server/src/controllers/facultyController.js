@@ -55,6 +55,19 @@ export const getReportMaterialsOnYear = async (req, res) => {
     );
     res.json(report);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getReportMaterialsOnYearWithDepartments = async (req, res) => {
+  try {
+    const { startYear, endYear } = req.query;
+    const report = await FacultyCases.getFacultyReportOnYearWithDepartmentsUseCase(
+      { startYear, endYear }, 
+      facultyRepository
+    );
+    res.json(report);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };

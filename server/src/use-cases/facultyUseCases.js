@@ -50,3 +50,33 @@ export const getFacultyReportOnYearUseCase = async (params, repository) => {
   return [...reportData, totals];
 };
 
+export const getFacultyReportOnYearWithDepartmentsUseCase = async (params, repository) => {
+  const startYear = parseInt(params.startYear) || 2020;
+  const endYear = parseInt(params.endYear) || 2026;
+
+  const rawData = await repository.getMaterialsReportOnYearWithDepartments(startYear, endYear);
+
+  const grouped = rawData.reduce((acc, row) => {
+    const facultyName = row.faculty_name;
+
+    if (!acc[facultyName]) {
+      acc[facultyName] = {
+        name: facultyName,
+        departments: [],
+        totals: { total: 0 } 
+      };
+      for (let y = startYear; y <= endYear; y++) acc[facultyName].totals[y] = 0;
+    }
+
+    acc[facultyName].departments.push(row);
+    
+   for (let year = startYear; year <= endYear; year++) {
+        acc[facultyName].totals[year] += Number(row[year] || 0);
+    }
+    acc[facultyName].totals.total += Number(row.total || 0);
+
+    return acc;
+  }, {});
+
+  return Object.values(grouped);
+};
