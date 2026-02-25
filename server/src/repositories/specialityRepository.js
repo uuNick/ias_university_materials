@@ -37,5 +37,26 @@ export const specialityRepository = {
       where: { spec_code: code }
     });
     return true;
+  },
+
+  async getSpecialityReportByYear(startYear, endYear) {
+    let yearColumns = '';
+    for (let year = startYear; year <= endYear; year++) {
+      yearColumns += `SUM(CASE WHEN m.issued_year = ${year} THEN 1 ELSE 0 END) as "${year}", `;
+    }
+
+    const query = `
+      SELECT 
+        s.spec_code || ' ' || s.spec_name as speciality_title,
+        ${yearColumns}
+        COUNT(m.id) as total
+      FROM specialties s
+      LEFT JOIN material_specialties ms ON s.spec_code = ms.spec_code
+      LEFT JOIN materials m ON ms.material_id = m.id
+      GROUP BY s.spec_code, s.spec_name
+      ORDER BY s.spec_code ASC
+    `;
+
+    return await prisma.$queryRawUnsafe(query);
   }
 };

@@ -45,3 +45,16 @@ export const deleteSpeciality = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+export const getSpecialityReportByYear = async (req, res) => {
+  try {
+    const { startYear, endYear } = req.query;
+    const result = await SpecCases.getSpecialityReportByYearUseCase(
+      { startYear, endYear }, 
+      specialityRepository
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

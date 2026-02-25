@@ -26,3 +26,11 @@ export const updateAuthorUseCase = async (id, data, repository) => {
 export const deleteAuthorUseCase = async (id, repository) => {
   return await repository.delete(id);
 };
+
+export const getTopAuthorsUseCase = async (repository, limit) => {
+  const authors = await repository.getAuthorsCountStats(limit);
+  if (!authors || authors.length === 0) {
+    throw new Error('Данные об авторах не найдены');
+  }
+  return authors;
+};

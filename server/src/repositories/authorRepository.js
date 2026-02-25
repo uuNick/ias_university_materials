@@ -42,20 +42,39 @@ export const authorRepository = {
       where: { id: Number(id) }
     });
     return true;
+  },
+
+  async getAuthorsCountStats(limit = 25) {
+    const stats = await prisma.material_authors.groupBy({
+      by: ['author_id'],
+      _count: {
+        material_id: true,
+      },
+      orderBy: {
+        _count: {
+          material_id: 'desc',
+        },
+      },
+      take: limit,
+    });
+
+    // Получить имена для авторов
+    const statsWithNames = await Promise.all(
+      stats.map(async (item) => {
+        const author = await prisma.authors.findUnique({
+          where: { id: item.author_id },
+          select: { name: true }
+        });
+        
+        return {
+          name: author.name,
+          count: item._count.material_id
+        };
+      })
+    );
+
+    return statsWithNames;
   }
-
-  // async countMaterials(authorId) {
-  //   const result = await prisma.authors.findUnique({
-  //     where: { id: Number(authorId) },
-  //     include: {
-  //       _count: {
-  //         select: { materials: true } // "materials" — имя поля связи в вашей prisma schema
-  //       }
-  //     }
-  //   });
-
-  //   return result ? result._count.materials : 0;
-  // }
 
   
 };

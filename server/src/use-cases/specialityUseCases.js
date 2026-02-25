@@ -27,3 +27,28 @@ export const updateSpecialityUseCase = async (code, data, repository) => {
 export const deleteSpecialityUseCase = async (code, repository) => {
   return await repository.delete(code);
 };
+
+export const getSpecialityReportByYearUseCase = async (params, repository) => {
+  const startYear = parseInt(params.startYear) || 2020;
+  const endYear = parseInt(params.endYear) || 2026;
+
+  const rawData = await repository.getSpecialityReportByYear(startYear, endYear);
+
+  const totals = {
+    speciality_title: 'Итого',
+    total: 0
+  };
+  
+  for (let y = startYear; y <= endYear; y++) totals[y] = 0;
+
+  const reportData = rawData.map(row => {
+    for (let year = startYear; year <= endYear; year++) {
+        const count = Number(row[year] || 0);
+        totals[year] += count;
+    }
+    totals.total += Number(row.total || 0);
+    return row;
+  });
+
+  return [...reportData, totals];
+};
