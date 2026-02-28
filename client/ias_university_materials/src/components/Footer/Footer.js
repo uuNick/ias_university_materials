@@ -1,46 +1,94 @@
-import './Footer.css';
+import React from 'react';
+import { Box, Container, Typography, Link } from '@mui/material';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const styles = {
+    columnTitle: {
+      fontSize: '0.85rem',
+      fontWeight: 700,
+      textTransform: 'uppercase',
+      letterSpacing: '1px',
+      color: 'rgba(255, 255, 255, 0.7)',
+      mb: 1,
+    },
+    footerLink: {
+      fontSize: '1rem',
+      color: 'white',
+      textDecoration: 'none',
+      transition: '0.2s',
+      '&:hover': {
+        textDecoration: 'underline',
+        opacity: 0.8,
+      },
+    },
+    column: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 1,
+      minWidth: '200px', 
+      flex: '1 1 0',
+    }
+  };
+
   return (
-    <footer className="site-footer">
-      <div className="footer-container">
-        
-        <div className="footer-column">
-          <span className="column-title">Авторские права</span>
-          <p className="footer-text">
-            © {currentYear} Белорусско-Российский университет
-          </p>
-          <p className="footer-subtext">Все права защищены.</p>
-        </div>
+    <Box
+      component="footer"
+      sx={{
+        bgcolor: 'primary.main',
+        color: 'white',
+        py: 5,
+        px: 2,
+        fontFamily: "'Play', sans-serif",
+      }}
+    >
+      <Container maxWidth="lg">
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            gap: 4,
+            textAlign: { xs: 'center', md: 'center' },
+          }}
+        >
+          <Box sx={styles.column}>
+            <Typography sx={styles.columnTitle}>Авторские права</Typography>
+            <Typography variant="body2">
+              © {currentYear} Белорусско-Российский университет
+            </Typography>
+            <Typography sx={{ fontSize: '0.75rem', opacity: 0.6 }}>
+              Все права защищены.
+            </Typography>
+          </Box>
 
-        <div className="footer-column">
-          <span className="column-title">Разработчики системы</span>
-          <p className="footer-text">IT-отдел БРУ</p>
-        </div>
+          <Box sx={styles.column}>
+            <Typography sx={styles.columnTitle}>Разработчики системы</Typography>
+            <Typography variant="body2">IT-отдел БРУ</Typography>
+          </Box>
 
-        <div className="footer-column">
-          <span className="column-title">Поддержка</span>
-          <a href="mailto:support@bru.by" className="footer-link">
-            nikitasidarenko@gmail.com
-          </a>
-        </div>
+          <Box sx={styles.column}>
+            <Typography sx={styles.columnTitle}>Поддержка</Typography>
+            <Link href="mailto:support@bru.by" sx={styles.footerLink}>
+              nikitasidarenko@gmail.com
+            </Link>
+          </Box>
 
-        <div className="footer-column">
-          <span className="column-title">Ресурсы</span>
-          <a 
-            href="http://e.biblio.bru.by/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="footer-link"
-          >
-            Электронная библиотека
-          </a>
-        </div>
-
-      </div>
-    </footer>
+          <Box sx={styles.column}>
+            <Typography sx={styles.columnTitle}>Ресурсы</Typography>
+            <Link 
+              href="http://e.biblio.bru.by/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              sx={styles.footerLink}
+            >
+              Электронная библиотека
+            </Link>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 
