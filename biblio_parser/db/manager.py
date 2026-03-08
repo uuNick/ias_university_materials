@@ -1,11 +1,14 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from .queries import *
 import psycopg2
 import logging
 
-load_dotenv()
 logger = logging.getLogger(__name__)
+
+env_path = Path(__file__).resolve().parents[1]
+load_dotenv(dotenv_path=env_path)
 
 
 class DatabaseManager:
