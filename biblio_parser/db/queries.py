@@ -1,6 +1,6 @@
 CREATE_TABLE_FACULTIES = """
 CREATE TABLE IF NOT EXISTS faculties (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     url TEXT NOT NULL UNIQUE
 );
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS faculties (
 CREATE_TABLE_DEPARTMENTS = """
 -- Связь: 1 Факультет имеет М Кафедр
 CREATE TABLE IF NOT EXISTS departments (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL,
     url TEXT NOT NULL UNIQUE,
     faculty_id INTEGER NOT NULL,
@@ -22,14 +22,14 @@ CREATE TABLE IF NOT EXISTS departments (
 
 CREATE_TABLE_AUTHORS = """
 CREATE TABLE IF NOT EXISTS authors (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL
 );
 """
 
 CREATE_TABLE_KEYWORDS = """
 CREATE TABLE IF NOT EXISTS keywords (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     word VARCHAR(100) UNIQUE NOT NULL
 );
 """
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS specialties (
 
 CREATE_TABLE_TYPES = """
 CREATE TABLE IF NOT EXISTS types (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     type_name VARCHAR(100) UNIQUE NOT NULL
 );
 """
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS udc_codes (
 CREATE_TABLE_MATERIALS = """
 -- Связи 1:М с departments
 CREATE TABLE IF NOT EXISTS materials (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
     alternative_title TEXT,
     abstract_text TEXT,
@@ -168,8 +168,7 @@ CREATE_TABLE_MATERIAL_EMBEDDINGS = """
 CREATE TABLE IF NOT EXISTS material_embeddings (
     material_id INTEGER PRIMARY KEY,
     
-    title_embedding vector(384),           -- Для поиска по названию
-    abstract_embedding vector(384),        -- Для поиска по аннотации
+    text_embedding vector(384),           -- Для поиска по названию и аннотации
     
     CONSTRAINT fk_material_embedding
         FOREIGN KEY (material_id)
@@ -180,14 +179,14 @@ CREATE TABLE IF NOT EXISTS material_embeddings (
 
 CREATE_TABLE_ROLES = """
 CREATE TABLE IF NOT EXISTS roles (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL
 );
 """
 
 CREATE_TABLE_USERS = """
 CREATE TABLE IF NOT EXISTS users (
-    user_id INTEGER PRIMARY KEY,
+    user_id SERIAL PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
     login VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,

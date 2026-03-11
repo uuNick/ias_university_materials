@@ -10,8 +10,16 @@ export const facultyRepository = {
     const data = await prisma.faculties.findUnique({ where: { id: Number(id) } });
     return data ? new Faculty(data) : null;
   },
+  async findByName(name) {
+    const raw = await prisma.faculties.findUnique({ where: { name: name } });
+    return raw ? new Faculty(raw) : null;
+  },
+  async findByUrl(url) {
+    const raw = await prisma.faculties.findUnique({ where: { url: url } });
+    return raw ? new Faculty(raw) : null;
+  },
   async create(data) {
-    const raw = await prisma.faculties.create({ data: {id: data.id, name: data.name, url: data.url } });
+    const raw = await prisma.faculties.create({ data: { name: data.name, url: data.url } });
     return new Faculty(raw);
   },
   async update(id, data) {

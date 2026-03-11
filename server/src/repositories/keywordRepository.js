@@ -24,7 +24,6 @@ export const keywordRepository = {
   async create(data) {
     const raw = await prisma.keywords.create({
       data: { 
-        id: data.id, // Если ID не автоинкрементный
         word: data.word }
     });
     return new Keyword(raw);

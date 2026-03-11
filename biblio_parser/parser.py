@@ -195,71 +195,71 @@ def parse_material_metadata(html):
 
 # Основная функция парсинга
 def main():
-    # db = DatabaseManager()
-    # try:
-    #     db.initialize_db()
-    # finally:
-    #     db.close()
-
+    db = DatabaseManager()
     try:
-        #Получить главную страницу (main_page)
-        main_html = fetch_page(BASE_URL)
-        if not main_html:
-            print("Не удалось загрузить главную страницу.")
-            return
-
-        # На главной странице найти ссылку на факультеты: <a href="/handle/1212121212/10">
-        soup = BeautifulSoup(main_html, 'html.parser')
-        faculties_link = soup.find('a', href=FACULTIES_LINK)
-        if not faculties_link:
-            print("Ссылка на факультеты не найдена.")
-            return
-        faculties_url = BASE_URL + faculties_link['href']
-
-        # Получить страницу факультетов
-        faculties_html = fetch_page(faculties_url)
-        if not faculties_html:
-            print("Не удалось загрузить страницу факультетов.")
-            return
-
-        # Парсинг факультетов
-        faculties = parse_communities(faculties_html)
-        print(f"Найдено факультетов: {len(faculties)}")
-
-        for faculty in faculties:
-            #faculty_id = db.insert_faculty(faculty['name'], faculty['url'])
-            print(f"Факультет: {faculty['name']} (URL: {faculty['url']})")
-
-            # Для каждого факультета получить его страницу и парсить кафедры
-            faculty_html = fetch_page(faculty['url'])
-            if not faculty_html:
-                continue
-
-            departments = parse_communities(faculty_html)
-            print(f"Найдено кафедр: {len(departments)}")
-
-            for dept in departments:
-                #dept_id = db.insert_department(dept['name'], dept['url'], faculty_id)
-                print(f"Кафедра: {dept['name']} (URL: {dept['url']}) count: {dept['count']}")
-
-                # Получить все материалы кафедры
-                materials = get_all_materials(dept['url'], dept['count'])
-                print(f"Найдено материалов: {len(materials)}")
-
-                for mat in materials:
-                    mat_html = fetch_page(mat['url'])
-                    time.sleep(1)
-                    if not mat_html:
-                        continue
-
-                    metadata = parse_material_metadata(mat_html)
-                    print(f"Материал: {mat['title']} (URL: {mat['url']})")
-                    print(f"Метаданные: {metadata}")
-            time.sleep(2)
-        print("Парсинг завершен")
+        db.initialize_db()
     finally:
-        pass
-        #db.close()
+        db.close()
+
+    # try:
+    #     #Получить главную страницу (main_page)
+    #     main_html = fetch_page(BASE_URL)
+    #     if not main_html:
+    #         print("Не удалось загрузить главную страницу.")
+    #         return
+    #
+    #     # На главной странице найти ссылку на факультеты: <a href="/handle/1212121212/10">
+    #     soup = BeautifulSoup(main_html, 'html.parser')
+    #     faculties_link = soup.find('a', href=FACULTIES_LINK)
+    #     if not faculties_link:
+    #         print("Ссылка на факультеты не найдена.")
+    #         return
+    #     faculties_url = BASE_URL + faculties_link['href']
+    #
+    #     # Получить страницу факультетов
+    #     faculties_html = fetch_page(faculties_url)
+    #     if not faculties_html:
+    #         print("Не удалось загрузить страницу факультетов.")
+    #         return
+    #
+    #     # Парсинг факультетов
+    #     faculties = parse_communities(faculties_html)
+    #     print(f"Найдено факультетов: {len(faculties)}")
+    #
+    #     for faculty in faculties:
+    #         #faculty_id = db.insert_faculty(faculty['name'], faculty['url'])
+    #         print(f"Факультет: {faculty['name']} (URL: {faculty['url']})")
+    #
+    #         # Для каждого факультета получить его страницу и парсить кафедры
+    #         faculty_html = fetch_page(faculty['url'])
+    #         if not faculty_html:
+    #             continue
+    #
+    #         departments = parse_communities(faculty_html)
+    #         print(f"Найдено кафедр: {len(departments)}")
+    #
+    #         for dept in departments:
+    #             #dept_id = db.insert_department(dept['name'], dept['url'], faculty_id)
+    #             print(f"Кафедра: {dept['name']} (URL: {dept['url']}) count: {dept['count']}")
+    #
+    #             # Получить все материалы кафедры
+    #             materials = get_all_materials(dept['url'], dept['count'])
+    #             print(f"Найдено материалов: {len(materials)}")
+    #
+    #             for mat in materials:
+    #                 mat_html = fetch_page(mat['url'])
+    #                 time.sleep(1)
+    #                 if not mat_html:
+    #                     continue
+    #
+    #                 metadata = parse_material_metadata(mat_html)
+    #                 print(f"Материал: {mat['title']} (URL: {mat['url']})")
+    #                 print(f"Метаданные: {metadata}")
+    #         time.sleep(2)
+    #     print("Парсинг завершен")
+    # finally:
+    #     pass
+    #     #db.close()
 
 
 if __name__ == "__main__":

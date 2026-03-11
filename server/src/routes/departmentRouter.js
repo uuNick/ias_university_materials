@@ -14,6 +14,6 @@ router.get('/', getAllDepartments);
 router.get('/byFacultyId/:id', getDepartmentsByFacultyId)
 router.get('/:id', getDepartment);
 router.post('/', createDepartment);
-router.put('/:id', updateDepartment);
+router.patch('/:id', updateDepartment);
 router.delete('/:id', deleteDepartment);
 export default router;

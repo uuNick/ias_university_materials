@@ -14,6 +14,13 @@ export const udcRepository = {
     return data ? new UdcCode(data) : null;
   },
 
+  async findByName(name) {
+    const raw = await prisma.udc_codes.findUnique({
+      where: { title: name }
+    });
+    return raw ? new UdcCode(raw) : null;
+  },
+
   async create(data) {
     const raw = await prisma.udc_codes.create({
       data: { 

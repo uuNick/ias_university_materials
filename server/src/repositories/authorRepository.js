@@ -22,7 +22,6 @@ export const authorRepository = {
   async create(data) {
     const raw = await prisma.authors.create({
       data: {
-        id: data.id, // Если ID не автоинкрементный
         name: data.name
       }
     });

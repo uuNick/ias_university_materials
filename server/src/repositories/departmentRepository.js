@@ -14,9 +14,21 @@ export const departmentRepository = {
     const data = await prisma.departments.findUnique({ where: { id: Number(id) } });
     return data ? new Department(data) : null;
   },
+  async findByName(name) {
+    const raw = await prisma.departments.findUnique({
+      where: {name: name}
+    });
+    return raw ? new Department (raw) : null
+  },
+  async findByUrl(url) {
+    const raw = await prisma.departments.findUnique({
+      where: {url: url}
+    });
+    return raw ? new Department (raw) : null
+  },
   async create(data) {
     const raw = await prisma.departments.create({ 
-      data: { id: data.id, name: data.name, url: data.url, faculty_id: Number(data.facultyId) } 
+      data: { name: data.name, url: data.url, faculty_id: Number(data.facultyId) } 
     });
     return new Department(raw);
   },

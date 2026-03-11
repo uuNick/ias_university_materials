@@ -13,8 +13,24 @@ export const userRepository = {
   },
 
   async findByLogin(login) {
-    const raw = await prisma.users.findUnique({ 
-      where: { login: login } 
+    const raw = await prisma.users.findUnique({
+      where: { login: login }
+    });
+    return raw ? new User(raw) : null;
+  },
+
+  // async findByEmail(email) {
+  //   const raw = await prisma.users.findUnique({
+  //     where: { email: email }
+  //   });
+  //   return raw ? new User(raw) : null;
+  // },
+
+  async countByRoleId(roleId) {
+    const raw = await prisma.users.count({
+      where: {
+        role_id: Number(roleId)
+      }
     });
     return raw ? new User(raw) : null;
   },

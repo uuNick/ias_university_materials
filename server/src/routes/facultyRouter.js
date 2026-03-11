@@ -16,6 +16,6 @@ router.get('/:id', getFaculty);
 router.get('/report/materials_by_year', getReportMaterialsOnYear);
 router.get('/report/materials_by_year_with_departments', getReportMaterialsOnYearWithDepartments);
 router.post('/', createFaculty);
-router.put('/:id', updateFaculty);
+router.patch('/:id', updateFaculty);
 router.delete('/:id', deleteFaculty);
 export default router;

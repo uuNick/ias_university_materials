@@ -23,7 +23,6 @@ export const typeRepository = {
 
   async create(data) {
     const raw = await prisma.types.create({
-      id: data.id, // Если ID не автоинкрементный
       data: { type_name: data.name }
     });
     return new Type(raw);

@@ -14,6 +14,6 @@ router.get('/', getAllAuthors);
 router.get('/:id', getAuthorById);
 router.get('/report/top_authors', getTopAuthors);
 router.post('/', createAuthor);
-router.put('/:id', updateAuthor);
+router.patch('/:id', updateAuthor);
 router.delete('/:id', deleteAuthor);
 export default router;

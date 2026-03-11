@@ -1,10 +1,9 @@
 export class MaterialEmbedding {
-  constructor({ materialId, titleEmbedding, abstractEmbedding }) {
+  constructor({ materialId, textEmbedding }) {
     this.materialId = materialId;
-    this.titleEmbedding = titleEmbedding; 
-    this.abstractEmbedding = abstractEmbedding;
+    this.textEmbedding = textEmbedding;
   }
   isReadyForSearch() {
-    return !!(this.titleEmbedding && this.abstractEmbedding);
+    return !!(this.textEmbedding);
   }
 }
