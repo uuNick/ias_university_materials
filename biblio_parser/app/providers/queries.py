@@ -68,7 +68,8 @@ CREATE TABLE IF NOT EXISTS materials (
     uri TEXT NOT NULL UNIQUE,
     available_date TIMESTAMP,
     issued_year INTEGER,
-    document_uri TEXT NOT NULL UNIQUE,
+    pages INTEGER,
+    file_link TEXT NOT NULL UNIQUE,
     department_id INTEGER NOT NULL,
 
     CONSTRAINT fk_department
@@ -188,6 +189,7 @@ CREATE_TABLE_USERS = """
 CREATE TABLE IF NOT EXISTS users (
     user_id SERIAL PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
     login VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     faculty_id INTEGER,
@@ -209,6 +211,55 @@ CREATE TABLE IF NOT EXISTS users (
 );
 """
 
+CREATE_TABLE_DISCIPLINES = """
+CREATE TABLE IF NOT EXISTS disciplines (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE
+);
+"""
+
+CREATE_TABLE_DEPARTMENT_DISCIPLINES = """
+CREATE TABLE IF NOT EXISTS department_disciplines (
+    id SERIAL PRIMARY KEY,
+    department_id INTEGER NOT NULL,
+    discipline_id INTEGER NOT NULL,
+    year_start INTEGER NOT NULL,
+    
+    CONSTRAINT fk_department_dd
+        FOREIGN KEY (department_id)
+        REFERENCES departments(id)
+        ON DELETE CASCADE,
+        
+    CONSTRAINT fk_discipline_dd
+        FOREIGN KEY (discipline_id)
+        REFERENCES disciplines(id)
+        ON DELETE CASCADE,
+        
+    -- Одна кафедра не может иметь ту же дисциплину дважды в один год
+    CONSTRAINT unique_department_discipline_year 
+        UNIQUE (department_id, discipline_id, year_start)
+);
+"""
+
+CREATE_TABLE_DISCIPLINE_SPECIALTIES = """
+CREATE TABLE IF NOT EXISTS discipline_specialties (
+    discipline_id INTEGER NOT NULL,
+    spec_code VARCHAR(30) NOT NULL,
+    
+    PRIMARY KEY (discipline_id, spec_code),
+    
+    CONSTRAINT fk_discipline_ds
+        FOREIGN KEY (discipline_id)
+        REFERENCES disciplines(id)
+        ON DELETE CASCADE,
+        
+    CONSTRAINT fk_specialty_ds
+        FOREIGN KEY (spec_code)
+        REFERENCES specialties(spec_code)
+        ON DELETE CASCADE
+);
+"""
+
 INIT_DB_COMMANDS = [
     CREATE_TABLE_FACULTIES,
     CREATE_TABLE_DEPARTMENTS,
@@ -225,56 +276,69 @@ INIT_DB_COMMANDS = [
     CREATE_TABLE_MATERIAL_UDC,
     CREATE_TABLE_MATERIAL_EMBEDDINGS,
     CREATE_TABLE_ROLES,
-    CREATE_TABLE_USERS
+    CREATE_TABLE_USERS,
+    CREATE_TABLE_DISCIPLINES,
+    CREATE_TABLE_DEPARTMENT_DISCIPLINES,
+    CREATE_TABLE_DISCIPLINE_SPECIALTIES
 ]
-
-# TO DO: Добавить вставку в CREATE_TABLE_UDC_CODES и в CREATE_TABLE_MATERIAL_UDC
 
 INSERT_FACULTY = """
     INSERT INTO faculties (name, url) 
     VALUES (%s, %s) 
-    ON CONFLICT (url) DO UPDATE 
-    SET name=EXCLUDED.name 
+    ON CONFLICT (url) DO UPDATE SET name = EXCLUDED.name 
     RETURNING id;
 """
 
 INSERT_DEPARTMENT = """
     INSERT INTO departments (name, url, faculty_id) 
     VALUES (%s, %s, %s) 
-    ON CONFLICT (url) DO UPDATE 
-    SET name=EXCLUDED.name, faculty_id=EXCLUDED.faculty_id 
+    ON CONFLICT (url) DO UPDATE SET name = EXCLUDED.name 
     RETURNING id;
 """
 
 INSERT_AUTHOR = """
     INSERT INTO authors (name) 
     VALUES (%s) 
-    ON CONFLICT (name) DO NOTHING 
+    ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name 
     RETURNING id;
 """
 
 INSERT_KEYWORD = """
     INSERT INTO keywords (word) 
     VALUES (%s) 
-    ON CONFLICT (word) DO NOTHING 
+    ON CONFLICT (word) DO UPDATE SET word = EXCLUDED.word 
     RETURNING id;
 """
 
 INSERT_SPECIALTY = """
     INSERT INTO specialties (spec_code, spec_name) 
     VALUES (%s, %s) 
-    ON CONFLICT (spec_code, spec_name) DO NOTHING 
-    RETURNING id;
+    ON CONFLICT (spec_code) DO UPDATE SET spec_name = EXCLUDED.spec_name 
+    RETURNING spec_code;
 """
 
 INSERT_TYPE = """
     INSERT INTO types (type_name) 
     VALUES (%s) 
-    ON CONFLICT (type_name) DO NOTHING 
+    ON CONFLICT (type_name) DO UPDATE SET type_name = EXCLUDED.type_name 
     RETURNING id;
 """
 
-INSERT_MATERIAL = """
+INSERT_UDC_CODES = """
+    INSERT INTO udc_codes (code, title) 
+    VALUES (%s, %s)
+    ON CONFLICT (code) DO UPDATE SET title = EXCLUDED.title
+    RETURNING code;
+"""
+
+INSERT_ROLE = """
+    INSERT INTO roles (name) 
+    VALUES (%s)
+    ON CONFLICT (name) DO NOTHING
+    RETURNING id;
+"""
+
+INSERT_MATERIAL = """    
     INSERT INTO materials (
         title, 
         alternative_title, 
@@ -285,12 +349,21 @@ INSERT_MATERIAL = """
         uri, 
         available_date, 
         issued_year, 
-        page,
+        pages,
+        file_link,
         department_id
     ) VALUES (
-        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
     ) 
+    ON CONFLICT (uri) DO UPDATE SET title = EXCLUDED.title
     RETURNING id;
+"""
+
+INSERT_USER = """
+    INSERT INTO users (full_name, login, email, password, faculty_id, department_id, role_id) 
+    VALUES (%s, %s, %s, %s, %s, %s, %s)
+    ON CONFLICT (login) DO NOTHING
+    RETURNING user_id;
 """
 
 INSERT_MATERIAL_AUTHOR = """
@@ -306,8 +379,60 @@ INSERT_MATERIAL_KEYWORD = """
 """
 
 INSERT_MATERIAL_SPECIALTY = """
-    INSERT INTO material_specialties (material_id, specialty_id) 
+    INSERT INTO material_specialties (material_id, spec_code) 
     VALUES (%s, %s) 
-    ON CONFLICT (material_id, specialty_id) DO NOTHING;
+    ON CONFLICT (material_id, spec_code) DO NOTHING;
 """
 
+INSERT_MATERIAL_TYPE = """
+    INSERT INTO material_types (material_id, type_id) 
+    VALUES (%s, %s)
+    ON CONFLICT (material_id, type_id) DO NOTHING;
+"""
+
+INSERT_MATERIAL_UDC = """
+    INSERT INTO material_udcCodes (material_id, code_udc) 
+    VALUES (%s, %s)
+    ON CONFLICT (material_id, code_udc) DO NOTHING;
+"""
+
+INSERT_DISCIPLINE = """
+    INSERT INTO disciplines (name) 
+    VALUES (%s) 
+    ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
+    RETURNING id;
+"""
+
+INSERT_DEPARTMENT_DISCIPLINE = """
+    INSERT INTO department_disciplines (department_id, discipline_id, year_start)
+    VALUES (%s, %s, %s)
+    ON CONFLICT (department_id, discipline_id, year_start) DO NOTHING
+    RETURNING id;
+"""
+
+INSERT_DISCIPLINE_SPECIALTY = """
+    INSERT INTO discipline_specialties (discipline_id, spec_code)
+    VALUES (%s, %s)
+    ON CONFLICT (discipline_id, spec_code) DO NOTHING;
+"""
+
+INSERT_MAP = {
+    'faculty': INSERT_FACULTY,
+    'department': INSERT_DEPARTMENT,
+    'author': INSERT_AUTHOR,
+    'keyword': INSERT_KEYWORD,
+    'specialty': INSERT_SPECIALTY,
+    'type': INSERT_TYPE,
+    'udc_code': INSERT_UDC_CODES,
+    'role': INSERT_ROLE,
+    'material': INSERT_MATERIAL,
+    'user': INSERT_USER,
+    'material_author': INSERT_MATERIAL_AUTHOR,
+    'material_keyword': INSERT_MATERIAL_KEYWORD,
+    'material_specialty': INSERT_MATERIAL_SPECIALTY,
+    'material_type': INSERT_MATERIAL_TYPE,
+    'material_udc': INSERT_MATERIAL_UDC,
+    'discipline': INSERT_DISCIPLINE,
+    'discipline_specialty': INSERT_DISCIPLINE_SPECIALTY,
+    'department_discipline': INSERT_DEPARTMENT_DISCIPLINE
+}
