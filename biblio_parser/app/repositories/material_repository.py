@@ -1,5 +1,5 @@
 import logging
-from app.providers.queries import INSERT_MAP
+from app.providers.queries import INSERT_MAP, CREATE_TEMP_STAGE_TABLE, INSERT_INTO_STAGE, BATCH_DISTRIBUTE_DATA
 
 logger = logging.getLogger(__name__)
 
@@ -14,6 +14,30 @@ class MaterialRepository:
 
     def save_department(self, name, url, faculty_id):
         return self.db.execute(self.insert_queries['department'], (name, url, faculty_id), fetch=True)
+
+    def save_materials_batch(self, batch_data):
+        if not batch_data:
+            return True
+
+        old_autocommit = self.db.conn.autocommit
+        self.db.conn.autocommit = False
+
+        try:
+            if not self.db.execute_batch(CREATE_TEMP_STAGE_TABLE):
+                raise Exception("Не удалось создать временную таблицу stage")
+            if not self.db.insert_values(INSERT_INTO_STAGE, batch_data):
+                raise Exception("Не удалось вставить данные во временную таблицу")
+            if not self.db.execute_batch(BATCH_DISTRIBUTE_DATA):
+                raise Exception("Ошибка при распределении пакетных данных по таблицам")
+            self.db.conn.commit()
+            logger.info(f"Пакет из {len(batch_data)} материалов успешно сохранен в БД.")
+            return True
+        except Exception as e:
+            self.db.conn.rollback()
+            logger.error(f"Ошибка при выполнении пакетного сохранения: {e}")
+            return False
+        finally:
+            self.db.conn.autocommit = old_autocommit
 
     def save_author(self, name):
         return self.db.execute(self.insert_queries['author'], (name,), fetch=True)

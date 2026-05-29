@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from app.providers.queries import *
 import psycopg2
+from psycopg2.extras import execute_values
 import logging
 
 logger = logging.getLogger(__name__)
@@ -40,7 +41,6 @@ class DatabaseManager:
                     if result is None:
                         return None
                     return result[0] if len(result) == 1 else dict(result)
-                #self.conn.commit()
                 return True
         except Exception as e:
             self.conn.rollback()
@@ -54,6 +54,8 @@ class DatabaseManager:
             with self.conn.cursor() as cur:
                 cur.execute(query, params)
                 return [dict(row) for row in cur.fetchall()]
+                # columns = [desc[0] for desc in cur.description]
+                # return [dict(zip(columns, row)) for row in cur.fetchall()]
         except Exception as e:
             logger.error(f"Ошибка fetchall: {e}")
             return []
@@ -66,12 +68,40 @@ class DatabaseManager:
                 for command in INIT_DB_COMMANDS:
                     logger.info(f"SQL: {command[:100]}...")  # Первые 100 символов
                     cur.execute(command)
-            #self.conn.commit()
+            self.conn.commit()
             logger.info("Таблицы успешно созданы")
             return True
         except Exception as e:
             self.conn.rollback()
             logger.error(f"Ошибка инициализации БД: {e}")
+            return False
+
+    def execute_batch(self, query, page_size=1000):
+        if not self.conn:
+            logger.error("Нет соединения с БД")
+            return False
+        try:
+            with self.conn.cursor() as cur:
+                cur.execute(query)
+                return True
+        except Exception as e:
+            self.conn.rollback()
+            logger.error(f"Ошибка выполнения пакетного SQL: {e}")
+            return False
+
+    def insert_values(self, query, value_list, page_size=1000):
+        if not self.conn:
+            logger.error("Нет соединения с БД")
+            return False
+        if not value_list:
+            return True
+        try:
+            with self.conn.cursor() as cur:
+                psycopg2.extras.execute_values(cur, query, value_list, page_size=page_size)
+                return True
+        except Exception as e:
+            self.conn.rollback()
+            logger.error(f"Ошибка пакетной вставки: {e}")
             return False
 
     def close(self):

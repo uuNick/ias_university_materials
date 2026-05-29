@@ -39,7 +39,7 @@ export const facultyRepository = {
       SELECT 
         f.name as faculty_name,
         ${yearColumns}
-        COUNT(m.id) as total
+        SUM(CASE WHEN m.issued_year BETWEEN ${startYear} AND ${endYear} THEN 1 ELSE 0 END) as total
       FROM faculties f
       LEFT JOIN departments d ON f.id = d.faculty_id
       LEFT JOIN materials m ON d.id = m.department_id
@@ -61,7 +61,7 @@ export const facultyRepository = {
         f.name as faculty_name,
         d.name as department_name,
         ${yearColumns}
-        COUNT(m.id) as total
+        SUM(CASE WHEN m.issued_year BETWEEN ${startYear} AND ${endYear} THEN 1 ELSE 0 END) as total
       FROM faculties f
       JOIN departments d ON f.id = d.faculty_id
       LEFT JOIN materials m ON d.id = m.department_id

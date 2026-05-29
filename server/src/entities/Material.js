@@ -2,7 +2,7 @@ export class Material {
   constructor({ 
     id, title, alternative_title, abstract_text, 
     language_code, publisher, citation, uri, available_date, issued_year,
-    document_uri, department_id,
+    file_link, department_id, pages, departmentName, facultyName,
     authors = [], keywords = [], types = [], specialities = [], material_udcCodes = []
   }) {
     this.id = id;
@@ -14,9 +14,12 @@ export class Material {
     this.citation = citation;
     this.uri = uri;
     this.availableDate = available_date;
-    this.documentUri = document_uri;
+    this.pages = pages;
+    this.fileLink = file_link;
     this.departmentId = department_id;
     this.year = issued_year;
+    this.departmentName = departmentName;
+    this.facultyName = facultyName;
     
     // Вложенные сущности
     this.authors = authors; 

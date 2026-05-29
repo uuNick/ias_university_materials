@@ -3,7 +3,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 
-# "Поднимаемся" на 2 уровня вверх, чтобы попасть в ai-service/
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 env_path = BASE_DIR / ".env"
 

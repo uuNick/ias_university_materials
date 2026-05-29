@@ -33,3 +33,30 @@ export const deleteDepartment = asyncHandler (async(req, res) => {
   res.status(204).send();
 });
 
+export const getDepartmentDisciplinesReport = asyncHandler (async(req, res) => {
+  const {departmentName, startYear, endYear } = req.query;
+  const reportData = await DepartmentCases.getDepartmentDisciplinesUseCase(departmentName,startYear, endYear, departmentRepository);
+  res.status(200).json(reportData);
+})
+
+export const exportDepartmentDisciplinesExcel = asyncHandler(async (req, res) => {
+  const params = {
+    departmentName: req.query.departmentName,
+    startYear: req.query.startYear,
+    endYear: req.query.endYear,
+    repository: departmentRepository
+  }
+
+  const { buffer, filename } = await DepartmentCases.exportDepartmentDisciplinesToExcel(params);
+
+  res.setHeader(
+    'Content-Type',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  );
+  res.setHeader(
+    'Content-Disposition',
+    `attachment; filename="${encodeURIComponent(filename)}"`
+  );
+
+  return res.status(200).send(buffer);
+});

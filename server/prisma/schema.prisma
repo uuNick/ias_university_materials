@@ -14,13 +14,14 @@ model authors {
 }
 
 model departments {
-  id         Int         @id @default(autoincrement())
-  name       String      @unique @db.VarChar(255)
-  url        String      @unique
-  faculty_id Int
-  faculties  faculties   @relation(fields: [faculty_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_faculty")
-  materials  materials[]
-  users      users[]
+  id                     Int                      @id @default(autoincrement())
+  name                   String                   @unique @db.VarChar(255)
+  url                    String                   @unique
+  faculty_id             Int
+  department_disciplines department_disciplines[]
+  faculties              faculties                @relation(fields: [faculty_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_faculty")
+  materials              materials[]
+  users                  users[]
 }
 
 model faculties {
@@ -65,7 +66,7 @@ model material_specialties {
   material_id Int
   spec_code   String      @db.VarChar(30)
   materials   materials   @relation(fields: [material_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_material_ms")
-  specialties specialties @relation(fields: [spec_code], references: [spec_code], onDelete: Cascade, onUpdate: NoAction, map: "fk_specialty_ms")
+  specialties specialties @relation(fields: [spec_code], references: [spec_code], onDelete: Cascade, map: "fk_specialty_ms")
 
   @@id([material_id, spec_code])
 }
@@ -99,7 +100,8 @@ model materials {
   uri                  String                 @unique
   available_date       DateTime?              @db.Timestamp(6)
   issued_year          Int?
-  document_uri         String                 @unique
+  pages                Int?
+  file_link            String                 @unique
   department_id        Int
   material_authors     material_authors[]
   material_embeddings  material_embeddings?
@@ -117,9 +119,10 @@ model roles {
 }
 
 model specialties {
-  spec_code            String                 @id @db.VarChar(30)
-  spec_name            String
-  material_specialties material_specialties[]
+  spec_code              String                   @id @db.VarChar(30)
+  spec_name              String
+  discipline_specialties discipline_specialties[]
+  material_specialties   material_specialties[]
 }
 
 model types {
@@ -137,6 +140,7 @@ model udc_codes {
 model users {
   user_id       Int          @id @default(autoincrement())
   full_name     String       @db.VarChar(255)
+  email         String?      @unique @db.VarChar(255)
   login         String       @unique @db.VarChar(100)
   password      String       @db.VarChar(255)
   faculty_id    Int?
@@ -145,4 +149,39 @@ model users {
   departments   departments? @relation(fields: [department_id], references: [id], onUpdate: NoAction, map: "fk_department")
   faculties     faculties?   @relation(fields: [faculty_id], references: [id], onUpdate: NoAction, map: "fk_faculty")
   roles         roles        @relation(fields: [role_id], references: [id], onUpdate: NoAction, map: "fk_role")
+}
+
+model department_disciplines {
+  id            Int         @id @default(autoincrement())
+  department_id Int
+  discipline_id Int
+  year_start    Int
+  departments   departments @relation(fields: [department_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_department_dd")
+  disciplines   disciplines @relation(fields: [discipline_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_discipline_dd")
+
+  @@unique([department_id, discipline_id, year_start], map: "unique_department_discipline_year")
+}
+
+model discipline_specialties {
+  discipline_id Int
+  spec_code     String      @db.VarChar(30)
+  disciplines   disciplines @relation(fields: [discipline_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_discipline_ds")
+  specialties   specialties @relation(fields: [spec_code], references: [spec_code], onDelete: Cascade, onUpdate: NoAction, map: "fk_specialty_ds")
+
+  @@id([discipline_id, spec_code])
+}
+
+model disciplines {
+  id                     Int                      @id @default(autoincrement())
+  name                   String                   @unique
+  department_disciplines department_disciplines[]
+  discipline_specialties discipline_specialties[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model specialties_backup {
+  spec_code String? @db.VarChar(30)
+  spec_name String?
+
+  @@ignore
 }

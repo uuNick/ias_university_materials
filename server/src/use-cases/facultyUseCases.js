@@ -1,20 +1,21 @@
-import { NotFoundError, BadRequestError, ConflictError } from "../errors/CommonErrors.js";
+import { NotFoundError, BadRequestError, ConflictError, ForbiddenError } from "../errors/CommonErrors.js";
+import { generateFacultyReportExcel, generateFacultyDepReportExcel } from '../services/excelService.js';
 
 export const createFacultyUseCase = async (data, repository) => {
   if (!data.name || !data.url) throw new BadRequestError('Для создания факультета необходимо указать имя и URL');
-  
+
   const existingFacultyByName = await repository.findByName(data.name);
 
-  if (existingFacultyByName){
+  if (existingFacultyByName) {
     throw new ConflictError(`Факультет с именем "${data.name}" уже существует`);
   }
 
   const existingFacultyByUrl = await repository.findByName(data.url);
 
-  if (existingFacultyByUrl){
+  if (existingFacultyByUrl) {
     throw new ConflictError(`Факультет с URL-адресом "${data.url}" уже существует`);
   }
-  
+
   return await repository.create(data);
 };
 
@@ -26,7 +27,7 @@ export const getFacultyByIdUseCase = async (id, repository) => {
   const faculty = await repository.findById(id);
 
   if (!faculty) throw new NotFoundError(`Факультет с ID ${id} не найден`);
-  
+
   return faculty;
 };
 
@@ -73,7 +74,7 @@ export const deleteFacultyUseCase = async (id, repository) => {
   if (!faculty) {
     throw new NotFoundError(`Факультет с ID ${id} не найден`);
   }
-  
+
   return await repository.delete(id);
 };
 
@@ -85,7 +86,7 @@ export const getFacultyReportOnYearUseCase = async (params, repository) => {
   if (startYear < 2010 || endYear > currentYear) {
     throw new BadRequestError(`Диапазон дат должен быть в пределах 2010-${currentYear} гг.`);
   }
-  
+
   if (startYear > endYear) {
     throw new BadRequestError('Год начала не может быть больше года окончания');
   }
@@ -130,15 +131,15 @@ export const getFacultyReportOnYearWithDepartmentsUseCase = async (params, repos
       acc[facultyName] = {
         name: facultyName,
         departments: [],
-        totals: { total: 0 } 
+        totals: { total: 0 }
       };
       for (let y = startYear; y <= endYear; y++) acc[facultyName].totals[y] = 0;
     }
 
     acc[facultyName].departments.push(row);
-    
+
     for (let year = startYear; year <= endYear; year++) {
-        acc[facultyName].totals[year] += Number(row[year] || 0);
+      acc[facultyName].totals[year] += Number(row[year] || 0);
     }
     acc[facultyName].totals.total += Number(row.total || 0);
 
@@ -146,4 +147,50 @@ export const getFacultyReportOnYearWithDepartmentsUseCase = async (params, repos
   }, {});
 
   return Object.values(grouped);
+};
+
+export const exportFacultyReportToExcelUseCase = async (repository, currentUser, startYear, endYear) => {
+  const currentYear = new Date().getFullYear();
+  if (!currentUser) {
+    throw new ForbiddenError('Пользователь не авторизован');
+  }
+
+  const defStartYear = startYear ? parseInt(startYear, 10) : 2010;
+  const defEndYear = endYear ? parseInt(endYear, 10) : 2026;
+
+  if (defStartYear < 2010 || defEndYear > currentYear) {
+    throw new BadRequestError(`Диапазон дат должен быть в пределах 2010-${currentYear} гг.`);
+  }
+
+  if (defStartYear > defEndYear) {
+    throw new BadRequestError('Год начала не может быть больше года окончания');
+  }
+
+  const facultyData = await repository.getMaterialsReportOnYear(defStartYear, defEndYear);
+
+  const buffer = await generateFacultyReportExcel(facultyData, defStartYear, defEndYear);
+
+  return buffer;
+};
+
+export const exportFacultyDepReportToExcelUseCase = async (params, repository, currentUser) => {
+  if (!currentUser) {
+    throw new ForbiddenError('Пользователь не авторизован');
+  }
+
+  const startYear = parseInt(params.startYear, 10) || 2010;
+  const currentYear = new Date().getFullYear();
+  const endYear = parseInt(params.endYear, 10) || currentYear;
+
+   if (startYear < 2010 || endYear > currentYear) {
+    throw new BadRequestError(`Диапазон дат должен быть в пределах 2010-${currentYear} гг.`);
+  }
+
+  if (startYear > endYear) {
+    throw new BadRequestError('Год начала не может быть больше года окончания');
+  }
+
+  const structuredData = await getFacultyReportOnYearWithDepartmentsUseCase(params, repository);
+
+  return await generateFacultyDepReportExcel(structuredData, startYear, endYear);
 };

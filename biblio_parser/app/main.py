@@ -1,40 +1,62 @@
-#from fastapi import FastAPI, BackgroundTasks
 import os
+from fastapi import FastAPI
+from dotenv import load_dotenv
+import uvicorn
+from contextlib import asynccontextmanager
+from app.routes import routes
 from app.providers.db_manager import DatabaseManager
-from app.providers.parser import SiteCrawler
-from app.repositories.material_repository import MaterialRepository
-from app.services.parser_service import ParserService
 import logging
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s | %(levelname)-8s | %(name)s | %(message)s',
-    datefmt='%H:%M:%S'
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
+
 logger = logging.getLogger(__name__)
+load_dotenv()
 
 
-BASE_URL = os.getenv("BASE_URL")
-FACULTIES_LINK = os.getenv("FACULTIES_LINK")
+# Управление жизненным циклом приложения
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logger.info("Проверка и инициализация структуры базы данных...")
+    db = DatabaseManager()
 
-
-def start_app():
-    db_manager = DatabaseManager()
-    success = db_manager.initialize_db()
-    if success:
-        logger.info("База данных готова к работе")
+    if db.conn:
+        success = db.initialize_db()
+        if success:
+            logger.info("Инициализация БД прошла успешно")
+        else:
+            logger.error("Ошибка при подготовке таблиц БД")
+        db.close()
     else:
-        logger.info("Критическая ошибка при подготовке БД")
-        return
+        logger.error("Не удалось подключиться к БД при старте сервера!")
 
-    crawler = SiteCrawler(base_url=BASE_URL, faculties_link=FACULTIES_LINK)
-    repository = MaterialRepository(db_manager)
-    parser_service = ParserService(crawler, repository)
-    parser_service.run_full_sync()
+    yield
 
+    logger.info("Остановка сервера парсера...")
+
+app = FastAPI(
+    lifespan=lifespan
+)
+app.include_router(routes.router)
+
+
+@app.get("/")
+async def root():
+    return {"message": "Сервер сбора данных ИАС БРУ работает"}
 
 if __name__ == "__main__":
-    start_app()
+    host = os.getenv("HOST")
+    port = int(os.getenv("PORT"))
+    logger.info(f"Запуск сервера на {host}:{port}")
+    uvicorn.run("app.main:app", host=host, port=port, reload=True)
+
+    # 21:12:26 | INFO     | app.services.parser_service | Кафедра: Кафедра "Технология машиностроения" (материалов: 255)
+    # 20:48:17 | INFO     | app.services.parser_service | Запуск парсера электронной библиотеки...
+    # 22:10:12 | INFO     | app.services.parser_service | Парсинг успешно завершен
+    # python -m app.main
+
 
 
 

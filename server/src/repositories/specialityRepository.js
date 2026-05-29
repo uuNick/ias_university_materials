@@ -3,8 +3,24 @@ import { Speciality } from '../entities/Speciality.js';
 
 export const specialityRepository = {
   async getAll() {
-    const list = await prisma.specialties.findMany();
-    return list.map(s => new Speciality(s));
+    return await prisma.specialties.findMany();
+  },
+
+  async findWithMaterials() {
+    return await prisma.specialties.findMany({
+      where: {
+        material_specialties: {
+          some: {}
+        }
+      },
+      select: {
+        spec_code: true,
+        spec_name: true
+      },
+      orderBy: {
+        spec_code: 'asc'
+      }
+    });
   },
 
   async findByCode(code) {
@@ -16,9 +32,9 @@ export const specialityRepository = {
 
   async create(data) {
     const raw = await prisma.specialties.create({
-      data: { 
-        spec_code: data.code, 
-        spec_name: data.name 
+      data: {
+        spec_code: data.code,
+        spec_name: data.name
       }
     });
     return new Speciality(raw);
@@ -58,5 +74,101 @@ export const specialityRepository = {
     `;
 
     return await prisma.$queryRawUnsafe(query);
-  }
-};
+  },
+
+  async getMaterialsBySpecialty(specCode, startYear = null, endYear = null) {
+    const materialsWhere = {
+      material_specialties: {
+        some: {
+          spec_code: specCode
+        }
+      }
+    };
+
+    if (startYear || endYear) {
+      materialsWhere.issued_year = {};
+      if (startYear) materialsWhere.issued_year.gte = startYear;
+      if (endYear) materialsWhere.issued_year.lte = endYear;
+    }
+
+    const [specialty, materials] = await Promise.all([
+      prisma.specialties.findUnique({
+        where: { spec_code: specCode },
+        select: { spec_code: true, spec_name: true }
+      }),
+      prisma.materials.findMany({
+        where: materialsWhere,
+        include: {
+          material_authors: {
+            include: {
+              authors: true
+            }
+          }
+        }
+      })
+    ]);
+
+    if (!specialty) return null;
+
+    return {
+      spec_code: specialty.spec_code,
+      spec_name: specialty.spec_name,
+      material_specialties: materials.map(material => ({
+        materials: material
+      }))
+    };
+  },
+  
+  async getSpecialityDisciplinesWithMaterials({ specCode, startYear, endYear, departmentId, facultyDepartmentsIds }) {
+
+    const disciplineWhere = {
+      discipline_specialties: {
+        some: { spec_code: specCode }
+      }
+    };
+
+    if (departmentId) {
+      disciplineWhere.department_disciplines = { some: { department_id: departmentId } };
+    } else if (facultyDepartmentsIds && facultyDepartmentsIds.length > 0) {
+      disciplineWhere.department_disciplines = { some: { department_id: { in: facultyDepartmentsIds } } };
+    }
+
+    const materialsWhere = {
+      material_specialties: {
+        some: { spec_code: specCode }
+      }
+    };
+
+    if (startYear || endYear) {
+      materialsWhere.issued_year = {};
+      if (startYear) materialsWhere.issued_year.gte = startYear;
+      if (endYear) materialsWhere.issued_year.lte = endYear;
+    }
+
+    const [disciplines, materials] = await Promise.all([
+      prisma.disciplines.findMany({
+        where: disciplineWhere,
+        select: { id: true, name: true },
+        orderBy: { name: 'asc' }
+      }),
+      prisma.materials.findMany({
+        where: materialsWhere,
+        select: {
+          id: true,
+          title: true,
+          alternative_title: true,
+          issued_year: true,
+          uri: true,
+          file_link: true,
+          material_authors: {
+            select: {
+              authors: { select: { name: true } }
+            }
+          }
+        }
+      })
+    ]);
+
+    return { disciplines, materials };
+  },
+}

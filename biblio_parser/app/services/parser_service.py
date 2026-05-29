@@ -1,5 +1,8 @@
+import os
+import httpx
 import time
 import logging
+import re
 
 logger = logging.getLogger(__name__)
 
@@ -8,6 +11,8 @@ class ParserService:
     def __init__(self, crawler, repository):
         self.crawler = crawler
         self.repo = repository
+        self.ai_reindex_url = os.getenv("AI_SERVER_URL_REINDEX")
+        self.chunk_size = 50
 
     def run_full_sync(self):
         logger.info("Запуск парсера электронной библиотеки...")
@@ -22,7 +27,7 @@ class ParserService:
         faculties_link = self.crawler.base_url + self.crawler.faculties_link
         faculties_html = self.crawler.fetch_page(faculties_link)
         if not faculties_html:
-            logger.error("Не удалось загрузить страницу факультетов.")
+            logger.error("Не удалось загрузить страницу факультетов")
             return
 
         faculties = self.crawler.parse_communities(faculties_html)
@@ -52,34 +57,73 @@ class ParserService:
                 # Получить список всех материалов кафедры
                 materials_list = self.crawler.get_all_materials(dept_data['url'], dept_data['count'])
 
-                for mat_info in materials_list:
+                materials_batch = []
+
+                for index, mat_info in enumerate(materials_list, start=1):
                     mat_html = self.crawler.fetch_page(mat_info['url'])
                     if not mat_html:
                         continue
 
                     metadata = self.crawler.parse_material_metadata(mat_html)
 
-                    mat_id = self.repo.save_material(
-                        title=metadata.get('title') or mat_info['title'],
-                        uri=metadata.get('identifier'),
-                        file_link=metadata.get('file_link'),
-                        department_id=dept_id,
-                        alternative_title=metadata.get('title_alternative'),
-                        abstract_text=metadata.get('abstract'),
-                        language_code=metadata.get('language', 'ru'),
-                        publisher=metadata.get('publisher'),
-                        citation=metadata.get('bibliographic_citation'),
-                        available_date=metadata.get('available'),
-                        issued_year=metadata.get('issued'),
-                        pages=metadata.get('pages')
+                    material_tuple = (
+                        metadata.get('title') or mat_info['title'],
+                        metadata.get('title_alternative'),
+                        metadata.get('abstract'),
+                        metadata.get('language', 'ru'),
+                        metadata.get('publisher'),
+                        metadata.get('bibliographic_citation'),
+                        metadata.get('identifier'),
+                        metadata.get('available'),
+                        metadata.get('issued'),
+                        metadata.get('pages'),
+                        metadata.get('file_link'),
+                        dept_id,
+                        metadata.get('creator', []),
+                        metadata.get('subject', []),
+                        metadata.get('type', []),
+                        metadata.get('udc', []),
+                        metadata.get('spec', [])
                     )
 
-                    if mat_id:
-                        self._save_related_entities(mat_id, metadata)
+                    materials_batch.append(material_tuple)
 
-                    time.sleep(0.1)
+                    if index % 10 == 0 or index == len(materials_list):
+                        logger.info(f"Собрано метаданных: {index} из {len(materials_list)}")
 
-        logger.info("Парсинг успешно завершен")
+                    if len(materials_batch) >= self.chunk_size:
+                        logger.info(f"Достигнут лимит пачки ({self.chunk_size}). Запись в БД...")
+                        self.repo.save_materials_batch(materials_batch)
+                        materials_batch.clear()
+
+                    #time.sleep(0.1)
+
+                    # mat_id = self.repo.save_material(
+                    #     title=metadata.get('title') or mat_info['title'],
+                    #     uri=metadata.get('identifier'),
+                    #     file_link=metadata.get('file_link'),
+                    #     department_id=dept_id,
+                    #     alternative_title=metadata.get('title_alternative'),
+                    #     abstract_text=metadata.get('abstract'),
+                    #     language_code=metadata.get('language', 'ru'),
+                    #     publisher=metadata.get('publisher'),
+                    #     citation=metadata.get('bibliographic_citation'),
+                    #     available_date=metadata.get('available'),
+                    #     issued_year=metadata.get('issued'),
+                    #     pages=metadata.get('pages')
+                    # )
+
+                    # if mat_id:
+                    #     self._save_related_entities(mat_id, metadata)
+
+                    #time.sleep(0.1)
+
+                if materials_batch:
+                    logger.info(f"Запись пакета из {len(materials_batch)} материалов в БД...")
+                    self.repo.save_materials_batch(materials_batch)
+
+        logger.info("Парсинг завершен")
+        self.notify_ai_server()
 
     def _save_related_entities(self, material_id, metadata):
         """Вспомогательный метод для сохранения связей многие-ко-многим."""
@@ -114,12 +158,28 @@ class ParserService:
             self.repo.save_material_udc(material_id, udc_code)
 
         # Специальности
-        # Формат: "6-05-0612-03 Название специальности"
         for spec_entry in metadata.get('spec', []):
-            parts = spec_entry.strip().split(' ', 1)
-            if len(parts) > 1:
-                spec_code = parts[0].strip()
-                spec_name = parts[1].strip()
+            match = re.match(r'^([0-9.\- ]+)\s+(.*)', spec_entry.strip())
 
+            if match:
+                spec_code = match.group(1).strip()
+                spec_name = match.group(2).strip()
+                logger.info(spec_code, spec_name)
                 self.repo.save_specialty(spec_code, spec_name)
                 self.repo.save_material_specialty(material_id, spec_code)
+
+    def notify_ai_server(self):
+        if not self.ai_reindex_url:
+            logger.warning("URL сервера ИИ не настроен")
+            return
+        logger.info(f"Отправка запроса на создание/обновление векторов материалов: {self.ai_reindex_url}")
+        try:
+            with httpx.Client(timeout=10.0) as client:
+                response = client.post(self.ai_reindex_url)
+                if response.status_code == 200:
+                    logger.info("Сервер ИИ успешно принял задачу на создание/обновление векторов материалов")
+                else:
+                    logger.error(f"Сервер ИИ вернул ошибку: {response.status_code}")
+        except Exception as e:
+            logger.error(f"Не удалось связаться с сервером ИИ: {e}")
+

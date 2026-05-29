@@ -260,6 +260,28 @@ CREATE TABLE IF NOT EXISTS discipline_specialties (
 );
 """
 
+CREATE_TEMP_STAGE_TABLE = """
+CREATE TEMP TABLE IF NOT EXISTS temp_material_stage (
+    title TEXT,
+    alternative_title TEXT,
+    abstract_text TEXT,
+    language_code VARCHAR(10),
+    publisher TEXT,
+    citation TEXT,
+    uri TEXT,
+    available_date TEXT,
+    issued_year TEXT,
+    pages INTEGER,
+    file_link TEXT,
+    department_id INTEGER,
+    authors TEXT[],      -- Массив авторов
+    subjects TEXT[],     -- Массив ключевых слов
+    types TEXT[],        -- Массив типов
+    udcs TEXT[],         -- Массив УДК
+    specs TEXT[]         -- Массив специальностей
+) ON COMMIT DROP; -- Удалять данные автоматически при завершении транзакции
+"""
+
 INIT_DB_COMMANDS = [
     CREATE_TABLE_FACULTIES,
     CREATE_TABLE_DEPARTMENTS,
@@ -279,7 +301,7 @@ INIT_DB_COMMANDS = [
     CREATE_TABLE_USERS,
     CREATE_TABLE_DISCIPLINES,
     CREATE_TABLE_DEPARTMENT_DISCIPLINES,
-    CREATE_TABLE_DISCIPLINE_SPECIALTIES
+    CREATE_TABLE_DISCIPLINE_SPECIALTIES,
 ]
 
 INSERT_FACULTY = """
@@ -416,6 +438,107 @@ INSERT_DISCIPLINE_SPECIALTY = """
     ON CONFLICT (discipline_id, spec_code) DO NOTHING;
 """
 
+INSERT_INTO_STAGE = """
+INSERT INTO temp_material_stage (
+    title, alternative_title, abstract_text, language_code, publisher, 
+    citation, uri, available_date, issued_year, pages, file_link, department_id,
+    authors, subjects, types, udcs, specs
+) VALUES %s
+"""
+
+BATCH_DISTRIBUTE_DATA = """
+INSERT INTO authors (name)
+SELECT DISTINCT unnest(authors) FROM temp_material_stage
+ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name;
+
+INSERT INTO keywords (word)
+SELECT DISTINCT unnest(subjects) FROM temp_material_stage
+ON CONFLICT (word) DO UPDATE SET word = EXCLUDED.word;
+
+INSERT INTO types (type_name)
+SELECT DISTINCT unnest(types) FROM temp_material_stage
+ON CONFLICT (type_name) DO UPDATE SET type_name = EXCLUDED.type_name;
+
+INSERT INTO udc_codes (code, title)
+SELECT DISTINCT 
+    split_part(raw_udc, ' ', 1) AS code,
+    NULLIF(trim(substring(raw_udc from ' \s*(.*)')), '') AS title
+FROM (
+    SELECT unnest(udcs) AS raw_udc FROM temp_material_stage
+) sub
+WHERE raw_udc IS NOT NULL AND raw_udc <> ''
+ON CONFLICT (code) DO UPDATE SET title = EXCLUDED.title;
+
+INSERT INTO specialties (spec_code, spec_name)
+SELECT DISTINCT
+    trim(substring(raw_spec from '^([0-9.\- ]+)\s+')) AS spec_code,
+    trim(substring(raw_spec from '^[0-9.\- ]+\s+(.*)')) AS spec_name
+FROM (
+    SELECT unnest(specs) AS raw_spec FROM temp_material_stage
+) sub
+WHERE raw_spec IS NOT NULL AND raw_spec ~ '^([0-9.\- ]+)\s+(.*)'
+ON CONFLICT (spec_code) DO UPDATE SET spec_name = EXCLUDED.spec_name;
+
+INSERT INTO materials (
+    title, alternative_title, abstract_text, language_code, publisher, 
+    citation, uri, available_date, issued_year, pages, file_link, department_id
+)
+SELECT DISTINCT 
+    title, 
+    alternative_title, 
+    abstract_text, 
+    language_code, 
+    publisher, 
+    citation, 
+    uri, 
+    NULLIF(available_date, '')::timestamp,
+    NULLIF(issued_year, '')::integer,
+    pages, 
+    file_link, 
+    department_id
+FROM temp_material_stage
+ON CONFLICT (uri) DO UPDATE SET title = EXCLUDED.title;
+
+INSERT INTO material_authors (material_id, author_id)
+SELECT DISTINCT m.id, a.id
+FROM temp_material_stage stage
+JOIN materials m ON m.uri = stage.uri
+JOIN authors a ON a.name = any(stage.authors)
+ON CONFLICT (material_id, author_id) DO NOTHING;
+
+INSERT INTO material_keywords (material_id, keyword_id)
+SELECT DISTINCT m.id, k.id
+FROM temp_material_stage stage
+JOIN materials m ON m.uri = stage.uri
+JOIN keywords k ON k.word = any(stage.subjects)
+ON CONFLICT (material_id, keyword_id) DO NOTHING;
+
+INSERT INTO material_types (material_id, type_id)
+SELECT DISTINCT m.id, t.id
+FROM temp_material_stage stage
+JOIN materials m ON m.uri = stage.uri
+JOIN types t ON t.type_name = any(stage.types)
+ON CONFLICT (material_id, type_id) DO NOTHING;
+
+INSERT INTO material_udcCodes (material_id, code_udc)
+SELECT DISTINCT m.id, split_part(raw_udc, ' ', 1)
+FROM temp_material_stage stage
+JOIN materials m ON m.uri = stage.uri
+CROSS JOIN unnest(stage.udcs) AS raw_udc
+WHERE raw_udc IS NOT NULL AND raw_udc <> ''
+ON CONFLICT (material_id, code_udc) DO NOTHING;
+
+INSERT INTO material_specialties (material_id, spec_code)
+SELECT DISTINCT 
+    m.id, 
+    trim((regexp_matches(raw_spec, '^([0-9.\- ]+)\s+(.*)'))[1])
+FROM temp_material_stage stage
+JOIN materials m ON m.uri = stage.uri
+CROSS JOIN unnest(stage.specs) AS raw_spec
+WHERE raw_spec IS NOT NULL AND raw_spec ~ '^([0-9.\- ]+)\s+(.*)'
+ON CONFLICT (material_id, spec_code) DO NOTHING;
+"""
+
 INSERT_MAP = {
     'faculty': INSERT_FACULTY,
     'department': INSERT_DEPARTMENT,
@@ -435,4 +558,17 @@ INSERT_MAP = {
     'discipline': INSERT_DISCIPLINE,
     'discipline_specialty': INSERT_DISCIPLINE_SPECIALTY,
     'department_discipline': INSERT_DEPARTMENT_DISCIPLINE
+}
+
+GET_DEPARTMENT_ID = """
+    SELECT id FROM departments 
+    WHERE name ILIKE '%%' || %s || '%%' 
+    LIMIT 1
+"""
+
+GET_DISCIPLINE_ID = "SELECT id FROM disciplines WHERE name = %s"
+
+SELECT_MAP = {
+    'get_department': GET_DEPARTMENT_ID,
+    'get_discipline': GET_DISCIPLINE_ID,
 }

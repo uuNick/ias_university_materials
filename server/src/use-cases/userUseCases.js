@@ -1,4 +1,6 @@
 import { NotFoundError, BadRequestError, ConflictError } from "../errors/CommonErrors.js";
+import crypto from 'crypto';
+import bcrypt from 'bcrypt';
 
 export const getUserByIdUseCase = async (id, repository) => {
   if (!id) {
@@ -21,30 +23,39 @@ export const getAllUserUseCase = async (repository) => {
   return users;
 }
 
-export const createUserUseCase = async (data, repository) => {
-  if (!data.login) {
-    throw new BadRequestError('Логин пользователя обязателен');
-  }
-  // if (!data.email) {
-  //   throw new BadRequestError('Адрес электронной почты пользователя обязателен');
-  // }
-  if (!data.full_name) {
-    throw new BadRequestError('ФИО пользователя обязательно');
+export const createUserUseCase = async (userData, userRepository) => {
+  const { fullName, email, login, roleId, facultyId, departmentId } = userData;
+
+  const candidateByLogin = await userRepository.findByLogin(login);
+  if (candidateByLogin) {
+    throw new ConflictError("Пользователь с таким логином уже существует");
   }
 
-  const existingUserByLogin = await repository.findByLogin(data.login);
-
-  if (existingUserByLogin) {
-    throw new ConflictError(`Логин пользователя "${data.login}" уже занят`);
+  if (email) {
+    const candidateByEmail = await userRepository.findByEmail(email);
+    if (candidateByEmail) {
+      throw new ConflictError("Пользователь с такой почтой уже существует");
+    }
   }
 
-  // const existingUserByEmail = await repository.findByEmail(data.email);
+  const temporaryPassword = crypto.randomBytes(6).toString('hex');
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(temporaryPassword, saltRounds);
 
-  // if (existingUserByEmail) {
-  //   throw new ConflictError(`Адрес электронной почты "${data.email}" уже занят`);
-  // }
+  const newUser = await userRepository.create({
+    fullName,
+    email,
+    login,
+    password: hashedPassword,
+    roleId: Number(roleId),
+    facultyId: facultyId ? Number(facultyId) : null,
+    departmentId: departmentId ? Number(departmentId) : null
+  });
 
-  return await repository.create(data);
+  return {
+    user: newUser,
+    temporaryPassword
+  };
 };
 
 export const updateUserUseCase = async (id, data, repository) => {
@@ -60,17 +71,17 @@ export const updateUserUseCase = async (id, data, repository) => {
   if (data.login && data.login !== currentUser.login) {
     const existingByLogin = await repository.findByLogin(data.login);
     if (existingByLogin) {
-      throw new ConflictError(`Логин "${data.name}" уже занят другим пользователем`);
+      throw new ConflictError(`Логин "${data.login}" уже занят другим пользователем`);
     }
   }
 
-  // if (data.email && data.email !== currentUser.email) {
-  //   const existingByEmail = await repository.findByEmail(data.email);
-  //   if (existingByEmail) {
-  //     throw new ConflictError(`Адрес электронной почты "${data.url}" уже занят`);
-  //   }
-  // }
-  
+  if (data.email && data.email !== currentUser.email) {
+    const existingByEmail = await repository.findByEmail(data.email);
+    if (existingByEmail) {
+      throw new ConflictError(`Адрес электронной почты "${data.email}" уже занят`);
+    }
+  }
+
   return await repository.update(id, data);
 };
 
@@ -83,4 +94,30 @@ export const deleteUserUseCase = async (id, repository) => {
     throw new NotFoundError(`Пользователь с ID ${id} не найден`);
   }
   return await repository.delete(id);
+};
+
+export const getUsersWithPagAndSearchUseCase = async (queryParameters, repository) => {
+  const { search = '', page = 1, limit = 10 } = queryParameters;
+  const parsedPage = Math.max(1, parseInt(page, 10));
+  const parsedLimit = Math.max(1, parseInt(limit, 10));
+  const skip = (parsedPage - 1) * parsedLimit;
+  const take = parsedLimit;
+
+  const { users, totalCount } = await repository.findManyAndCount({
+    search: search.toString(),
+    skip,
+    take,
+  });
+
+  const totalPages = Math.ceil(totalCount / parsedLimit);
+
+  return {
+    data: users,
+    pagination: {
+      totalItems: totalCount,
+      totalPages: totalPages,
+      currentPage: parsedPage,
+      itemsPerPage: parsedLimit,
+    },
+  };
 };
