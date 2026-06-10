@@ -20,3 +20,8 @@ class SearchResult(BaseModel):
 class SearchResponse(BaseModel):
     query: str
     results: List[SearchResult]
+
+
+class SimilarityRequest(BaseModel):
+    material_id: int = Field(..., ge=1, description="ID исходного материала")
+    limit: int = Field(5, ge=1, le=50, description="Количество похожих материалов")

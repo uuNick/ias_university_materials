@@ -2,6 +2,7 @@ import { NotFoundError, BadRequestError, ConflictError, ForbiddenError } from ".
 import { Speciality } from "../entities/Speciality.js";
 import { ROLES } from "../config/roles.js";
 import { generateSpecialtyDisciplinesWithMaterialsReport, generateSpecialtyMaterialsExcelReport } from "../services/excelService.js";
+import { generateSpecialtyMaterialsWord, generateSpecialtyDisciplinesWithMaterialsWord } from '../services/wordService.js'
 
 export const getAllSpecialitiesUseCase = async (repository) => {
   const specialties = await repository.getAll();
@@ -330,9 +331,40 @@ export const exportSpecialtyMaterialsToExcelUseCase = async (specCode, startYear
   const reportData = await GetSpecialtyMaterialsUseCase(specCode, startYear, endYear, repository);
   const buffer = await generateSpecialtyMaterialsExcelReport(reportData, startYear, endYear);
   const safeSpecCode = specCode.replace(/[^a-zA-Z0-9А-Яа-я]/g, '_');
-  const filename = `Report_Specialty_${safeSpecCode}_${new Date().toISOString().split('T')[0]}.xlsx`;
+  const filename = `Specialty_${safeSpecCode}_Excel_Report${new Date().toISOString().split('T')[0]}.xlsx`;
   return {
     buffer,
     filename
+  };
+};
+
+export const exportSpecialtyMaterialsToWordUseCase = async (params, repository) => {
+
+  const { specCode, startYear, endYear } = params;
+
+  const reportData = await GetSpecialtyMaterialsUseCase(specCode, startYear, endYear, repository);
+
+  const buffer = await generateSpecialtyMaterialsWord(reportData, startYear, endYear);
+
+  const safeSpecCode = specCode.replace(/[^a-zA-Z0-9А-Яа-я]/g, '_');
+
+  return {
+    buffer,
+    filename: `Specialty_${safeSpecCode}_Word_Report_${startYear}-${endYear}.docx`
+  };
+};
+
+export const exportSpecialtyDisciplinesToWordUseCase = async (params, currentUser, repository, departmentRepository) => {
+  const { specCode, startYear, endYear } = params;
+
+  const reportData = await generateSpecialityDisciplinesWithMaterialsReport(params, currentUser, repository, departmentRepository);
+
+  const buffer = await generateSpecialtyDisciplinesWithMaterialsWord(reportData, startYear, endYear);
+
+  const safeSpecCode = specCode.replace(/[^a-zA-Z0-9А-Яа-я]/g, '_')
+
+  return {
+    buffer,
+    filename: `Specialty_Disciplines_${safeSpecCode}_Word_Report_${startYear}-${endYear}.docx`
   };
 };

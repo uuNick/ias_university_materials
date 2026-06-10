@@ -1,6 +1,7 @@
 import { NotFoundError, BadRequestError, ConflictError, ForbiddenError } from "../errors/CommonErrors.js";
 import { ROLES } from "../config/roles.js";
 import { generateTopAuthorsExcel, generateAuthorReportExcel } from '../services/excelService.js';
+import { generateTopAuthorsWord, generateAuthorReportWord } from '../services/wordService.js'
 
 export const getAuthorByIdUseCase = async (id, repository) => {
   if (!id) {
@@ -140,6 +141,10 @@ export const findByAuthor = async (authorName, startYear, endYear, repository) =
   return report;
 };
 
+//---------------------------------
+//---------EXPORT EXCEL------------
+//---------------------------------
+
 export const exportTopAuthorsToExcelUseCase = async (repository, currentUser, limit) => {
   if (!currentUser) {
     throw new ForbiddenError('Пользователь не авторизован');
@@ -182,4 +187,35 @@ export const exportAuthorReportToExcelUseCase = async (authorName, startYear, en
   const buffer = await generateAuthorReportExcel(rawData, authorName, startYear, endYear);
 
   return buffer;
+};
+
+//---------------------------------
+//---------EXPORT WORD-------------
+//---------------------------------
+
+export const exportTopAuthorsToWordUseCase = async (repository, limit) => {
+
+  const authors = await getTopAuthorsUseCase(repository, limit);
+
+  const buffer = await generateTopAuthorsWord(authors, limit);
+
+  return {
+    buffer,
+    filename: `Top_${limit || authors.length}_Authors_Word_Report.docx`
+  };
+};
+
+export const exportAuthorReportToWordUseCase = async (params, repository) => {
+    const { authorName, startYear, endYear } = params;
+
+    const reportData = await findByAuthor(authorName, startYear, endYear, repository);
+
+    const buffer = await generateAuthorReportWord(reportData, authorName, startYear, endYear);
+
+    const safeName = authorName.replace(/[^a-zA-Zа-яА-Я0-9]/g, '_');
+
+    return {
+        buffer,
+        filename: `Author_${safeName}_Word_Report_${startYear}-${endYear}.docx`
+    };
 };

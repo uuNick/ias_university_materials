@@ -30,8 +30,6 @@ const AdminTableRow = (props) => {
     const isFacultySelectAllowed = row.roleId === 4 || row.roleId === 5;
     const isDepartmentSelectAllowed = isFacultySelectAllowed && row.roleId !== 4 && row.facultyId !== null;
 
-    console.log(row)
-
     return (
         <React.Fragment>
             <TableRow hover sx={{ '& > *': { borderBottom: 'unset' } }}>

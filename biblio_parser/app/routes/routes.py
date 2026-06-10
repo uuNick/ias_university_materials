@@ -5,8 +5,10 @@ from app.services.excel_service import ExcelService
 from app.services.specialty_service import SpecialtyService
 from app.providers.db_manager import DatabaseManager
 from app.providers.parser import SiteCrawler
+from app.providers.log_sender import LogSender
 from app.repositories.material_repository import MaterialRepository
 from app.repositories.discipline_repository import DisciplineRepository
+
 
 router = APIRouter(prefix="/api/parser", tags=["Parser"])
 
@@ -18,7 +20,8 @@ def get_parser_service():
         faculties_link=os.getenv("FACULTIES_LINK")
     )
     repository = MaterialRepository(db_manager)
-    return ParserService(crawler, repository)
+    log_sender = LogSender()
+    return ParserService(crawler, repository, log_sender)
 
 
 def get_excel_service():

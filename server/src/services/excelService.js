@@ -847,29 +847,51 @@ export const generateSpecialtyMaterialsExcelReport = async (reportData, startYea
   return await workbook.xlsx.writeBuffer();
 };
 
-export const generateDepartmentDisciplinesExcelReport = async (reportData, startYear, endYear) => {
+export const generateDepartmentDisciplinesExcelReport = async (
+  reportData,
+  startYear,
+  endYear,
+  targetYear,
+  showReissueColumn = false
+) => {
   const workbook = new ExcelJS.Workbook();
-  const worksheet = workbook.addWorksheet('По дисциплинам кафедры');
+  const worksheet = workbook.addWorksheet(
+    showReissueColumn ? 'Потребность в переиздании' : 'По дисциплинам кафедры'
+  );
 
   worksheet.views = [{ showGridLines: true }];
 
-  worksheet.columns = [
+  // ✅ Смещение колонок при наличии колонки переиздания
+  const colOffset = showReissueColumn ? 1 : 0;
+  const totalColumns = 5 + colOffset;
+
+  // ✅ Динамические колонки
+  const columns = [
     { key: 'disciplineName', width: 30 },
+    ...(showReissueColumn ? [{ key: 'reissue', width: 18 }] : []),
     { key: 'bibliography', width: 65 },
     { key: 'yearStartBound', width: 20 },
     { key: 'uri', width: 40 },
     { key: 'pdf', width: 30 }
   ];
+  worksheet.columns = columns;
 
-  worksheet.mergeCells('A1:E1');
+  // ✅ Динамический заголовок
+  const lastColLetter = worksheet.getColumn(totalColumns).letter;
+  worksheet.mergeCells(`A1:${lastColLetter}1`);
+
   const titleCell = worksheet.getCell('A1');
-  titleCell.value = `Список методических рекомендаций кафедры «${reportData.departmentName || ''}» за период ${startYear} - ${endYear} гг.`;
+  titleCell.value = showReissueColumn
+    ? `${reportData.departmentName || ''}. Потребность в переиздании материалов за период ${startYear} - ${endYear} гг. на ${targetYear} год`
+    : `${reportData.departmentName || ''}. Отчет по дисциплинам за период ${startYear} - ${endYear} гг.`;
   titleCell.font = { name: 'Arial', size: 13, bold: true };
   titleCell.alignment = { vertical: 'middle', horizontal: 'left' };
   worksheet.getRow(1).height = 35;
 
+  // ✅ Динамическая шапка
   const headers = [
     'Дисциплина',
+    ...(showReissueColumn ? ['Требуется переиздание'] : []),
     'Библиография',
     'Год начала подготовки',
     'Ссылка в электронной библиотеке',
@@ -905,7 +927,7 @@ export const generateDepartmentDisciplinesExcelReport = async (reportData, start
     if (hasMaterials) {
       rowGroup.materials.forEach((material, mIndex) => {
         const row = worksheet.getRow(currentExcelRow);
-        row.height = 90; 
+        row.height = 90;
 
         if (mIndex === 0) {
           const disciplineCell = row.getCell(1);
@@ -914,7 +936,28 @@ export const generateDepartmentDisciplinesExcelReport = async (reportData, start
           disciplineCell.alignment = { vertical: 'top', horizontal: 'left', wrapText: true };
         }
 
-        const bibCell = row.getCell(2);
+        if (showReissueColumn) {
+          const reissueCell = row.getCell(2);
+          reissueCell.value = material.needsReissue ? 'Да' : 'Нет';
+          reissueCell.font = {
+            name: 'Arial',
+            size: 10,
+            bold: material.needsReissue,
+            color: material.needsReissue
+              ? { argb: 'FFD32F2F' }
+              : { argb: 'FF2E7D32' }
+          };
+          if (material.needsReissue) {
+            reissueCell.fill = {
+              type: 'pattern',
+              pattern: 'solid',
+              fgColor: { argb: 'FFFFF2F2' }
+            };
+          }
+          reissueCell.alignment = { vertical: 'middle', horizontal: 'center' };
+        }
+
+        const bibCell = row.getCell(2 + colOffset);
         const richTextValue = [];
 
         if (material.title) {
@@ -934,12 +977,12 @@ export const generateDepartmentDisciplinesExcelReport = async (reportData, start
         bibCell.value = { richText: richTextValue };
         bibCell.alignment = { vertical: 'top', horizontal: 'left', wrapText: true };
 
-        const yearCell = row.getCell(3);
+        const yearCell = row.getCell(3 + colOffset);
         yearCell.value = rowGroup.yearStartBound;
         yearCell.font = { name: 'Arial', size: 10 };
         yearCell.alignment = { vertical: 'top', horizontal: 'center', wrapText: true };
 
-        const uriCell = row.getCell(4);
+        const uriCell = row.getCell(4 + colOffset);
         if (material.uri) {
           uriCell.value = { text: material.uri, hyperlink: material.uri };
           uriCell.font = { name: 'Arial', size: 10, color: { argb: 'FF0066CC' }, underline: true };
@@ -948,16 +991,16 @@ export const generateDepartmentDisciplinesExcelReport = async (reportData, start
         }
         uriCell.alignment = { vertical: 'top', horizontal: 'left', wrapText: true };
 
-        const pdfCell = row.getCell(5);
+        const pdfCell = row.getCell(5 + colOffset);
         if (material.fileLink) {
-          pdfCell.value = { text: 'Ссылка на материал (PDF)', hyperlink: material.fileLink };
+          pdfCell.value = { text: material.fileLink, hyperlink: material.fileLink };
           pdfCell.font = { name: 'Arial', size: 10, color: { argb: 'FFD32F2F' }, underline: true };
         } else {
           pdfCell.value = '—';
         }
         pdfCell.alignment = { vertical: 'top', horizontal: 'center', wrapText: true };
 
-        for (let c = 1; c <= 5; c++) {
+        for (let c = 1; c <= totalColumns; c++) {
           row.getCell(c).border = getThinBorders();
         }
 
@@ -972,23 +1015,28 @@ export const generateDepartmentDisciplinesExcelReport = async (reportData, start
       disciplineCell.font = { name: 'Arial', size: 10, bold: true };
       disciplineCell.alignment = { vertical: 'top', horizontal: 'left', wrapText: true };
 
-      const bibCell = row.getCell(2);
-      bibCell.value = 'Методические материалы по данной дисциплине не найдены';
+      if (showReissueColumn) {
+        row.getCell(2).value = '—';
+        row.getCell(2).alignment = { vertical: 'middle', horizontal: 'center' };
+      }
+
+      const bibCell = row.getCell(2 + colOffset);
+      bibCell.value = 'Учебно-методические материалы по данной дисциплине не найдены';
       bibCell.font = { name: 'Arial', size: 10, italic: true, color: { argb: 'FF757575' } };
       bibCell.alignment = { vertical: 'top', horizontal: 'left', wrapText: true };
 
-      const yearCell = row.getCell(3);
+      const yearCell = row.getCell(3 + colOffset);
       yearCell.value = rowGroup.yearStartBound;
       yearCell.font = { name: 'Arial', size: 10 };
       yearCell.alignment = { vertical: 'top', horizontal: 'center', wrapText: true };
 
-      row.getCell(4).value = '—';
-      row.getCell(4).alignment = { vertical: 'top', horizontal: 'center' };
+      row.getCell(4 + colOffset).value = '—';
+      row.getCell(4 + colOffset).alignment = { vertical: 'top', horizontal: 'center' };
 
-      row.getCell(5).value = '—';
-      row.getCell(5).alignment = { vertical: 'top', horizontal: 'center' };
+      row.getCell(5 + colOffset).value = '—';
+      row.getCell(5 + colOffset).alignment = { vertical: 'top', horizontal: 'center' };
 
-      for (let c = 1; c <= 5; c++) {
+      for (let c = 1; c <= totalColumns; c++) {
         row.getCell(c).border = getThinBorders();
       }
 
@@ -996,10 +1044,13 @@ export const generateDepartmentDisciplinesExcelReport = async (reportData, start
     }
 
     if (totalRowsForDiscipline > 1) {
+      const yearColLetter = worksheet.getColumn(3 + colOffset).letter;
+
       worksheet.mergeCells(`A${startRow}:A${endRow}`);
-      worksheet.mergeCells(`C${startRow}:C${endRow}`);
+      worksheet.mergeCells(`${yearColLetter}${startRow}:${yearColLetter}${endRow}`);
+
       worksheet.getCell(`A${startRow}`).alignment = { vertical: 'top', horizontal: 'left', wrapText: true };
-      worksheet.getCell(`C${startRow}`).alignment = { vertical: 'top', horizontal: 'center', wrapText: true };
+      worksheet.getCell(`${yearColLetter}${startRow}`).alignment = { vertical: 'top', horizontal: 'center', wrapText: true };
     }
   });
 

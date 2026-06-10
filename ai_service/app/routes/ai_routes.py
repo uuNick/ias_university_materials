@@ -1,11 +1,13 @@
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+import logging
 from typing import List
 from app.providers.model_loader import ModelLoader
 from app.services.reindex_service import ReindexService
 from app.services.search_service import SearchService
+from app.services.similarity_service import SimilarityService
 from app.repositories.material_repository import MaterialRepository
 from app.providers.database import DatabaseManager
-from app.schemas.schemas import SearchRequest, SearchResult, ReindexResponse
+from app.routes.schemas import SearchRequest, SearchResult, ReindexResponse, SimilarityRequest
 
 router = APIRouter(prefix="/api/ai", tags=["AI Operations"])
 
@@ -22,6 +24,12 @@ def get_reindex_service():
     repo = MaterialRepository(db)
     model = ModelLoader.get_model()
     return ReindexService(repo, model)
+
+
+def get_similarity_service():
+    db = DatabaseManager()
+    repo = MaterialRepository(db)
+    return SimilarityService(repo)
 
 
 @router.post("/reindex", response_model=ReindexResponse)
@@ -49,3 +57,29 @@ async def semantic_search(
         ]
     except Exception:
         raise HTTPException(status_code=500, detail="Ошибка при выполнении поиска")
+
+
+@router.post("/similarity", response_model=List[SearchResult])
+async def get_similar_materials_by_id(
+        request: SimilarityRequest,
+        service: SimilarityService = Depends(get_similarity_service)
+):
+    try:
+        results = service.get_similar_materials(
+            material_id=request.material_id,
+            limit=request.limit
+        )
+
+        return [
+            SearchResult(
+                material_id=item["material_id"],
+                similarity=item["similarity"]
+            )
+            for item in results
+        ]
+    except Exception as e:
+        logging.error(f"Ошибка в эндпоинте similarity: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail="Ошибка при получении похожих материалов"
+        )

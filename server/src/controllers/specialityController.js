@@ -1,35 +1,35 @@
-import { specialityRepository } from '../repositories/specialityRepository.js';
+import { specialtyRepository } from '../repositories/specialtyRepository.js';
 import { departmentRepository } from '../repositories/departmentRepository.js';
 import * as SpecCases from '../use-cases/specialityUseCases.js';
 import { asyncHandler } from '../middleware/asyncHandler.js';
 
 export const getAllSpecialities = asyncHandler(async (req, res) => {
-  const data = await SpecCases.getAllSpecialitiesUseCase(specialityRepository);
+  const data = await SpecCases.getAllSpecialitiesUseCase(specialtyRepository);
   res.json(data);
 });
 
 export const getWithMaterials = asyncHandler(async (req, res) => {
-  const data = await SpecCases.getSpecialtiesWithMaterials(specialityRepository);
+  const data = await SpecCases.getSpecialtiesWithMaterials(specialtyRepository);
   res.json(data);
 })
 
 export const getSpecialityByCode = asyncHandler(async (req, res) => {
-  const spec = await SpecCases.getSpecialityByCodeUseCase(req.params.code, specialityRepository);
+  const spec = await SpecCases.getSpecialityByCodeUseCase(req.params.code, specialtyRepository);
   res.json(spec);
 });
 
 export const createSpeciality = asyncHandler(async (req, res) => {
-  const newSpec = await SpecCases.createSpecialityUseCase(req.body, specialityRepository);
+  const newSpec = await SpecCases.createSpecialityUseCase(req.body, specialtyRepository);
   res.status(201).json(newSpec);
 });
 
 export const updateSpeciality = asyncHandler(async (req, res) => {
-  const updated = await SpecCases.updateSpecialityUseCase(req.params.code, req.body, specialityRepository);
+  const updated = await SpecCases.updateSpecialityUseCase(req.params.code, req.body, specialtyRepository);
   res.json(updated);
 });
 
 export const deleteSpeciality = asyncHandler(async (req, res) => {
-  await SpecCases.deleteSpecialityUseCase(req.params.code, specialityRepository);
+  await SpecCases.deleteSpecialityUseCase(req.params.code, specialtyRepository);
   res.status(204).send();
 });
 
@@ -37,14 +37,14 @@ export const getSpecialityReportByYear = asyncHandler(async (req, res) => {
   const { startYear, endYear } = req.query;
   const result = await SpecCases.getSpecialityReportByYearUseCase(
     { startYear, endYear },
-    specialityRepository
+    specialtyRepository
   );
   res.json(result);
 });
 
 export const getSpecialtyReport = asyncHandler(async (req, res) => {
   const { spec_code, startYear, endYear } = req.query;
-  const report = await SpecCases.GetSpecialtyMaterialsUseCase(spec_code, startYear, endYear, specialityRepository);
+  const report = await SpecCases.GetSpecialtyMaterialsUseCase(spec_code, startYear, endYear, specialtyRepository);
   res.json(report);
 });
 
@@ -55,12 +55,16 @@ export const getSpecialtyDisciplinesWithMaterialsReport = asyncHandler(async (re
     specCode,
     startYear,
     endYear,
-  }, req.user, specialityRepository, departmentRepository);
+  }, req.user, specialtyRepository, departmentRepository);
 
   return res.status(200).json(reportData);
 });
 
-export const exportSpecialtyDepartmentWithMaterialsReportExcel = asyncHandler(async (req, res) => {
+//---------------------------------
+//---------EXPORT EXCEL------------
+//---------------------------------
+
+export const exportSpecialtyDepartmentWithMaterialsReportToExcel = asyncHandler(async (req, res) => {
   const params = {
     specCode: req.query.specCode,
     startYear: req.query.startYear,
@@ -72,7 +76,7 @@ export const exportSpecialtyDepartmentWithMaterialsReportExcel = asyncHandler(as
   const { buffer, filename } = await SpecCases.exportSpecialityDisciplinesWithMaterialsReportToExcel(
     params,
     currentUser,
-    specialityRepository,
+    specialtyRepository,
     departmentRepository
   );
 
@@ -88,14 +92,14 @@ export const exportSpecialtyDepartmentWithMaterialsReportExcel = asyncHandler(as
   return res.status(200).send(buffer);
 });
 
-export const exportSpecialtyMaterialsReportExcel = asyncHandler(async (req, res) => {
+export const exportSpecialtyMaterialsReportToExcel = asyncHandler(async (req, res) => {
   const { specCode, startYear, endYear } = req.query;
 
   const { buffer, filename } = await SpecCases.exportSpecialtyMaterialsToExcelUseCase(
     specCode,
     startYear,
     endYear,
-    specialityRepository
+    specialtyRepository
   );
 
   res.setHeader(
@@ -109,3 +113,42 @@ export const exportSpecialtyMaterialsReportExcel = asyncHandler(async (req, res)
 
   return res.status(200).send(buffer);
 });
+
+//---------------------------------
+//---------EXPORT WORD-------------
+//---------------------------------
+
+export const exportSpecialtyMaterialsReportToWord = asyncHandler(async (req, res) => {
+
+  const result = await SpecCases.exportSpecialtyMaterialsToWordUseCase(req.query, specialtyRepository);
+
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  );
+
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename*=UTF-8''${encodeURIComponent(result.filename)}`
+  );
+
+  res.send(result.buffer);
+});
+
+export const exportSpecialtyDepartmentWithMaterialsReportToWord = asyncHandler(async (req, res) => {
+
+  const result = await SpecCases.exportSpecialtyDisciplinesToWordUseCase(req.query, req.user, specialtyRepository, departmentRepository);
+
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  );
+
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename*=UTF-8''${encodeURIComponent(result.filename)}`
+  );
+
+  res.send(result.buffer);
+});
+

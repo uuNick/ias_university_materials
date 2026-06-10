@@ -1,6 +1,7 @@
 import { NotFoundError, BadRequestError, ConflictError, ForbiddenError } from "../errors/CommonErrors.js";
 import { ROLES } from "../config/roles.js";
-import {generateDepartmentMaterialsExcel} from '../services/excelService.js';
+import { generateDepartmentMaterialsExcel } from '../services/excelService.js';
+import { generateDepartmentMaterialsWord } from '../services/wordService.js';
 
 export const getMaterialByIdUseCase = async (id, currentUser, repository) => {
   if (!id) {
@@ -209,7 +210,11 @@ export const getDepartmentMaterialsUseCase = async (materialRepository, currentU
   return sortedGroupedByYear;
 };
 
-export const exportDepartmentMaterialsToExcelUseCase = async (filters, materialRepository, currentUser, departmentName ) => {
+//---------------------------------
+//---------EXPORT EXCEL------------
+//---------------------------------
+
+export const exportDepartmentMaterialsToExcelUseCase = async (filters, materialRepository, currentUser, departmentName) => {
   if (!currentUser) {
     throw new Error('Пользователь не авторизован');
   }
@@ -223,4 +228,20 @@ export const exportDepartmentMaterialsToExcelUseCase = async (filters, materialR
   const buffer = await generateDepartmentMaterialsExcel(data, departmentName);
 
   return buffer;
+};
+
+//---------------------------------
+//---------EXPORT WORD-------------
+//---------------------------------
+
+export const exportDepartmentMaterialsToWordUseCase = async (materialRepository, currentUser, filters, departmentName) => {
+
+  const groupedData = await getDepartmentMaterialsUseCase(materialRepository, currentUser, filters);
+
+  const buffer = await generateDepartmentMaterialsWord(groupedData, departmentName, filters.yearFrom, filters.yearTo);
+
+  return {
+    buffer,
+    filename: `Department_Materials_Word_Report_${filters.yearFrom || "all"}-${filters.yearTo || "all"}.docx`
+  };
 };

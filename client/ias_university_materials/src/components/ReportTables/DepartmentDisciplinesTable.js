@@ -11,20 +11,27 @@ import {
     IconButton,
     Tooltip,
     Typography,
-    Box
+    Box,
+    Chip
 } from '@mui/material';
 import {
     Launch as LaunchIcon,
     GetApp as DownloadIcon,
     MenuBook as BookIcon,
-    WarningAmber as WarningIcon
+    WarningAmber as WarningIcon,
+    CheckCircleOutline as SuccessIcon
 } from '@mui/icons-material';
 
-const DepartmentDisciplinesTable = ({ data }) => {
-    const report = data?.data || data;
-    const rows = report?.rows || [];
+const DepartmentDisciplinesTable = ({ data, showReissueColumn = false }) => {
+    const rawData = data?.data ?? data;
 
-    if (!report || rows.length === 0) {
+    // 2. Проверяем: если нам пришел объект с полем rows — берем его, иначе работаем с ним как с массивом напрямую
+    const rows = Array.isArray(rawData) ? rawData : (rawData?.rows || []);
+
+    // 3. Лог для контроля структуры в консоли браузера
+    console.log("Обработанные строки для таблицы:", rows);
+
+    if (!rows || rows.length === 0) {
         return (
             <Box sx={{ p: 4, textAlign: 'center' }}>
                 <WarningIcon color="warning" sx={{ fontSize: '3rem', mb: 1 }} />
@@ -40,9 +47,19 @@ const DepartmentDisciplinesTable = ({ data }) => {
             <Table sx={{ minWidth: 700 }} aria-label="department disciplines report table">
                 <TableHead sx={{ backgroundColor: '#f0f4f8' }}>
                     <TableRow>
-                        <TableCell sx={{ fontWeight: 'bold', width: '25%' }}>Дисциплина</TableCell>
-                        <TableCell sx={{ fontWeight: 'bold', width: '45%' }}>Библиография</TableCell>
-                        <TableCell align="center" sx={{ fontWeight: 'bold', width: '120px' }}>Год начала подготовки</TableCell>
+                        {/* Задаем фиксированную ширину в пикселях */}
+                        <TableCell sx={{ fontWeight: 'bold', width: '200px' }}>Дисциплина</TableCell>
+
+                        {showReissueColumn && (
+                            <TableCell align="center" sx={{ fontWeight: 'bold', width: '120px' }}>
+                                Требуется переиздание
+                            </TableCell>
+                        )}
+
+                        {/* Убираем width полностью, чтобы колонка тянулась и занимала максимум места */}
+                        <TableCell sx={{ fontWeight: 'bold' }}>Библиография</TableCell>
+
+                        <TableCell align="center" sx={{ fontWeight: 'bold', width: '120px' }}>Год издания</TableCell>
                         <TableCell align="center" sx={{ fontWeight: 'bold', width: '140px' }}>Ссылки</TableCell>
                     </TableRow>
                 </TableHead>
@@ -66,8 +83,37 @@ const DepartmentDisciplinesTable = ({ data }) => {
                                         {rowGroup.disciplineName}
                                     </TableCell>
 
+
                                     {hasMaterials ? (
                                         <>
+                                            {showReissueColumn && (
+                                                <TableCell
+                                                    align="center"
+                                                    sx={{
+                                                        verticalAlign: 'middle',
+                                                        backgroundColor: rowGroup.materials[0].needsReissue ? '#fff5f5' : 'inherit'
+                                                    }}
+                                                >
+                                                    {rowGroup.materials[0].needsReissue ? (
+                                                        <Chip
+                                                            icon={<WarningIcon style={{ color: '#d32f2f' }} />}
+                                                            label="Да"
+                                                            color="error"
+                                                            size="small"
+                                                            variant="outlined"
+                                                            sx={{ fontWeight: 'bold' }}
+                                                        />
+                                                    ) : (
+                                                        <Chip
+                                                            icon={<SuccessIcon style={{ color: '#2e7d32' }} />}
+                                                            label="Нет"
+                                                            color="success"
+                                                            size="small"
+                                                            variant="outlined"
+                                                        />
+                                                    )}
+                                                </TableCell>
+                                            )}
                                             <TableCell sx={{ verticalAlign: 'top' }}>
                                                 <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>
                                                     <BookIcon color="action" sx={{ mt: 0.3, fontSize: '1.1rem' }} />
@@ -83,7 +129,7 @@ const DepartmentDisciplinesTable = ({ data }) => {
                                             </TableCell>
                                             <TableCell align="center" sx={{ verticalAlign: 'top' }}>
                                                 <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                                                    {rowGroup.yearStartBound}
+                                                    {rowGroup.materials[0].issuedYear}
                                                 </Typography>
                                             </TableCell>
                                             <TableCell align="center" sx={{ verticalAlign: 'top' }}>
@@ -121,12 +167,15 @@ const DepartmentDisciplinesTable = ({ data }) => {
                                         </>
                                     ) : (
                                         <>
+                                            {showReissueColumn && (
+                                                <TableCell align="center" sx={{ color: 'text.secondary' }}>—</TableCell>
+                                            )}
                                             <TableCell sx={{ fontStyle: 'italic', color: 'text.secondary' }}>
-                                                Методические материалы по данной дисциплине не найдены
+                                                Учебно-методические материалы по данной дисциплине не найдены
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                                                    {rowGroup.yearStartBound}
+                                                <Typography variant="body2">
+                                                    —
                                                 </Typography>
                                             </TableCell>
                                             <TableCell align="center">—</TableCell>
@@ -136,6 +185,34 @@ const DepartmentDisciplinesTable = ({ data }) => {
 
                                 {hasMaterials && rowGroup.materials.slice(1).map((material, mIndex) => (
                                     <TableRow key={`material-${material.id}-${mIndex}`} hover>
+                                        {showReissueColumn && (
+                                            <TableCell
+                                                align="center"
+                                                sx={{
+                                                    verticalAlign: 'middle',
+                                                    backgroundColor: material.needsReissue ? '#fff5f5' : 'inherit'
+                                                }}
+                                            >
+                                                {material.needsReissue ? (
+                                                    <Chip
+                                                        icon={<WarningIcon style={{ color: '#d32f2f' }} />}
+                                                        label="Да"
+                                                        color="error"
+                                                        size="small"
+                                                        variant="outlined"
+                                                        sx={{ fontWeight: 'bold' }}
+                                                    />
+                                                ) : (
+                                                    <Chip
+                                                        icon={<SuccessIcon style={{ color: '#2e7d32' }} />}
+                                                        label="Нет"
+                                                        color="success"
+                                                        size="small"
+                                                        variant="outlined"
+                                                    />
+                                                )}
+                                            </TableCell>
+                                        )}
                                         <TableCell sx={{ verticalAlign: 'top' }}>
                                             <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>
                                                 <BookIcon color="action" sx={{ mt: 0.3, fontSize: '1.1rem' }} />
@@ -151,7 +228,7 @@ const DepartmentDisciplinesTable = ({ data }) => {
                                         </TableCell>
                                         <TableCell align="center" sx={{ verticalAlign: 'top' }}>
                                             <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                                                {rowGroup.yearStartBound}
+                                                {material.issuedYear}
                                             </Typography>
                                         </TableCell>
                                         <TableCell align="center" sx={{ verticalAlign: 'top' }}>

@@ -18,7 +18,7 @@ class ReindexService:
                 logger.warning("В таблице materials нет данных")
                 return
 
-            logger.info(f"Запуск процесса переиндексации")
+            logger.info(f"Запуск процесса векторизации")
             logger.info(f"Найдено материалов для обработки: {total_count}")
 
             processed_count = 0
@@ -34,6 +34,7 @@ class ReindexService:
                 # Генерация эмбеддингов для каждого материала в пакете
                 for row in batch_materials:
                     m_id, title, specs = row
+                    logger.info(row)
                     full_text = f"{title}. {specs}"
                     clean_text = " ".join(full_text.split())
                     vector = self.model.encode(clean_text).tolist()

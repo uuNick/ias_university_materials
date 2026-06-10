@@ -85,10 +85,10 @@ const excelService = {
             throw error;
         }
     },
-    downloaDepartmentDisciplinesExcel: async (departmentName, startYear, endYear) => {
+    downloaDepartmentDisciplinesExcel: async (departmentName, startYear, endYear, targetYear, showReissueColumn) => {
         try {
             const response = await axiosInstance.get('/departments/export_excel/disciplines', {
-                params: { departmentName, startYear, endYear },
+                params: { departmentName, startYear, endYear, targetYear, showReissueColumn },
                 responseType: 'blob'
             });
             return response.data;

@@ -1,7 +1,10 @@
 import { createDatabaseBackup } from '../utils/backupService.js';
 import { asyncHandler } from '../middleware/asyncHandler.js';
+import socketServerInstance from '../websocket/socketServer.js';
 import fs from 'fs';
 import axios from 'axios';
+
+let parserLogsCache = [];
 
 export const downloadBackup = asyncHandler(async (req, res) => {
     
@@ -32,3 +35,30 @@ export const runParser = asyncHandler(async (req, res) => {
         });
     }
 });
+
+export const handleParserWebhookLog = async (req, res, next) => {
+  try {
+    const { level, message, timestamp } = req.body;
+
+    const logEntry = {
+      level: level || 'INFO',
+      message: message,
+      timestamp: timestamp || new Date().toISOString()
+    };
+
+    parserLogsCache.push(logEntry);
+    if (parserLogsCache.length > 500) {
+      parserLogsCache.shift();
+    }
+
+    socketServerInstance.emitParserLog(logEntry);
+
+    return res.status(200).json({ status: 'success' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getInitialLogs = (req, res) => {
+  return res.status(200).json(parserLogsCache);
+};

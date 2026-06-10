@@ -13,18 +13,71 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const LineChart = ({ chartData }) => {
+const LineChart = ({ chartData, title }) => {
+  // const options = {
+  //   responsive: true,
+  //   maintainAspectRatio: false,
+  //   plugins: {
+  //     datalabels: {
+  //       anchor: 'end',
+  //       align: 'top',
+  //       offset: 1,
+  //       font: {
+  //         size: 10,
+  //         weight: 'bold'
+  //       },
+  //       color: '#444'
+  //     },
+  //     legend: {
+  //       position: 'top',
+  //     }
+  //   },
+  //   scales: {
+  //     y: {
+  //       beginAtZero: true,
+  //       grace: '5%'
+  //     }
+  //   }
+  // };
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'top' },
-      title: { display: true, text: 'Динамика выпуска материалов по годам' },
+      legend: {
+        display: true,
+        position: 'top'
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: false
+      },
+      datalabels: false,
+      title: {
+        display: Boolean(title),
+        text: title,
+        align: 'center',
+        color: '#111827',
+        font: {
+          size: 18,
+          weight: 'bold'
+        },
+        padding: {
+          top: 10,
+          bottom: 20
+        }
+      }
+    },
+    interaction: {
+      mode: 'index',
+      intersect: false
     },
     scales: {
-      y: { beginAtZero: true }
+      y: {
+        beginAtZero: true
+      }
     }
   };
+
 
   return <Line data={chartData} options={options} />;
 };

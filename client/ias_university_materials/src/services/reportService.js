@@ -21,6 +21,17 @@ const reportService = {
             throw error;
         }
     },
+    getDepartmentMaterialsByFaculty: async (facultyName, startYear, endYear) => {
+        try {
+            console.log(facultyName)
+            const response = await axiosInstance.get('/faculties/report/faculty_departments', {
+                params: { facultyName, startYear, endYear }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
     getTopAuthors: async (limit = 10) => {
         try {
             const response = await axiosInstance.get('/authors/report/top_authors', {
@@ -79,10 +90,11 @@ const reportService = {
             throw error;
         }
     },
-    getDepartmentDisciplines: async (departmentName, startYear, endYear) => {
+    getDepartmentDisciplines: async (departmentName, startYear, endYear, targetYear) => {
         try {
+            console.log(departmentName)
             const response = await axiosInstance.get('/departments/report/disciplines', {
-                params: { departmentName, startYear, endYear }
+                params: { departmentName, startYear, endYear, targetYear }
             })
             return response.data;
         } catch (error) {
@@ -90,7 +102,29 @@ const reportService = {
             throw error;
         }
     },
-    
+    getDepartmentMaterialsCount: async (startYear, endYear, facultyId = null) => {
+        try {
+            const response = await axiosInstance.get('/departments/report/department_activity', {
+                params: { startYear, endYear, facultyId }
+            });
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
+    getDepartmentAuthorsActivity: async (departmentId, startYear, endYear) => {
+        try {
+            const response = await axiosInstance.get('/departments/report/department_authors_activity', {
+                params: { departmentId, startYear, endYear }
+            });
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
 };
 
 export default reportService;

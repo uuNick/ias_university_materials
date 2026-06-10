@@ -18,7 +18,7 @@ const DepartmentAutoComplete = ({ facultyId, allDepartments = false, value, onCh
         const fetchDepartments = async () => {
             setLoading(true);
             try {
-                const responseData = allDepartments 
+                const responseData = allDepartments
                     ? await departmentService.getAllDepartments()
                     : await departmentService.getAllDepartmentsByFacultyId(facultyId);
 
@@ -53,11 +53,13 @@ const DepartmentAutoComplete = ({ facultyId, allDepartments = false, value, onCh
             size='small'
             onOpen={() => setOpen(true)}
             onClose={() => setOpen(false)}
-            value={options.find((opt) => opt.name === value) || null}
+            value={value}
             onChange={(event, newValue) => {
-                onChange(newValue ? newValue.name : '');
+                onChange(newValue);
             }}
-            isOptionEqualToValue={(option, val) => option.name === val.name}
+            isOptionEqualToValue={(option, val) =>
+                String(option?.id) === String(val?.id)
+            }
             getOptionLabel={(option) => option.name || ''}
             options={options}
             loading={loading}

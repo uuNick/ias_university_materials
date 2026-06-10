@@ -25,11 +25,13 @@ import {
     Description as WordIcon,
     PictureAsPdf as PdfIcon,
     TableChart as ExcelIcon,
-    Search as SearchIcon
+    Search as SearchIcon,
+    Code as JsonIcon
 } from '@mui/icons-material';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import reportService from '../services/reportService';
 import excelService from '../services/excelService';
+import wordService from '../services/wordService';
 import specialtyService from '../services/specialtyService';
 import FacultyDepTable from '../components/ReportTables/FacultyDepTable';
 import FacultyTable from '../components/ReportTables/FacultyTable';
@@ -58,7 +60,8 @@ const ReportsPage = () => {
     const [authorName, setAuthorName] = useState('');
     const [selectedSpecialty, setSelectedSpecialty] = useState(null);
     const [selectedAuthor, setSelectedAuthor] = useState(null);
-    const [selectedDepartmentName, setSelectedDepartmentName] = useState('');
+    const [selectedDepartment, setSelectedDepartment] = useState(null);
+    const [targetYear, setTargetYear] = useState(2026);
 
     const roleName = localStorage.getItem('role');
     const currentUser = (() => {
@@ -72,16 +75,20 @@ const ReportsPage = () => {
     })();
 
     useEffect(() => {
-        if (roleName === ROLES.DEPARTMENT && currentUser?.departmentName) {
-            setSelectedDepartmentName(currentUser.departmentName);
+        if (roleName === ROLES.DEPARTMENT && currentUser?.department_id) {
+            setSelectedDepartment({
+                id: currentUser.department_id,
+                name: currentUser.departmentName
+            });
         } else {
-            setSelectedDepartmentName('');
+            setSelectedDepartment(null);
         }
         setReportData(null);
         setError(null);
     }, [reportType, roleName]);
 
     const availableYears = Array.from({ length: 12 }, (_, i) => 2015 + i);
+    const targetYearsList = Array.from({ length: 5 }, (_, i) => 2026 + i);
 
     const handleGenerateReport = async () => {
         setError(null);
@@ -97,7 +104,6 @@ const ReportsPage = () => {
                 data = await reportService.getMaterialsByFaculty(startYear, endYear);
             } else if (reportType === 'department') {
                 data = await reportService.getMaterialsByYearWithDepartments(startYear, endYear);
-                console.log(data);
             } else if (reportType === 'authors') {
                 data = await reportService.getTopAuthors(authorLimit);
             } else if (reportType === 'author_materials') {
@@ -123,13 +129,13 @@ const ReportsPage = () => {
             else if (reportType === 'specialty_disciplines_with_materials') {
                 data = await reportService.getSpecialtyDisciplinesWithMaterials(selectedSpecialty.code, startYear, endYear);
             }
-            else if (reportType === 'department_disciplines') {
-                if (!selectedDepartmentName) {
+            else if (reportType === 'department_disciplines' || reportType === 'reissue_needs') {
+                if (!selectedDepartment) {
                     setError('Необходимо указать название кафедры для формирования данного отчета');
                     setLoading(false);
                     return;
                 }
-                data = await reportService.getDepartmentDisciplines(selectedDepartmentName, startYear, endYear);
+                data = await reportService.getDepartmentDisciplines(selectedDepartment.name, startYear, endYear, targetYear);
             }
             console.log(data);
             setReportData(data);
@@ -166,14 +172,42 @@ const ReportsPage = () => {
     };
 
     const handleExport = async (format) => {
-        if (format !== 'Excel') {
-            alert(`Экспорт в ${format} пока находится в разработке`);
+        const currentAuthorName = selectedAuthor ? selectedAuthor.name : authorName;
+
+        if (reportType === 'author_materials' && (!currentAuthorName || !currentAuthorName.trim())) {
+            setError('Выберите автора для поиска');
             return;
         }
 
-        const currentAuthorName = selectedAuthor ? selectedAuthor.name : authorName;
-        if (reportType === 'author_materials' && (!currentAuthorName || !currentAuthorName.trim())) {
-            setError('Выберите автора для поиска');
+        if (format === 'JSON') {
+            try {
+                setLoading(true);
+                setError(null);
+
+                if (!reportData || (reportData.rows && reportData.rows.length === 0)) {
+                    setError('Нет данных для экспорта в JSON');
+                    return;
+                }
+
+                const jsonString = JSON.stringify(reportData, null, 2);
+                const blob = new Blob([jsonString], { type: 'application/json' });
+                const downloadUrl = window.URL.createObjectURL(blob);
+
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                link.download = `${reportType}_report_${startYear || 'all'}_${endYear || 'all'}.json`;
+
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(downloadUrl);
+
+            } catch (err) {
+                console.error(err);
+                setError('Не удалось экспортировать отчет в формат JSON');
+            } finally {
+                setLoading(false);
+            }
             return;
         }
 
@@ -183,44 +217,98 @@ const ReportsPage = () => {
 
             let blobData;
             let fileName = '';
+            const isWord = format === 'Word';
 
             if (reportType === 'faculty') {
-                blobData = await excelService.downloadFacultyReportExcel(startYear, endYear);
-                fileName = `faculty_report_${startYear}_${endYear}.xlsx`;
+                if (isWord) {
+                    blobData = await wordService.downloadFacultyReportWord(startYear, endYear);
+                    fileName = `faculty_word_report_${startYear}_${endYear}.docx`;
+                } else {
+                    blobData = await excelService.downloadFacultyReportExcel(startYear, endYear);
+                    fileName = `faculty_excel_report_${startYear}_${endYear}.xlsx`;
+                }
             }
             else if (reportType === 'department') {
-                blobData = await excelService.downloadFacultyDepReportExcel(startYear, endYear);
-                fileName = `faculty_with_departments_report_${startYear}_${endYear}.xlsx`;
+                if (isWord) {
+                    blobData = await wordService.downloadFacultyDepReportWord(startYear, endYear);
+                    fileName = `faculty_with_departments_word_report_${startYear}_${endYear}.docx`;
+                } else {
+                    blobData = await excelService.downloadFacultyDepReportExcel(startYear, endYear);
+                    fileName = `faculty_with_departments_excel_report_${startYear}_${endYear}.xlsx`;
+                }
             }
             else if (reportType === 'authors') {
-                blobData = await excelService.downloadTopAuthorsExcel(authorLimit);
-                fileName = `top_${authorLimit}_authors_report.xlsx`;
+                if (isWord) {
+                    blobData = await wordService.downloadTopAuthorsWord(authorLimit);
+                    fileName = `top_${authorLimit}_authors_word_report.docx`;
+                } else {
+                    blobData = await excelService.downloadTopAuthorsExcel(authorLimit);
+                    fileName = `top_${authorLimit}_authors_excel_report.xlsx`;
+                }
             }
             else if (reportType === 'author_materials') {
-                blobData = await excelService.downloadAuthorMaterialsExcel(currentAuthorName, startYear, endYear);
-                fileName = `author_materials_report_${startYear}_${endYear}.xlsx`;
+                if (isWord) {
+                    blobData = await wordService.downloadAuthorMaterialsWord(currentAuthorName, startYear, endYear);
+                    fileName = `author_materials_word_report_${startYear}_${endYear}.docx`;
+                } else {
+                    blobData = await excelService.downloadAuthorMaterialsExcel(currentAuthorName, startYear, endYear);
+                    fileName = `author_materials_excel_report_${startYear}_${endYear}.xlsx`;
+                }
             }
             else if (reportType === 'department_materials') {
-                blobData = await excelService.downloaDepartmentMaterialsExcel(startYear, endYear, currentUser.departmentName);
-                fileName = `department_materials_report_${startYear}_${endYear}.xlsx`;
+                if (isWord) {
+                    blobData = await wordService.downloaDepartmentMaterialsWord(startYear, endYear, currentUser.departmentName);
+                    fileName = `department_materials_word_report_${startYear}_${endYear}.docx`;
+                } else {
+                    blobData = await excelService.downloaDepartmentMaterialsExcel(startYear, endYear, currentUser.departmentName);
+                    fileName = `department_materials_excel_report_${startYear}_${endYear}.xlsx`;
+                }
             }
             else if (reportType === 'specialty_disciplines_with_materials') {
-                blobData = await excelService.downloaSpecialtyDepartmentsWithMaterialsExcel(selectedSpecialty.code, startYear, endYear);
-                fileName = `specialty_disciplines_with_materials_report_${startYear}_${endYear}.xlsx`;
+                if (isWord) {
+                    blobData = await wordService.downloaSpecialtyDepartmentsWithMaterialsWord(selectedSpecialty.code, startYear, endYear);
+                    fileName = `specialty_disciplines_with_materials_word_report_${startYear}_${endYear}.docx`;
+                } else {
+                    blobData = await excelService.downloaSpecialtyDepartmentsWithMaterialsExcel(selectedSpecialty.code, startYear, endYear);
+                    fileName = `specialty_disciplines_with_materials_excel_report_${startYear}_${endYear}.xlsx`;
+                }
             }
             else if (reportType === 'specialty_materials') {
-                blobData = await excelService.downloaSpecialtyMaterialsExcel(selectedSpecialty.code, startYear, endYear);
-                fileName = `specialty_materials_report_${startYear}_${endYear}.xlsx`;
+                if (isWord) {
+                    blobData = await wordService.downloaSpecialtyMaterialsWord(selectedSpecialty.code, startYear, endYear);
+                    fileName = `specialty_materials_word_report_${startYear}_${endYear}.docx`;
+                } else {
+                    blobData = await excelService.downloaSpecialtyMaterialsExcel(selectedSpecialty.code, startYear, endYear);
+                    fileName = `specialty_materials_excel_report_${startYear}_${endYear}.xlsx`;
+                }
             }
-            else if (reportType === 'department_disciplines') {
-                blobData = await excelService.downloaDepartmentDisciplinesExcel(selectedDepartmentName, startYear, endYear);
-                fileName = `department_disciplines_report_${startYear}_${endYear}.xlsx`;
+            else if (reportType === 'department_disciplines' || reportType === 'reissue_needs') {
+                if (isWord) {
+                    if (reportType === 'department_disciplines') {
+                        blobData = await wordService.downloaDepartmentDisciplinesWord(selectedDepartment.name, startYear, endYear, targetYear, false);
+                        fileName = `department_disciplines_word_report_${startYear}_${endYear}.docx`;
+                    }
+                    else {
+                        blobData = await wordService.downloaDepartmentDisciplinesWord(selectedDepartment.name, startYear, endYear, targetYear, true);
+                        fileName = `reissue_word_report_${startYear}_${endYear}-${targetYear}.docx`;
+                    }
+                } else {
+                    if(reportType === 'department_disciplines'){
+                        blobData = await excelService.downloaDepartmentDisciplinesExcel(selectedDepartment.name, startYear, endYear, targetYear, false);
+                        fileName = `department_disciplines_report_${startYear}_${endYear}.xlsx`;
+                    }
+                    else{
+                        blobData = await excelService.downloaDepartmentDisciplinesExcel(selectedDepartment.name, startYear, endYear, targetYear, true);
+                        fileName = `reissue_excel_report_${startYear}_${endYear}.xlsx`;
+                    }
+                }
             }
             else {
-                alert(`Экспорт для типа отчета "${reportType}" еще не реализован.`);
+                alert(`Экспорт для типа отчета "${reportType}" в формат ${format} еще не реализован.`);
                 return;
             }
 
+            // Сохраняем полученный файл (функция saveExcelBlob подходит для любых Blob объектов)
             if (blobData) {
                 saveExcelBlob(blobData, fileName);
             }
@@ -255,6 +343,14 @@ const ReportsPage = () => {
             >
                 Экспорт в Excel
             </Button>
+            <Button
+                variant="contained"
+                startIcon={<JsonIcon />}
+                onClick={() => handleExport('JSON')}
+                sx={{ backgroundColor: '#383636', '&:hover': { backgroundColor: '#242323' }, textTransform: 'none' }}
+            >
+                Экспорт в JSON
+            </Button>
         </Stack>
     );
 
@@ -263,7 +359,7 @@ const ReportsPage = () => {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                minHeight: '100vh' 
+                minHeight: '100vh'
             }}
         >
             <Header />
@@ -291,7 +387,8 @@ const ReportsPage = () => {
                                         <MenuItem key="author_materials" value="author_materials">По автору</MenuItem>,
                                         <MenuItem key="department_materials" value="department_materials">Материалы кафедры</MenuItem>,
                                         <MenuItem key="specialty_disciplines_with_materials" value="specialty_disciplines_with_materials">По дисциплинам специальности</MenuItem>,
-                                        <MenuItem key="department_disciplines" value="department_disciplines">Дисциплины кафедры</MenuItem>
+                                        <MenuItem key="department_disciplines" value="department_disciplines">Дисциплины кафедры</MenuItem>,
+                                        <MenuItem key="reissue_needs" value="reissue_needs">Потребность в переиздании</MenuItem>
                                     ]
                                 ) : (
                                     [
@@ -301,7 +398,8 @@ const ReportsPage = () => {
                                         <MenuItem key="author_materials" value="author_materials">По автору</MenuItem>,
                                         <MenuItem key="specialty_materials" value="specialty_materials">По материалам специальности</MenuItem>,
                                         <MenuItem key="specialty_disciplines_with_materials" value="specialty_disciplines_with_materials">По дисциплинам специальности</MenuItem>,
-                                        <MenuItem key="department_disciplines" value="department_disciplines">Дисциплины кафедры</MenuItem>
+                                        <MenuItem key="department_disciplines" value="department_disciplines">Дисциплины кафедры</MenuItem>,
+                                        <MenuItem key="reissue_needs" value="reissue_needs">Потребность в переиздании</MenuItem>
                                     ]
                                 )}
                             </Select>
@@ -334,42 +432,62 @@ const ReportsPage = () => {
                             </Box>
                         )}
 
-                        {reportType === 'department_disciplines' && roleName !== ROLES.DEPARTMENT && (
+                        {(reportType === 'department_disciplines' || reportType === 'reissue_needs') && roleName !== ROLES.DEPARTMENT && (
                             <Box sx={{ minWidth: 350 }}>
                                 <DepartmentAutoComplete
-                                    value={selectedDepartmentName}
-                                    onChange={(newValue) => setSelectedDepartmentName(newValue)}
+                                    value={selectedDepartment}
+                                    onChange={(newValue) => setSelectedDepartment(newValue)}
                                     facultyId={roleName === ROLES.DEANERY ? currentUser?.facultyId : null}
                                     allDepartments={roleName === ROLES.ADMIN || roleName === ROLES.ACADEMIC}
                                 />
                             </Box>
                         )}
 
-                        <FormControl sx={{ minWidth: 120 }} size="small">
-                            <InputLabel>С</InputLabel>
-                            <Select
-                                value={startYear}
-                                label="С года"
-                                onChange={(e) => setStartYear(e.target.value)}
-                            >
-                                {availableYears.map(year => (
-                                    <MenuItem key={year} value={year}>{year}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                        {(reportType != 'authors') && (
+                            <>
+                                <FormControl sx={{ minWidth: 120 }} size="small">
+                                    <InputLabel>С</InputLabel>
+                                    <Select
+                                        value={startYear}
+                                        label="С года"
+                                        onChange={(e) => setStartYear(e.target.value)}
+                                    >
+                                        {availableYears.map(year => (
+                                            <MenuItem key={year} value={year}>{year}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
 
-                        <FormControl sx={{ minWidth: 120 }} size="small">
-                            <InputLabel>По</InputLabel>
-                            <Select
-                                value={endYear}
-                                label="По год"
-                                onChange={(e) => setEndYear(e.target.value)}
-                            >
-                                {availableYears.map(year => (
-                                    <MenuItem key={year} value={year}>{year}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                                <FormControl sx={{ minWidth: 120 }} size="small">
+                                    <InputLabel>По</InputLabel>
+                                    <Select
+                                        value={endYear}
+                                        label="По год"
+                                        onChange={(e) => setEndYear(e.target.value)}
+                                    >
+                                        {availableYears.map(year => (
+                                            <MenuItem key={year} value={year}>{year}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </>
+                        )}
+
+
+                        {reportType === 'reissue_needs' && (
+                            <FormControl sx={{ minWidth: 140 }} size="small">
+                                <InputLabel>Год проверки</InputLabel>
+                                <Select
+                                    value={targetYear}
+                                    label="Год проверки"
+                                    onChange={(e) => setTargetYear(e.target.value)}
+                                >
+                                    {targetYearsList.map(year => (
+                                        <MenuItem key={year} value={year}>{year}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        )}
 
                         <Button
                             variant="contained"
@@ -431,11 +549,12 @@ const ReportsPage = () => {
                                             {reportType === 'faculty' && 'Отчет по факультетам'}
                                             {reportType === 'department' && 'Отчет по факультетам в разрезе кафедр'}
                                             {reportType === 'authors' && 'Отчет по авторам'}
-                                            {reportType === 'author_materials' && `Отчет по одному автору: ${authorName}`}
+                                            {reportType === 'author_materials' && `Отчет по автору: ${authorName}`}
                                             {reportType === 'specialty_materials' && `Отчет по материалам специальности "${selectedSpecialty?.code} - ${selectedSpecialty?.name}"`}
                                             {reportType === 'specialty_disciplines_with_materials' && `Отчет по дисциплинам специальности "${selectedSpecialty?.code} - ${selectedSpecialty?.name}"`}
-                                            {reportType === 'department_materials' && (currentUser?.departmentName ? `${currentUser.departmentName}` : 'Материалы кафедры')}
-                                            {reportType === 'department_disciplines' && (selectedDepartmentName ? `${selectedDepartmentName}` : 'Материалы кафедры')}
+                                            {reportType === 'department_materials' && (currentUser?.departmentName ? `${currentUser.departmentName}. Отчет по материалам` : 'Материалы кафедры')}
+                                            {reportType === 'department_disciplines' && `${selectedDepartment.name}. Отчет по дисциплинам`}
+                                            {reportType === 'reissue_needs' && `${selectedDepartment.name}. Потребность в переиздании на ${targetYear} год`}
                                         </Typography>
                                         <Typography variant="caption" color="textSecondary">
                                             Период: {startYear} — {endYear} гг.
@@ -452,7 +571,12 @@ const ReportsPage = () => {
                                     {reportType === 'specialty_materials' && <SpecialtyMaterialsTable data={reportData} />}
                                     {reportType === 'department_materials' && <MaterialsByDepartmentTable data={reportData} />}
                                     {reportType === 'specialty_disciplines_with_materials' && <SpecialtyDisciplinesWithMaterialsTable data={reportData} />}
-                                    {reportType === 'department_disciplines' && <DepartmentDisciplinesTable data={reportData} />}
+                                    {(reportType === 'department_disciplines' || reportType === 'reissue_needs') && (
+                                        <DepartmentDisciplinesTable
+                                            data={reportData}
+                                            showReissueColumn={reportType === 'reissue_needs'}
+                                        />
+                                    )}
 
                                     {/* Нижние кнопки экспорта (опционально, если таблица длинная) */}
                                     <ExportButtons />

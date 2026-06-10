@@ -40,12 +40,6 @@ const MaterialsByDepartment = ({ data }) => {
                         </TableCell>
                         <TableCell
                             align="center"
-                            sx={{ fontWeight: 'bold', borderRight: '1px solid rgba(224, 224, 224, 1)', width: '15%' }}
-                        >
-                            Вид методических рекомендаций
-                        </TableCell>
-                        <TableCell
-                            align="center"
                             sx={{ fontWeight: 'bold', width: '10%' }}
                         >
                             Год издания
@@ -103,9 +97,6 @@ const MaterialsByDepartment = ({ data }) => {
                                     </TableCell>
                                     <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }}>
                                         {row.authors}
-                                    </TableCell>
-                                    <TableCell align="center" sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }}>
-                                        {row.types || 'Методические указания'}
                                     </TableCell>
                                     <TableCell align="center">
                                         {year}

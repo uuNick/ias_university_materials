@@ -74,7 +74,7 @@ const ForbiddenPage = () => {
                         </Button>
                         <Button
                             variant="contained"
-                            onClick={() => navigate('/catalog')}
+                            onClick={() => navigate('/')}
                             sx={{
                                 bgcolor: '#0056b3',
                                 px: 4,
@@ -85,7 +85,7 @@ const ForbiddenPage = () => {
                                 '&:hover': { bgcolor: '#004494', boxShadow: 'none' },
                             }}
                         >
-                            В каталог
+                            На главную
                         </Button>
                     </Box>
                 </Paper>

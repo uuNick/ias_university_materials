@@ -2,7 +2,7 @@ import { axiosInstance } from "./axiosInstance";
 
 const adminService = {
     downloadDatabaseBackup: async () => {
-        const response = await axiosInstance.get('/admin/backup', {
+        const response = await axiosInstance.post('/admin/backup', {
             responseType: 'blob',
         });
         return response.data;

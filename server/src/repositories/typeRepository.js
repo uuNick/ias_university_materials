@@ -1,4 +1,4 @@
-import prisma from '../repositories/prisma-client.js';
+import prisma from './prisma/prisma-client.js';
 import { Type } from '../entities/Type.js';
 
 export const typeRepository = {

@@ -1,5 +1,6 @@
 import { NotFoundError, BadRequestError, ConflictError, ForbiddenError } from "../errors/CommonErrors.js";
 import { generateFacultyReportExcel, generateFacultyDepReportExcel } from '../services/excelService.js';
+import { generateFacultyReportWord, generateFacultyWithDepartmentsWord } from "../services/wordService.js";
 
 export const createFacultyUseCase = async (data, repository) => {
   if (!data.name || !data.url) throw new BadRequestError('Для создания факультета необходимо указать имя и URL');
@@ -149,6 +150,46 @@ export const getFacultyReportOnYearWithDepartmentsUseCase = async (params, repos
   return Object.values(grouped);
 };
 
+export const getDepartmentMaterialsByFacultyUseCase = async (params, repository) => {
+  const currentYear = new Date().getFullYear();
+  const { facultyName } = params;
+  const startYear = parseInt(params.startYear, 10) || 2020;
+  const endYear = parseInt(params.endYear, 10) || currentYear;
+
+  if (!facultyName) {
+    throw new BadRequestError('Название факультета обязательно для формирования отчета');
+  }
+
+  if (startYear < 2010 || endYear > currentYear) {
+    throw new BadRequestError(`Диапазон дат должен быть в пределах 2010-${currentYear} гг.`);
+  }
+
+  if (startYear > endYear) {
+    throw new BadRequestError('Год начала не может быть больше года окончания');
+  }
+
+  const rawData = await repository.getDepartmentMaterialsByFaculty(facultyName, startYear, endYear);
+
+  if (!rawData || rawData.length === 0) {
+    throw new NotFoundError(`Данные по кафедрам для факультета "${facultyName}" за указанный период не найдены`);
+  }
+
+  // Приведение BigInt полей от БД к обычным Number для корректного JSON.stringify на фронтенде
+  return rawData.map(row => {
+    const formattedRow = { ...row };
+    Object.keys(formattedRow).forEach(key => {
+      if (key !== 'department_name' && key !== 'faculty_name' && key !== 'department_id') {
+        formattedRow[key] = Number(formattedRow[key] || 0);
+      }
+    });
+    return formattedRow;
+  });
+};
+
+//---------------------------------
+//---------EXPORT EXCEL------------
+//---------------------------------
+
 export const exportFacultyReportToExcelUseCase = async (repository, currentUser, startYear, endYear) => {
   const currentYear = new Date().getFullYear();
   if (!currentUser) {
@@ -182,7 +223,7 @@ export const exportFacultyDepReportToExcelUseCase = async (params, repository, c
   const currentYear = new Date().getFullYear();
   const endYear = parseInt(params.endYear, 10) || currentYear;
 
-   if (startYear < 2010 || endYear > currentYear) {
+  if (startYear < 2010 || endYear > currentYear) {
     throw new BadRequestError(`Диапазон дат должен быть в пределах 2010-${currentYear} гг.`);
   }
 
@@ -194,3 +235,45 @@ export const exportFacultyDepReportToExcelUseCase = async (params, repository, c
 
   return await generateFacultyDepReportExcel(structuredData, startYear, endYear);
 };
+
+
+//---------------------------------
+//---------EXPORT WORD-------------
+//---------------------------------
+
+export const exportFacultyReportToWordUseCase = async (params, repository, currentUser) => {
+
+  if (!currentUser) {
+    throw new ForbiddenError('Пользователь не авторизован');
+  }
+
+  const reportData = await getFacultyReportOnYearUseCase(params, repository);
+
+  const buffer = await generateFacultyReportWord(
+    reportData,
+    params.startYear,
+    params.endYear
+  );
+
+  return {
+    buffer,
+    filename: `Faculty_Word_Report_${params.startYear}-${params.endYear}.docx`
+  };
+};
+
+export const exportFacultyDepReportToWordUseCase = async (params, repository) => {
+    
+    const reportData = await getFacultyReportOnYearWithDepartmentsUseCase(params, repository);
+
+    const buffer = await generateFacultyWithDepartmentsWord(
+        reportData,
+        params.startYear,
+        params.endYear
+    );
+
+    return {
+        buffer,
+        filename: `Faculty_Departments_Word_Report_${params.startYear}-${params.endYear}.docx`
+    };
+};
+

@@ -45,7 +45,20 @@ export const getReportMaterialsOnYearWithDepartments = asyncHandler(async (req, 
   res.json(report);
 });
 
-export const exportFacultyReportExcel = asyncHandler(async (req, res) => {
+export const getDepartmentMaterialsReport = asyncHandler(async (req, res) => {
+  const { facultyName, startYear, endYear } = req.query;
+  const report = await FacultyCases.getDepartmentMaterialsByFacultyUseCase(
+    { facultyName, startYear, endYear },
+    facultyRepository
+  );
+  res.json(report);
+});
+
+//---------------------------------
+//---------EXPORT EXCEL-------------
+//---------------------------------
+
+export const exportFacultyReportToExcel = asyncHandler(async (req, res) => {
   const { startYear, endYear } = req.query;
 
   const excelBuffer = await FacultyCases.exportFacultyReportToExcelUseCase(
@@ -67,7 +80,7 @@ export const exportFacultyReportExcel = asyncHandler(async (req, res) => {
   res.end(excelBuffer);
 });
 
-export const exportFacultyDepReportExcel = asyncHandler(async (req, res) => {
+export const exportFacultyDepReportToExcel = asyncHandler(async (req, res) => {
   const params = {
     startYear: req.query.startYear,
     endYear: req.query.endYear
@@ -89,4 +102,50 @@ export const exportFacultyDepReportExcel = asyncHandler(async (req, res) => {
   );
 
   res.end(excelBuffer);
+});
+
+//---------------------------------
+//---------EXPORT WORD-------------
+//---------------------------------
+
+export const exportFacultyReportToWord = asyncHandler(async (req, res) => {
+
+  const result = await FacultyCases.exportFacultyReportToWordUseCase(
+    req.query,
+    facultyRepository,
+    req.user
+  );
+
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  );
+
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="${result.filename}"`
+  );
+
+  res.send(result.buffer);
+});
+
+export const exportFacultyDepReportToWord = asyncHandler(async (req, res) => {
+
+  const result = await FacultyCases.exportFacultyDepReportToWordUseCase(
+    req.query,
+    facultyRepository,
+    req.user
+  );
+
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  );
+
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="${result.filename}"`
+  );
+
+  res.send(result.buffer);
 });

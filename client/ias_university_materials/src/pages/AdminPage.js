@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Container, Box, Typography, Paper, Button,
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
     CircularProgress, Alert, Snackbar, TextField, TablePagination, InputAdornment,
-    IconButton
+    IconButton, Grid
 } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
+import TerminalIcon from '@mui/icons-material/Terminal';
 
 import * as yup from 'yup';
+import io from 'socket.io-client';
 
 import AdminTableRow from '../components/Tables/AdminTableRow';
 
@@ -64,6 +66,11 @@ const AdminPage = () => {
     const [backupLoading, setBackupLoading] = useState(false);
     const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
+    // --- НОВЫЕ СОСТОЯНИЯ ДЛЯ WEBSOCKET И ЛОГОВ ---
+    const [logs, setLogs] = useState([]);
+    const socketRef = useRef(null);
+    const consoleEndRef = useRef(null);
+
     // Функция загрузки пользователей (обернута в useCallback, чтобы не пересоздаваться)
     const loadUsers = useCallback(async (searchQuery, currentPage, limit) => {
         try {
@@ -82,6 +89,39 @@ const AdminPage = () => {
             setTableLoading(false);
             setLoading(false);
         }
+    }, []);
+
+    // ЭФФЕКТ ДЛЯ НАСТРОЙКИ WEBSOCKET СОЕДИНЕНИЯ
+    useEffect(() => {
+        // Подключаемся к нашему основному бэкенду на Node.js (порт из конфига, здесь 5000)
+        socketRef.current = io(process.env.REACT_APP_SOCKET_URL);
+
+        socketRef.current.on('connect', () => {
+            console.log('Успешное WebSocket подключение к комнате логов');
+            // Подписываемся на выделенный канал логов парсера
+            socketRef.current.emit('subscribe_parser_logs');
+        });
+
+        // Слушаем старые логи из оперативной памяти сервера при входе
+        socketRef.current.on('initial_logs', (initialLogs) => {
+            setLogs(initialLogs);
+        });
+
+        // Слушаем поступление новых логов в реальном времени
+        socketRef.current.on('new_parser_log', (newLog) => {
+            setLogs((prevLogs) => [...prevLogs, newLog]);
+        });
+
+        // Слушаем сигнал очистки консоли бэкендом (при повторном перезапуске)
+        socketRef.current.on('logs_cleared', () => {
+            setLogs([]);
+        });
+
+        return () => {
+            if (socketRef.current) {
+                socketRef.current.disconnect();
+            }
+        };
     }, []);
 
     // Первоначальная загрузка справочников и первой страницы
@@ -254,6 +294,15 @@ const AdminPage = () => {
         }
     };
 
+    const getLogColor = (level) => {
+        switch (level) {
+            case 'ERROR': return '#ff6b6b';
+            case 'WARNING': return '#ffd166';
+            case 'SUCCESS': return '#06d6a0';
+            default: return '#e0e0e0';
+        }
+    };
+
     if (loading) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
@@ -379,11 +428,80 @@ const AdminPage = () => {
                 </Paper>
 
                 {/* Блоки парсера и бэкапа остаются без изменений */}
+                {/* --- 2. МОДИФИЦИРОВАННЫЙ БЛОК ПАРСЕРА (СЕТКА GRID ДЛЯ ВЫВОДА ЛОГОВ СПРАВА) --- */}
                 <Paper elevation={2} sx={{ p: 3, mb: 4, borderRadius: '12px' }}>
-                    <Typography variant="h6" sx={{ color: '#0056b3', fontWeight: 'bold', mb: 2 }}>Парсер материалов</Typography>
-                    <Button variant="contained" onClick={handleStartParser} disabled={parserLoading} sx={{ bgcolor: '#0056b3', textTransform: 'none', fontWeight: 'bold' }}>
-                        {parserLoading ? 'Выполняется...' : 'Запуск парсера'}
-                    </Button>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: { xs: 'column', md: 'row' },
+                            gap: 3
+                        }}
+                    >
+                        {/* Левая колонка: Управление */}
+                        <Box
+                            sx={{
+                                flex: { xs: '1 1 auto', md: '0 0 33%' },
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            <Typography variant="h6" sx={{ color: '#0056b3', fontWeight: 'bold', mb: 1 }}>
+                                Парсер материалов
+                            </Typography>
+                            <Box>
+                                <Button
+                                    variant="contained"
+                                    onClick={handleStartParser}
+                                    disabled={parserLoading}
+                                    sx={{ bgcolor: '#0056b3', textTransform: 'none', fontWeight: 'bold', px: 4 }}
+                                >
+                                    {parserLoading ? 'Выполняется...' : 'Запуск парсера'}
+                                </Button>
+                            </Box>
+                        </Box>
+
+                        {/* Правая колонка: Окно терминала с логами */}
+                        <Box sx={{ flex: '1 1 auto', minWidth: 0 }}>
+                            <Box display="flex" alignItems="center" gap={1} mb={1}>
+                                <TerminalIcon fontSize="small" sx={{ color: '#0056b3' }} />
+                                <Typography variant="subtitle2" sx={{ fontWeight: 'bold', color: 'text.secondary' }}>
+                                    Консоль мониторинга
+                                </Typography>
+                            </Box>
+                            <Paper
+                                elevation={0}
+                                sx={{
+                                    backgroundColor: '#1e1e1e',
+                                    borderRadius: '8px',
+                                    p: 2,
+                                    height: '180px',
+                                    overflowY: 'auto',
+                                    fontFamily: 'Courier New, monospace',
+                                    boxShadow: 'inset 0px 2px 5px rgba(0,0,0,0.5)'
+                                }}
+                            >
+                                {logs.length > 0 ? (
+                                    logs.map((log, index) => (
+                                        <Typography
+                                            key={index}
+                                            variant="caption"
+                                            component="div"
+                                            sx={{ color: getLogColor(log.level), whiteSpace: 'pre-wrap', mb: 0.5, lineHeight: 1.4 }}
+                                        >
+                                            {log.timestamp ? `[${new Date(log.timestamp).toLocaleTimeString()}] ` : ''}
+                                            {log.message}
+                                        </Typography>
+                                    ))
+                                ) : (
+                                    <Typography variant="caption" sx={{ color: '#666', fontStyle: 'italic' }}>
+                                        Ожидание запуска или системных логов...
+                                    </Typography>
+                                )}
+                                <div ref={consoleEndRef} />
+                            </Paper>
+                        </Box>
+                    </Box>
                 </Paper>
 
                 <Paper elevation={2} sx={{ p: 3, borderRadius: '12px' }}>

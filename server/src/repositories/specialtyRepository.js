@@ -1,7 +1,7 @@
-import prisma from '../repositories/prisma-client.js';
+import prisma from './prisma/prisma-client.js';
 import { Speciality } from '../entities/Speciality.js';
 
-export const specialityRepository = {
+export const specialtyRepository = {
   async getAll() {
     return await prisma.specialties.findMany();
   },
@@ -117,7 +117,7 @@ export const specialityRepository = {
         materials: material
       }))
     };
-  },
+  }, // Перемстить в материалы
   
   async getSpecialityDisciplinesWithMaterials({ specCode, startYear, endYear, departmentId, facultyDepartmentsIds }) {
 

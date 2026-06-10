@@ -76,13 +76,17 @@ export const getDepartmentMaterialsReport = asyncHandler(async (req, res) => {
   res.status(200).json(reportData);
 });
 
-export const exportDepartmentReportExcel = asyncHandler(async (req, res) => {
-  const { startYear, endYear , departmentName } = req.query;
+//---------------------------------
+//---------EXPORT EXCEL------------
+//---------------------------------
+
+export const exportDepartmentReportToExcel = asyncHandler(async (req, res) => {
+  const { startYear, endYear, departmentName } = req.query;
 
   const excelBuffer = await MaterialUseCase.exportDepartmentMaterialsToExcelUseCase(
     { yearFrom: startYear, yearTo: endYear },
     materialRepository,
-    req.user, 
+    req.user,
     departmentName
   );
 
@@ -96,6 +100,33 @@ export const exportDepartmentReportExcel = asyncHandler(async (req, res) => {
     `attachment; filename="materials_department.xlsx"`
   );
 
-  // Отправляем буфер в поток ответа
   res.end(excelBuffer);
+});
+
+//---------------------------------
+//---------EXPORT WORD-------------
+//---------------------------------
+
+export const exportDepartmentReportToWord = asyncHandler(async (req, res) => {
+
+  const { startYear, endYear, departmentName } = req.query;
+
+  const result = await MaterialUseCase.exportDepartmentMaterialsToWordUseCase(
+    materialRepository,
+    req.user,
+    { yearFrom: startYear, yearTo: endYear },
+    departmentName
+  );
+
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  );
+
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename*=UTF-8''${encodeURIComponent(result.filename)}`
+  );
+
+  res.send(result.buffer);
 });

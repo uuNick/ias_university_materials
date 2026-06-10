@@ -9,8 +9,8 @@ import MaterialDetailPage from './pages/MaterialDetailPage.js';
 import ReportsPage from './pages/ReportsPage.js';
 import AnalyticsPage from './pages/AnalyticsPage.js';
 import AdminPage from './pages/AdminPage.js';
-import ForbiddenPage from './pages/ForbiddenPage.js';
-import NotFoundPage from './pages/NotFoundPage.js';
+import ForbiddenPage from './pages/Errors/ForbiddenPage.js';
+import NotFoundPage from './pages/Errors/NotFoundPage.js';
 
 function App() {
   return (

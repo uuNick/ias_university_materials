@@ -1,4 +1,4 @@
-import prisma from '../repositories/prisma-client.js';
+import prisma from './prisma/prisma-client.js';
 import { Material } from '../entities/Material.js';
 import { getMaterialsWithPag } from '../use-cases/materialUseCases.js';
 

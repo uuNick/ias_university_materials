@@ -8,19 +8,22 @@ logger = logging.getLogger(__name__)
 
 
 class ParserService:
-    def __init__(self, crawler, repository):
+    def __init__(self, crawler, repository, log_sender):
         self.crawler = crawler
         self.repo = repository
         self.ai_reindex_url = os.getenv("AI_SERVER_URL_REINDEX")
         self.chunk_size = 50
+        self.log_sender = log_sender
 
     def run_full_sync(self):
         logger.info("Запуск парсера электронной библиотеки...")
+        self.log_sender.send_log("Запуск парсера электронной библиотеки...", "INFO")
 
         # Получить главную страницу
         main_html = self.crawler.fetch_page(self.crawler.base_url)
         if not main_html:
             logger.error("Не удалось загрузить главную страницу")
+            self.log_sender.send_log("Не удалось загрузить главную страницу", "ERROR")
             return
 
         # Получить страницу факультетов
@@ -28,10 +31,12 @@ class ParserService:
         faculties_html = self.crawler.fetch_page(faculties_link)
         if not faculties_html:
             logger.error("Не удалось загрузить страницу факультетов")
+            self.log_sender.send_log("Не удалось загрузить страницу факультетов", "ERROR")
             return
 
         faculties = self.crawler.parse_communities(faculties_html)
         logger.info(f"Найдено факультетов для обработки: {len(faculties)}")
+        self.log_sender.send_log(f"Найдено факультетов для обработки: {len(faculties)}", "INFO")
 
         for fac_data in faculties:
             faculty_id = self.repo.save_faculty(fac_data['name'], fac_data['url'])
@@ -39,6 +44,7 @@ class ParserService:
                 continue
 
             logger.info(f"Обработка факультета: {fac_data['name']}")
+            self.log_sender.send_log(f"Обработка факультета: {fac_data['name']}", "INFO")
 
             # Для каждого факультета получить его страницу и парсить кафедры
             fac_html = self.crawler.fetch_page(fac_data['url'])
@@ -53,6 +59,7 @@ class ParserService:
                     continue
 
                 logger.info(f"Кафедра: {dept_data['name']} (материалов: {dept_data['count']})")
+                self.log_sender.send_log(f"Кафедра: {dept_data['name']} (материалов: {dept_data['count']})", "INFO")
 
                 # Получить список всех материалов кафедры
                 materials_list = self.crawler.get_all_materials(dept_data['url'], dept_data['count'])
@@ -90,13 +97,14 @@ class ParserService:
 
                     if index % 10 == 0 or index == len(materials_list):
                         logger.info(f"Собрано метаданных: {index} из {len(materials_list)}")
+                        self.log_sender.send_log(f"Собрано метаданных: {index} из {len(materials_list)}")
 
                     if len(materials_batch) >= self.chunk_size:
-                        logger.info(f"Достигнут лимит пачки ({self.chunk_size}). Запись в БД...")
+                        logger.info(f"Достигнут лимит пакета ({self.chunk_size}). Запись в БД...")
+                        self.log_sender.send_log(f"Достигнут лимит пакета ({self.chunk_size}). Запись в БД...")
                         self.repo.save_materials_batch(materials_batch)
                         materials_batch.clear()
 
-                    #time.sleep(0.1)
 
                     # mat_id = self.repo.save_material(
                     #     title=metadata.get('title') or mat_info['title'],
@@ -120,10 +128,11 @@ class ParserService:
 
                 if materials_batch:
                     logger.info(f"Запись пакета из {len(materials_batch)} материалов в БД...")
+                    self.log_sender.send_log(f"Запись пакета из {len(materials_batch)} материалов в БД...")
                     self.repo.save_materials_batch(materials_batch)
 
         logger.info("Парсинг завершен")
-        self.notify_ai_server()
+        self.log_sender.send_log("Парсинг завершен")
 
     def _save_related_entities(self, material_id, metadata):
         """Вспомогательный метод для сохранения связей многие-ко-многим."""
@@ -167,19 +176,4 @@ class ParserService:
                 logger.info(spec_code, spec_name)
                 self.repo.save_specialty(spec_code, spec_name)
                 self.repo.save_material_specialty(material_id, spec_code)
-
-    def notify_ai_server(self):
-        if not self.ai_reindex_url:
-            logger.warning("URL сервера ИИ не настроен")
-            return
-        logger.info(f"Отправка запроса на создание/обновление векторов материалов: {self.ai_reindex_url}")
-        try:
-            with httpx.Client(timeout=10.0) as client:
-                response = client.post(self.ai_reindex_url)
-                if response.status_code == 200:
-                    logger.info("Сервер ИИ успешно принял задачу на создание/обновление векторов материалов")
-                else:
-                    logger.error(f"Сервер ИИ вернул ошибку: {response.status_code}")
-        except Exception as e:
-            logger.error(f"Не удалось связаться с сервером ИИ: {e}")
 

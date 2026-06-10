@@ -51,7 +51,12 @@ export const findByAuthor = asyncHandler(async (req, res) => {
   res.json(authorInfo);
 });
 
-export const exportTopAuthorsReportExcel = asyncHandler(async (req, res) => {
+//---------------------------------
+//---------EXPORT EXCEL------------
+//---------------------------------
+
+
+export const exportTopAuthorsReportToExcel = asyncHandler(async (req, res) => {
   const { authorLimit } = req.query;
 
   const excelBuffer = await AuthorCases.exportTopAuthorsToExcelUseCase(
@@ -72,7 +77,7 @@ export const exportTopAuthorsReportExcel = asyncHandler(async (req, res) => {
   res.end(excelBuffer);
 });
 
-export const exportAuthorReportExcel = asyncHandler(async (req, res) => {
+export const exportAuthorReportToExcel = asyncHandler(async (req, res) => {
   const { authorName, startYear, endYear } = req.query;
 
   const excelBuffer = await AuthorCases.exportAuthorReportToExcelUseCase(
@@ -95,4 +100,51 @@ export const exportAuthorReportExcel = asyncHandler(async (req, res) => {
   );
 
   res.end(excelBuffer);
+});
+
+//---------------------------------
+//---------EXPORT WORD-------------
+//---------------------------------
+
+export const exportTopAuthorsReportToWord = asyncHandler(async (req, res) => {
+
+  const limit = parseInt(req.query.limit) || 10;
+
+  const result = await AuthorCases.exportTopAuthorsToWordUseCase(
+    authorRepository,
+    limit
+  );
+
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  );
+
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="${result.filename}"`
+  );
+
+  res.send(result.buffer);
+});
+
+export const exportAuthorReportToWord = asyncHandler(async (req, res) => {
+
+  const { authorName, startYear, endYear } = req.query;
+
+  const result = await AuthorCases.exportAuthorReportToWordUseCase(
+    { authorName, startYear, endYear },
+    authorRepository
+  );
+
+  res.setHeader(
+    'Content-Type',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  );
+  res.setHeader(
+    'Content-Disposition',
+    `attachment; filename*=UTF-8''${encodeURIComponent(result.filename)}`
+  );
+
+  res.send(result.buffer);
 });

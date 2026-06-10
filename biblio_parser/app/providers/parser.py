@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-import time
 import logging
 
 logger = logging.getLogger(__name__)
@@ -64,7 +63,6 @@ class SiteCrawler:
         return communities
 
     def parse_materials_list(self, html: str):
-        """Извлекает список ссылок на материалы со страницы кафедры."""
         soup = BeautifulSoup(html, 'html.parser')
         materials = []
 
@@ -105,7 +103,6 @@ class SiteCrawler:
         return materials
 
     def parse_material_metadata(self, html: str):
-        """Парсит детальные метаданные конкретного материала из таблицы."""
         soup = BeautifulSoup(html, 'html.parser')
         metadata = {
             'title': None, 'creator': [], 'abstract': None,

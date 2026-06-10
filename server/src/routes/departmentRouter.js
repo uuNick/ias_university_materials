@@ -6,8 +6,11 @@ import {
     createDepartment,
     updateDepartment,
     deleteDepartment,
+    getDepartmentsMaterialsCount,
     getDepartmentDisciplinesReport,
-    exportDepartmentDisciplinesExcel
+    getDepartmentAuthorsActivity,
+    exportDepartmentDisciplinesToExcel,
+    exportDepartmentDisciplinesToWord
 } from '../controllers/departmentController.js';
 import { protect } from '../middleware/authMiddleware.js';
 import { restrictTo } from '../middleware/roleMiddleware.js';
@@ -18,7 +21,10 @@ const router = express.Router();
 router.get('/', getAllDepartments);
 router.get('/byFacultyId/:id', getDepartmentsByFacultyId);
 router.get('/report/disciplines', protect, restrictTo(...Object.values(ROLES)), getDepartmentDisciplinesReport);
-router.get('/export_excel/disciplines', protect, restrictTo(...Object.values(ROLES)), exportDepartmentDisciplinesExcel);
+router.get('/report/department_activity', protect, restrictTo(...Object.values(ROLES)), getDepartmentsMaterialsCount);
+router.get('/report/department_authors_activity', protect, restrictTo(...Object.values(ROLES)), getDepartmentAuthorsActivity);
+router.get('/export_excel/disciplines', protect, restrictTo(...Object.values(ROLES)), exportDepartmentDisciplinesToExcel);
+router.get('/export_word/disciplines', protect, restrictTo(...Object.values(ROLES)), exportDepartmentDisciplinesToWord);
 router.get('/:id', getDepartment);
 router.post('/', createDepartment);
 router.patch('/:id', updateDepartment);

@@ -1,4 +1,4 @@
-import prisma from '../repositories/prisma-client.js';
+import prisma from './prisma/prisma-client.js';
 import { Role } from '../entities/Role.js';
 
 export const roleRepository = {

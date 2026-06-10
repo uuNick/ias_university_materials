@@ -1,4 +1,4 @@
-import prisma from './prisma-client.js';
+import prisma from './prisma/prisma-client.js';
 import { Author } from '../entities/Author.js';
 
 export const authorRepository = {
@@ -126,7 +126,7 @@ export const authorRepository = {
         },
       },
     };
-    
+
     if (startYear || endYear) {
       whereClause.issued_year = {};
       if (startYear) whereClause.issued_year.gte = startYear;
@@ -156,5 +156,5 @@ export const authorRepository = {
         { title: 'asc' },
       ],
     });
-  }
+  },
 };

@@ -1,4 +1,4 @@
-import prisma from '../repositories/prisma-client.js';
+import prisma from './prisma/prisma-client.js';
 import { UdcCode } from '../entities/UdcCode.js';
 
 export const udcRepository = {
